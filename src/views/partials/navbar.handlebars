@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/navbar.css" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+    <script src="scripts/navbar.js" defer></script>
+</head>
+
+<body>
+    <nav class="nav">
+        <i class="uil uil-bars navOpenBtn"></i>
+        <a href="/" class="logo">Sua logo</a>
+
+        <ul class="nav-links">
+            <i class="uil uil-times navCloseBtn"></i>
+            <li><a href="#">Noticias</a></li>
+            <li><a href="#">Empregos</a></li>
+            <li><a href="#">Parceiros</a></li>
+            <li><a href="#">Contato</a></li>
+            <li><a href="#">Eventos</a></li>
+        </ul>
+
+        <i class="uil uil-search search-icon" id="searchIcon"></i>
+        <div class="search-box">
+            <i class="uil uil-search search-icon"></i>
+            <input type="text" placeholder="Search here..." />
+        </div>
+
+        {{#if usuarioLogado}}
+        <div class="profile-details" onclick="toggleCombobox()">
+            <img src="/images/profile.jpg" class="profile-image-sidebar">
+            <span class="admin_name">{{usuarioLogado.nome}}</span>
+            <i class="bx bx-chevron-down"></i>
+            <div class="combobox" id="profileCombobox">
+                <a href="/profile"> <i class="bx bx-user" style="font-size: 18px;"></i> Configurações</a>
+                <a href="/deslogar"> <i class="bx bx-log-out" style="font-size: 18px;"></i> Deslogar</a>
+            </div>
+        </div>
+
+        {{else}} 
+                <a href="/login" class="login-btn">Login</a>
+
+        {{/if}}
+    </nav>
+</body>
+
+</html>

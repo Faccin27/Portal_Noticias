@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site de Notícias</title>
+  <link rel="stylesheet" href="styles/dashboard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="scripts/dashboard.js" defer></script>
+</head>
+
+<body>
+  <header>
+    {{> navbar}}
+  </header>
+  <div class="container">
+    <main class="main">
+      <section class="latest-news">
+        <div class="section-content">
+          <div class="latest-news-header">
+            <h2>Latest News</h2>
+            <a href="/noticias" class="viewall">View All</a>
+          </div>
+          <div class="news-grid">
+            {{#each (limit listaNoticias 3)}}
+            <div class="news-card" data-id{{this.id}}>
+              <img src="images/profile.jpg" class="news-image">
+              <div class="news-body">
+                <div class="news-category">{{this.categoria}}</div>
+                <h3 class="news-title">{{this.titulo}}</h3>
+                <p class="news-description">{{this.descricao}}</p>
+                <a href="#" class="read-more">Read More
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="read-more-icon">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </section>
+    </main>
+ <aside class="aside">
+      <div class="aside-content">
+        <div class="categories">
+          <h2>Categories</h2>
+          <nav class="categories-nav">
+            <a href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="category-icon">
+                <path
+                  d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2">
+                </path>
+                <path d="M18 14h-8"></path>
+                <path d="M15 18h-5"></path>
+                <path d="M10 6h8v4h-8V6Z"></path>
+              </svg>
+              <span>Noticias</span>
+            </a>
+            <a href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="category-icon">
+                <path d="M17.28 9.05a5.5 5.5 0 1 0-10.56 0A5.5 5.5 0 1 0 12 17.66a5.5 5.5 0 1 0 5.28-8.6Z"></path>
+                <path d="M12 17.66L12 22"></path>
+              </svg>
+              <span>Esportes</span>
+            </a>
+            <a href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="category-icon">
+                <path d="M19.09 20.91a8 8 0 1 0-14.18-7.72A5 5 0 0 0 2 18a8 8 0 0 0 17.09 2.91z"></path>
+                <path d="M5.9 12.29A8 8 0 0 0 12 16.16a8 8 0 0 0 6.09-3.87A8 8 0 0 0 5.9 12.29z"></path>
+              </svg>
+              <span>Negocios</span>
+            </a>
+            <a href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="category-icon">
+                <path d="M6 16V6a6 6 0 0 1 12 0v10a6 6 0 0 1-12 0z"></path>
+                <path d="M9 20h6"></path>
+              </svg>
+              <span>Tecnologia</span>
+            </a>
+            <a href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="category-icon">
+                <path d="M19 20H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2z"></path>
+                <path d="M4 6h16"></path>
+                <path d="M4 10h16"></path>
+                <path d="M4 14h16"></path>
+                <path d="M4 18h16"></path>
+              </svg>
+              <span>Entretenimento</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </aside>
+  </div>
+</body>
+
+</html>

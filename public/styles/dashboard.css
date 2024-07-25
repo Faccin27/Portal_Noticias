@@ -1,0 +1,118 @@
+/* Basic reset and global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    padding-top: 60px; /* Adiciona um espaço para o header */
+  }
+  .container {
+    display: flex;
+    min-height: 100vh;
+  }
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    z-index: 1000; /* Garante que o cabeçalho esteja acima de outros elementos */
+  }
+  .main {
+    flex: 1;
+    padding: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  .latest-news {
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+  .latest-news-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .latest-news-header h2 {
+    font-size: 1.5rem;
+  }
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+  .news-card {
+    background: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .news-image {
+    width: 100%;
+    height: auto;
+    max-height: 200px; /* Limita a altura máxima da imagem */
+    object-fit: cover; /* Ajusta a imagem dentro do contêiner */
+  }
+  .news-body {
+    padding: 1rem;
+  }
+  .news-category {
+    font-size: 0.875rem;
+    color: #666;
+  }
+  .news-title {
+    font-size: 1.25rem;
+    margin: 0.5rem 0;
+  }
+  .news-description {
+    font-size: 1rem;
+    color: #555;
+  }
+  .read-more {
+    display: flex;
+    align-items: center;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .read-more-icon {
+    margin-left: 0.5rem;
+  }
+  .aside {
+    background-color: #f4f4f4;
+    padding: 1rem;
+    width: 300px; /* Ajusta a largura do aside */
+  }
+  .aside-content {
+    max-width: 100%;
+  }
+  .categories {
+    margin-bottom: 2rem;
+  }
+  .categories-nav a {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    color: #333;
+    text-decoration: none;
+  }
+  .category-icon {
+    margin-right: 0.5rem;
+  }
+  .footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+  }
+  
+  .viewall{
+      color: #007bff;
+      text-decoration:underline;
+  }

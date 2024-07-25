@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register | Seu Forum de noticias</title>
+    <link rel="stylesheet" href="styles/register.css" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+    <script src="scripts/register.js" defer></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <form method="post" action="/register">
+
+            <h1 id="formTitle">Registro</h1>
+            <div class="input-group">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" id="user" name="nome" placeholder="Seu Usuario" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" id="email" name="email" placeholder="Seu email" required>
+            </div>
+
+
+            <div class="input-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" id="password" name="senha" placeholder="Sua senha" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" id="rpassword" name="confirm" placeholder="Repita sua senha">
+            </div>
+
+            <div class="error" id="error-message"></div>
+
+            <button type="submit" value="sign up">Registrar</button>
+
+            <div class="error" id="errorMessage"></div>
+        </form>
+        <div class="toggle">
+            <a href="/login" id="toggleAuth">Ja tem uma conta?</a>
+        </div>
+    </div>
+
+
+</body>
