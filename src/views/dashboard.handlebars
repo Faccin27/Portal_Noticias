@@ -19,6 +19,7 @@
       <section class="latest-news">
         <div class="section-content">
           <div class="latest-news-header">
+            
             <h2>Latest News</h2>
             <a href="/noticias" class="viewall">View All</a>
           </div>
@@ -45,7 +46,7 @@
         </div>
       </section>
     </main>
- <aside class="aside">
+    <aside class="aside">
       <div class="aside-content">
         <div class="categories">
           <h2>Categories</h2>
@@ -102,11 +103,49 @@
               </svg>
               <span>Entretenimento</span>
             </a>
+            <button id="openModal">Adicionar Notícia</button>
           </nav>
         </div>
       </div>
     </aside>
   </div>
+
+<form method="POST" action="/noticias/create">  
+   <div id="addNewsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Adicionar Nova Notícia</h2>
+                <span class="close">&times;</span>
+            </div>
+            
+                <div class="form-group">
+                    <label for="title">Título:</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Descrição:</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="content">Conteúdo:</label>
+                    <textarea id="content" name="content" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="category">Categoria:</label>
+                    <select id="category" name="category" required>
+                        <option value="">Selecione uma categoria</option>
+                        <option value="Esportes">Esportes</option>
+                        <option value="Negocios">Negócios</option>
+                        <option value="Tecnologia">Tecnologia</option>
+                        <option value="Entretenimento">Entretenimento</option>
+                        <option value="Ciencias">Ciências</option>
+                    </select>
+                </div>
+                <button type="submit">Adicionar Notícia</button>
+            </form>
+        </div>
+    </div>
+
 </body>
 
 </html>

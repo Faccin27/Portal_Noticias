@@ -37,8 +37,9 @@ router.get('/login', async (req, res) => {
  } else {
    return res.redirect('/');
  }
-
 });
+
+
 
 router.get('/noticias', async (req, res) => {  
   await getUsuarioLogado(req);  
@@ -56,18 +57,64 @@ router.get('/noticias', async (req, res) => {
   }
 });
 
+router.get('/noticia/:id', async (req, res) => {
+  await getUsuarioLogado(req);
+  const noticiaId = req.params.id;
 
-router.get('/register', (req, res) => {
-  res.status(200).render("register")
+  try {
+    const noticia = await NoticiaDAO.getById(noticiaId);
+
+    if (!noticia) {
+      return res.status(404).render("error", { message: "Notícia não encontrada" });
+    }
+
+    if (usuarioLogado) {
+      res.status(200).render("news", {
+        usuarioLogado: usuarioLogado.get(),
+        noticia: noticia
+      });
+    } else {
+      res.status(200).render("news", {
+        noticia: noticia
+      });
+    }
+  } catch (error) {
+    console.error('Erro ao buscar notícia:', error);
+    res.status(500).render("error", { message: "Erro ao carregar a notícia" });
+  }
 });
 
-router.get('/dashboard', (req, res) => {
-  res.status(200).render("dashboard")
-});
+router.get('/register', async (req, res) => {
+  await getUsuarioLogado(req);
 
+  if(usuarioLogado){
+    res.status(200).render("register")
+  } else{res.redirect('/')}
+
+});
 
 router.post('/register', RegisterController.register);
 router.post('/login', LoginController.login);
+
+//postar
+router.post('/noticias/create', async (req, res) => {
+  await getUsuarioLogado(req);
+
+  if (usuarioLogado) {
+    const { title, description, content, category } = req.body;
+    try {
+      const newNoticia = await NoticiaDAO.create({
+        idUsuario: usuarioLogado.id, categoria : category, titulo: title, descricao: description, conteudo: content
+      });
+      res.status(201).redirect("/noticias");
+
+    } catch (error) {
+      res.status(500).json({ error: 'erro ao criar postagem' })
+    }
+  } else {
+    res.redirect('/login');
+  }
+});
 
 
 router.get('/deslogar', (req, res) => {

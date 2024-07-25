@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All News - Site de Notícias</title>
-    <link rel="stylesheet" href="styles/dashboard.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="scripts/dashboard.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All News - Site de Notícias</title>
+  <link rel="stylesheet" href="styles/dashboard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="scripts/dashboard.js" defer></script>
 </head>
+
 <body>
-    <header>
-        {{> navbar}}
-    </header>
-    <div class="container">
-        <main class="main">
-            <section class="all-news">
-                <h1>All News</h1>
-                <div class="news-grid">
-                    {{#each listaNoticias}}
-                    <div class="news-card" data-id="{{this.id}}">
-                        <img src="images/profile.jpg" class="news-image" alt="News image">
-                        <div class="news-body">
-                            <div class="news-category">{{this.categoria}}</div>
-                            <h3 class="news-title">{{this.titulo}}</h3>
-                            <p class="news-description">{{this.descricao}}</p>
-                            <a href="#" class="read-more">Read More
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                    class="read-more-icon">
-                                    <path d="M5 12h14"></path>
-                                    <path d="m12 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                    {{/each}}
-                </div>
-            </section>
-        </main>
+  <header>
+    {{> navbar}}
+  </header>
+  <div class="container">
+    <main class="main">
+      <section class="all-news">
+        <h1>All News</h1>
+        <div class="news-grid">
+          {{#each listaNoticias}}
+          <div class="news-card" data-id="{{this.id}}">
+            <img src="images/profile.jpg" class="news-image" alt="News image">
+            <div class="news-body">
+              <div class="news-category">{{this.categoria}}</div>
+              <h3 class="news-title">{{this.titulo}}</h3>
+              <p class="news-description">{{this.descricao}}</p>
+              <a href="/noticia/{{this.id}}" class="read-more">Read More
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="read-more-icon">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </section>
+    </main>
     <aside class="aside">
       <div class="aside-content">
         <div class="categories">
@@ -99,6 +101,7 @@
         </div>
       </div>
     </aside>
-    </div>
+  </div>
 </body>
+
 </html>

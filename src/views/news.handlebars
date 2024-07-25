@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{noticia.titulo}}</title>
+    <link rel="stylesheet" href="styles/news.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="scripts/news.js" defer></script>
+</head>
+<body>
+    <header>
+        {{> navbar}}
+    </header>    
+
+    <main class="main">
+        <article class="news-item">
+            <h1>{{noticia.titulo}}</h1>
+            <div class="news-category">{{noticia.categoria}}</div>
+            <p class="news-description">{{noticia.descricao}}</p>
+            <img src="images/logo.png" alt="{{noticia.titulo}}">
+            <div class="news-content">
+                {{{noticia.conteudo}}}
+            </div>
+            <div class="news-metadata">
+                <p>Publicado em: {{noticia.createdAt}}</p>
+                <p>Autor: {{noticia.idUsuario}}</p>
+            </div>
+        </article>
+    </main>
+</body>
+</html>
