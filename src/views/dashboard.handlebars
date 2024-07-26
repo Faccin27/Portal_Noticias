@@ -63,6 +63,33 @@
           </div>
         </div>
       </section>
+      <section class="partners">
+        <div class="section-content">
+          <div class="partners-header">
+            <h2>Our Partners</h2>
+            <a href="/parceiros" class="viewall">View All</a>
+          </div>
+          <div class="partners-grid">
+            {{#each (limit listaParceiros 3)}}
+            <div class="partner-card" data-id={{this.id}}>
+              <img src="images/logo.png" class="partner-logo" alt="{{this.nome}}">
+              <div class="partner-body">
+                <h3 class="partner-name">{{this.nome}}</h3>
+                <p class="partner-description">{{this.descricao}}</p>
+                <a href="/parceiro/{{this.id}}" class="read-more-g">Learn More
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="read-more-icon-g">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </section>
     </main>
     <aside class="aside">
       <div class="aside-content">
@@ -121,10 +148,14 @@
               </svg>
               <span>Entretenimento</span>
             </a>
-            <button id="openModal">Adicionar Notícia</button>
+
+
           </nav>
+          
         </div>
       </div>
+                  <button id="openModal">Adicionar Notícia</button>
+            <button id="openPartnerModal">Adicionar Parceiro</button>
     </aside>
   </div>
 
@@ -161,9 +192,39 @@
         </div>
         <button type="submit">Adicionar Notícia</button>
   </form>
+
+
+<div id="addPartnerModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Adicionar Novo Parceiro</h2>
+      <span class="close">&times;</span>
+    </div>
+    <form method="POST" action="/parceiros/create">
+      <div class="form-group">
+        <label for="partnerTitle">Título:</label>
+        <input type="text" id="partnerTitle" name="title" required>
+      </div>
+      <div class="form-group">
+        <label for="partnerDescription">Descrição:</label>
+        <textarea id="partnerDescription" name="description" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="partnerContent">Conteúdo:</label>
+        <textarea id="partnerContent" name="content" required></textarea>
+      </div>
+      <button type="submit">Adicionar Parceiro</button>
+    </form>
+  </div>
+</div>
+
+
   </div>
   </div>
 
+  <footer>
+    {{> footer}}
+  </footer>
 </body>
 
 </html>

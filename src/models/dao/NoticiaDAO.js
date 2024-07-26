@@ -4,10 +4,10 @@ const Noticia = require('../Noticia');
 
 class NoticiaDAO {
   // Cria e persiste uma notícia
-  async create({ idUsuario, categoria, titulo, descricao, conteudo }) {
+  async create({ titulo, descricao, conteudo }) {
     let newNoticia;
     try {
-      newNoticia = await Noticia.create({ idUsuario, categoria, titulo, descricao, conteudo });
+      newNoticia = await Noticia.create({ titulo, descricao, conteudo });
     } catch (error) {
       console.error('Erro ao criar notícia:', error);
     } finally {
@@ -67,8 +67,7 @@ async getById(noticiaId) {
     try {
       noticia = await Noticia.findByPk(noticiaId);
       if (noticia) {
-        noticia.idUsuario = noticiaAtualizada.idUsuario || noticia.idUsuario;
-        noticia.categoria = noticiaAtualizada.categoria || noticia.categoria;
+
         noticia.titulo = noticiaAtualizada.titulo || noticia.titulo;
         noticia.descricao = noticiaAtualizada.descricao || noticia.descricao;
         noticia.conteudo = noticiaAtualizada.conteudo || noticia.conteudo;

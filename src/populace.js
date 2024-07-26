@@ -1,6 +1,7 @@
 const db = require('./config/database');
 const UsuarioDAO = require('./models/dao/UsuarioDAO');
 const NoticiaDAO = require('./models/dao/NoticiaDAO');
+const ParceiroDAO = require('./models/dao/ParceiroDAO');
 
 // Sincronize os modelos com o banco de dados
 db.sequelize.sync({ force: true }).then(async () => {
@@ -124,6 +125,43 @@ db.sequelize.sync({ force: true }).then(async () => {
     descricao: 'Nova descoberta científica que pode mudar o mundo.',
     conteudo: 'Detalhes sobre a nova descoberta científica e suas implicações.'
   });
+
+
+    // Adicionando os parceiros
+    await ParceiroDAO.create({
+      titulo: 'Tech Innovators Inc.',
+      descricao: 'Líder em inovação tecnológica e desenvolvimento de software.',
+      conteudo: 'A Tech Innovators Inc. é uma empresa globalmente reconhecida por suas soluções tecnológicas avançadas e serviços de desenvolvimento de software personalizados.',
+      data_criacao: new Date()
+    });
+  
+    await ParceiroDAO.create({
+      titulo: 'Green Earth Ltd.',
+      descricao: 'Companhia dedicada à sustentabilidade e soluções ecológicas.',
+      conteudo: 'A Green Earth Ltd. se destaca por seu compromisso com a preservação ambiental e oferece uma variedade de produtos e serviços eco-friendly.',
+      data_criacao: new Date()
+    });
+  
+    await ParceiroDAO.create({
+      titulo: 'Health First Co.',
+      descricao: 'Empresa focada em produtos e serviços para a saúde e bem-estar.',
+      conteudo: 'A Health First Co. fornece uma ampla gama de produtos e serviços voltados para a melhoria da saúde e qualidade de vida de seus clientes.',
+      data_criacao: new Date()
+    });
+  
+    await ParceiroDAO.create({
+      titulo: 'EduTech Solutions',
+      descricao: 'Especialista em tecnologia educacional e ferramentas de aprendizado.',
+      conteudo: 'A EduTech Solutions desenvolve soluções inovadoras para melhorar a educação e o processo de aprendizagem através da tecnologia.',
+      data_criacao: new Date()
+    });
+  
+    await ParceiroDAO.create({
+      titulo: 'Financial Masters',
+      descricao: 'Consultoria financeira e serviços de gestão de investimentos.',
+      conteudo: 'A Financial Masters oferece consultoria financeira especializada e serviços personalizados para ajudar seus clientes a alcançar seus objetivos financeiros.',
+      data_criacao: new Date()
+    });
 
   console.log('Dados de exemplo criados com sucesso.');
   process.exit(0);

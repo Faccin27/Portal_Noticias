@@ -5,6 +5,7 @@ const LoginController = require('../controllers/LoginController');
 const RegisterController = require('../controllers/RegisterController');
 const UsuarioDAO = require('../models/dao/UsuarioDAO');
 const NoticiaDAO = require('../models/dao/NoticiaDAO');
+const ParceiroDAO = require("../models/dao/ParceiroDAO");
 
 let usuarioLogado;
 
@@ -15,16 +16,19 @@ async function getUsuarioLogado(req) {
 router.get('/', async (req, res) => {
   await getUsuarioLogado(req)
 
-  let listaNoticias = await NoticiaDAO.getLatest(5);
+  let listaNoticias = await NoticiaDAO.getLatest(6);
+  let listaParceiros = await ParceiroDAO.getLatest(3);
 
   if(usuarioLogado){
     res.status(200).render("dashboard", {
       usuarioLogado: usuarioLogado.get(),
-      listaNoticias: listaNoticias
+      listaNoticias: listaNoticias,
+      listaParceiros: listaParceiros
     })
   } else{
     res.status(200).render("dashboard", {
-      listaNoticias: listaNoticias
+      listaNoticias: listaNoticias,
+      listaParceiros: listaParceiros
     })
   }
 });
@@ -38,7 +42,21 @@ router.get('/login', async (req, res) => {
  }
 });
 
+router.get('/parceiros', async (req, res) => {
+  await getUsuarioLogado(req);
+  let listaParceiros = await ParceiroDAO.getAll();
 
+  if(usuarioLogado){
+    res.status(200).render("partners",{
+      usuarioLogado: usuarioLogado.get(),
+      listaParceiros: listaParceiros
+    })
+  } else{
+    res.status(200).render("partners",{
+      listaParceiros: listaParceiros
+    })
+  }
+})
 
 router.get('/noticias', async (req, res) => {  
   await getUsuarioLogado(req);  

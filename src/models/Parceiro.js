@@ -1,0 +1,39 @@
+// Importando as dependências necessárias
+const db = require('../config/database');
+const { Model, DataTypes } = require('sequelize');
+
+// Definindo a classe Parceiro que estende Model do Sequelize
+class Parceiro extends Model {
+  // Método para definir associações, caso necessário no futuro
+  static associate(models) {
+    // Defina as associações aqui, se necessário
+  }
+}
+
+// Inicializando a classe Parceiro com o esquema do banco de dados
+Parceiro.init({
+  titulo: { 
+    type: DataTypes.STRING, 
+    allowNull: false 
+  },
+  descricao: { 
+    type: DataTypes.TEXT, 
+    allowNull: false 
+  },
+  conteudo: { 
+    type: DataTypes.TEXT, 
+    allowNull: false 
+  },
+  data_criacao: { 
+    type: DataTypes.DATE, 
+    allowNull: false,
+    defaultValue: DataTypes.NOW
+  },
+}, {
+  sequelize: db.sequelize, // Conexão com o banco de dados
+  modelName: 'Parceiro', // Nome do modelo
+  tableName: 'Parceiros', // Nome da tabela no banco de dados, geralmente no plural
+});
+
+// Exportando a classe Parceiro
+module.exports = Parceiro;

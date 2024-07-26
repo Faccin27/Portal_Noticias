@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All News - Site de Notícias</title>
+  <link rel="stylesheet" href="styles/partner.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="scripts/partner.js" defer></script>
+</head>
+
+<body>
+  <header>
+    {{> navbar}}
+  </header>
+  <div class="container">
+    <main class="main">
+      <section class="all-news">
+        <h1>All Partners</h1>
+          <div class="partners-grid">
+            {{#each (limit listaParceiros 3)}}
+            <div class="partner-card" data-id={{this.id}}>
+              <img src="images/logo.png" class="partner-logo" alt="{{this.nome}}">
+              <div class="partner-body">
+                <h3 class="partner-name">{{this.nome}}</h3>
+                <p class="partner-description">{{this.descricao}}</p>
+                <a href="/parceiro/{{this.id}}" class="read-more-g">Learn More
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="read-more-icon-g">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    {{> footer}}
+  </footer>
+</body>
+
+</html>

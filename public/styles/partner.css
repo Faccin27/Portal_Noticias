@@ -1,0 +1,78 @@
+/* Reset básico e estilos globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    padding-top: 60px; /* Adiciona um espaço para o cabeçalho */
+}
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    z-index: 1000; /* Garante que o cabeçalho esteja acima de outros elementos */
+}
+.main {
+    flex: 1;
+    padding: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+.all-news {
+    margin: 0 auto;
+    max-width: 1200px;
+}
+.all-news h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+.partners-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+.partner-card {
+    background: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.partner-logo {
+    width: 100%;
+    height: auto;
+    max-height: 200px; /* Limita a altura máxima do logo */
+    object-fit: cover; /* Ajusta a imagem dentro do contêiner */
+}
+.partner-body {
+    padding: 1rem;
+}
+.partner-name {
+    font-size: 1.25rem;
+    margin: 0.5rem 0;
+}
+.partner-description {
+    font-size: 1rem;
+    color: #555;
+}
+.read-more-g {
+    display: flex;
+    align-items: center;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+.read-more-icon-g {
+    margin-left: 0.5rem;
+}
