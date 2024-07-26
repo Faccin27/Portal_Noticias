@@ -1,3 +1,5 @@
+const { Sequelize, DataTypes } = require('sequelize');
+const { sequelize } = require("../../config/database");
 const Noticia = require('../Noticia');
 
 class NoticiaDAO {
@@ -13,29 +15,51 @@ class NoticiaDAO {
     }
   }
 
-  // Busca todas as notícias do banco de dados
+  // buscar todas as noticias e inserindo nome do autor
   async getAll() {
-    let noticias;
+    let newNoticias;
     try {
-      noticias = await Noticia.findAll();
+      newNoticias = await sequelize.query(
+        `SELECT noticia.*, usuarios.nome
+         FROM noticia
+         LEFT JOIN usuarios
+         ON noticia.idUsuario = usuarios.id`,
+        {
+          type: Sequelize.QueryTypes.SELECT,
+        }
+      );
     } catch (error) {
       console.error('Erro ao buscar notícias:', error);
     } finally {
-      return noticias;
+      return newNoticias;
     }
   }
 
-  // Busca uma notícia no banco de dados pela sua ID
-  async getById(noticiaId) {
-    let noticia;
-    try {
-      noticia = await Noticia.findByPk(noticiaId);
-    } catch (error) {
-      console.error('Erro ao buscar notícia por ID:', error);
-    } finally {
-      return noticia;
-    }
+// Busca uma notícia no banco de dados pela sua ID, incluindo o nome do autor
+async getById(noticiaId) {
+  let noticia;
+  try {
+    noticia = await sequelize.query(
+      `SELECT noticia.*, usuarios.nome
+       FROM noticia
+       LEFT JOIN usuarios
+       ON noticia.idUsuario = usuarios.id
+       WHERE noticia.id = :noticiaId`,
+      {
+        replacements: { noticiaId: noticiaId },
+        type: Sequelize.QueryTypes.SELECT,
+      }
+    );
+
+    // As consultas SELECT com sequelize.query retornam um array, então pegamos o primeiro elemento.
+    noticia = noticia[0];
+  } catch (error) {
+    console.error('Erro ao buscar notícia por ID:', error);
+  } finally {
+    return noticia;
   }
+}
+
 
   // Atualiza uma notícia no banco de dados
   async update(noticiaId, noticiaAtualizada) {
@@ -43,12 +67,12 @@ class NoticiaDAO {
     try {
       noticia = await Noticia.findByPk(noticiaId);
       if (noticia) {
-        noticia.idUsuario = noticiaAtualizada.idUsuario || noticia.idUsuario; // Atualiza o campo de idUsuario se ele foi alterado
-        noticia.categoria = noticiaAtualizada.categoria || noticia.categoria; // Atualiza o campo de categoria se ele foi alterado
-        noticia.titulo = noticiaAtualizada.titulo || noticia.titulo; // Atualiza o campo de título se ele foi alterado
-        noticia.descricao = noticiaAtualizada.descricao || noticia.descricao; // Atualiza o campo de descrição se ele foi alterado
-        noticia.conteudo = noticiaAtualizada.conteudo || noticia.conteudo; // Atualiza o campo de conteúdo se ele foi alterado
-        await noticia.save(); // Salve as alterações
+        noticia.idUsuario = noticiaAtualizada.idUsuario || noticia.idUsuario;
+        noticia.categoria = noticiaAtualizada.categoria || noticia.categoria;
+        noticia.titulo = noticiaAtualizada.titulo || noticia.titulo;
+        noticia.descricao = noticiaAtualizada.descricao || noticia.descricao;
+        noticia.conteudo = noticiaAtualizada.conteudo || noticia.conteudo;
+        await noticia.save();
       } else {
         console.log('Notícia não encontrada para atualização.');
       }
@@ -86,6 +110,21 @@ class NoticiaDAO {
       console.error('Erro ao buscar notícia:', error);
     } finally {
       return noticia;
+    }
+  }
+
+  // Buscar ultimas noticias inserindo nome do autor
+  async getLatest(limit = 3) {
+    let noticias;
+    try {
+      noticias = await Noticia.findAll({
+        order: [['id', 'DESC']],
+        limit: limit
+      });
+    } catch (error) {
+      console.error('Erro ao buscar as últimas notícias:', error);
+    } finally {
+      return noticias;
     }
   }
 }

@@ -14,12 +14,30 @@
   <header>
     {{> navbar}}
   </header>
+  <div class="carousel-container">
+    <div class="carousel">
+      {{#each (limit listaNoticias 5)}}
+      <div class="carousel-item">
+        <div class="carousel-card">
+          <img src="images/profile.jpg" class="news-image" alt="{{this.titulo}}">
+          <div class="news-content">
+            <h3 class="news-title">{{this.titulo}}</h3>
+            <p class="news-description">{{this.descricao}}</p>
+            <a href="/noticia/{{this.id}}" class="read-more">Leia mais</a>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      <a href="#" class="carousel-nav prev"><i class="fas fa-chevron-left"></i></a>
+      <a href="#" class="carousel-nav next"><i class="fas fa-chevron-right"></i></a>
+    </div>
+  </div>
+
   <div class="container">
     <main class="main">
       <section class="latest-news">
         <div class="section-content">
           <div class="latest-news-header">
-            
             <h2>Latest News</h2>
             <a href="/noticias" class="viewall">View All</a>
           </div>
@@ -31,10 +49,10 @@
                 <div class="news-category">{{this.categoria}}</div>
                 <h3 class="news-title">{{this.titulo}}</h3>
                 <p class="news-description">{{this.descricao}}</p>
-                <a href="#" class="read-more">Read More
+                <a href="/noticia/{{this.id}}" class="read-more-g">Read More
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="read-more-icon">
+                    class="read-more-icon-g">
                     <path d="M5 12h14"></path>
                     <path d="m12 5 7 7-7 7"></path>
                   </svg>
@@ -110,41 +128,41 @@
     </aside>
   </div>
 
-<form method="POST" action="/noticias/create">  
-   <div id="addNewsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Adicionar Nova Notícia</h2>
-                <span class="close">&times;</span>
-            </div>
-            
-                <div class="form-group">
-                    <label for="title">Título:</label>
-                    <input type="text" id="title" name="title" required>
-                </div>
-                <div class="form-group">
-                    <label for="description">Descrição:</label>
-                    <textarea id="description" name="description" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="content">Conteúdo:</label>
-                    <textarea id="content" name="content" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="category">Categoria:</label>
-                    <select id="category" name="category" required>
-                        <option value="">Selecione uma categoria</option>
-                        <option value="Esportes">Esportes</option>
-                        <option value="Negocios">Negócios</option>
-                        <option value="Tecnologia">Tecnologia</option>
-                        <option value="Entretenimento">Entretenimento</option>
-                        <option value="Ciencias">Ciências</option>
-                    </select>
-                </div>
-                <button type="submit">Adicionar Notícia</button>
-            </form>
+  <form method="POST" action="/noticias/create">
+    <div id="addNewsModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Adicionar Nova Notícia</h2>
+          <span class="close">&times;</span>
         </div>
-    </div>
+
+        <div class="form-group">
+          <label for="title">Título:</label>
+          <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Descrição:</label>
+          <textarea id="description" name="description" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="content">Conteúdo:</label>
+          <textarea id="content" name="content" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="category">Categoria:</label>
+          <select id="category" name="category" required>
+            <option value="">Selecione uma categoria</option>
+            <option value="Esportes">Esportes</option>
+            <option value="Negocios">Negócios</option>
+            <option value="Tecnologia">Tecnologia</option>
+            <option value="Entretenimento">Entretenimento</option>
+            <option value="Ciencias">Ciências</option>
+          </select>
+        </div>
+        <button type="submit">Adicionar Notícia</button>
+  </form>
+  </div>
+  </div>
 
 </body>
 

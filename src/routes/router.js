@@ -15,14 +15,13 @@ async function getUsuarioLogado(req) {
 router.get('/', async (req, res) => {
   await getUsuarioLogado(req)
 
-  let listaNoticias = await NoticiaDAO.getAll();
+  let listaNoticias = await NoticiaDAO.getLatest(5);
 
   if(usuarioLogado){
-    console.log("TESTE",listaNoticias)
     res.status(200).render("dashboard", {
       usuarioLogado: usuarioLogado.get(),
       listaNoticias: listaNoticias
-  })
+    })
   } else{
     res.status(200).render("dashboard", {
       listaNoticias: listaNoticias
