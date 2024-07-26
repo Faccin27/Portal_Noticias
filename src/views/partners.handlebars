@@ -18,28 +18,42 @@
     <main class="main">
       <section class="all-news">
         <h1>All Partners</h1>
-          <div class="partners-grid">
-            {{#each (limit listaParceiros 3)}}
-            <div class="partner-card" data-id={{this.id}}>
-              <img src="images/logo.png" class="partner-logo" alt="{{this.nome}}">
-              <div class="partner-body">
-                <h3 class="partner-name">{{this.nome}}</h3>
-                <p class="partner-description">{{this.descricao}}</p>
-                <a href="/parceiro/{{this.id}}" class="read-more-g">Learn More
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="read-more-icon-g">
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path>
-                  </svg>
-                </a>
-              </div>
+        <div class="partners-grid">
+          {{#each listaParceiros}}
+          <div class="partner-card" data-id="{{this.id}}">
+            <img src="images/profile.jpg" class="partner-logo" alt="{{this.nome}}">
+            <div class="partner-body">
+              <h3 class="partner-name">{{this.titulo}}</h3>
+              <p class="partner-description">{{this.descricao}}</p>
+              <a href="#" class="read-more-g" data-content="{{this.conteudo}}">Learn More
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="read-more-icon-g">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
             </div>
-            {{/each}}
           </div>
+          {{/each}}
+        </div>
       </section>
     </main>
   </div>
+
+  <!-- Modal -->
+  <div id="partner-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <img id="modal-image" src="" alt="Partner Image" class="modal-image">
+      <h2 id="modal-title"></h2>
+      <p id="modal-description"></p>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+
+
 
   <footer>
     {{> footer}}

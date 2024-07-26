@@ -74,9 +74,9 @@
             <div class="partner-card" data-id={{this.id}}>
               <img src="images/logo.png" class="partner-logo" alt="{{this.nome}}">
               <div class="partner-body">
-                <h3 class="partner-name">{{this.nome}}</h3>
+                <h3 class="partner-name">{{this.titulo}}</h3>
                 <p class="partner-description">{{this.descricao}}</p>
-                <a href="/parceiro/{{this.id}}" class="read-more-g">Learn More
+                <a href="/parceiros" class="read-more-g">Learn More
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="read-more-icon-g">
@@ -151,11 +151,12 @@
 
 
           </nav>
-          
+
         </div>
       </div>
-                  <button id="openModal">Adicionar Notícia</button>
-            <button id="openPartnerModal">Adicionar Parceiro</button>
+      <button id="openModal">Adicionar Notícia</button>
+      <button class="parceiro-botao-abrir"> Adicionar Parceiro</button>
+
     </aside>
   </div>
 
@@ -193,30 +194,32 @@
         <button type="submit">Adicionar Notícia</button>
   </form>
 
+  <form method="POST" action="/parceiros/create" id="parceiro-formulario">
 
-<div id="addPartnerModal" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2 class="modal-title">Adicionar Novo Parceiro</h2>
-      <span class="close">&times;</span>
+    <div id="parceiro-modal" class="parceiro-modal-container">
+      <div class="parceiro-modal-conteudo">
+        <span class="parceiro-fechar-modal">&times;</span>
+        <h2 class="parceiro-titulo-modal">Adicionar Novo Parceiro</h2>
+
+        <div class="parceiro-form-grupo">
+          <label for="parceiro-titulo" class="parceiro-rotulo">Título:</label>
+          <input type="text" id="parceiro-titulo" class="parceiro-entrada" required>
+        </div>
+        <div class="parceiro-form-grupo">
+          <label for="parceiro-descricao" class="parceiro-rotulo">Descrição:</label>
+          <textarea id="parceiro-descricao" class="parceiro-textarea" required></textarea>
+        </div>
+        <div class="parceiro-form-grupo">
+          <label for="parceiro-conteudo" class="parceiro-rotulo">Conteúdo:</label>
+          <textarea id="parceiro-conteudo" class="parceiro-textarea" required></textarea>
+        </div>
+        <button type="submit" class="parceiro-botao-enviar">Adicionar Parceiro</button>
+
+      </div>
     </div>
-    <form method="POST" action="/parceiros/create">
-      <div class="form-group">
-        <label for="partnerTitle">Título:</label>
-        <input type="text" id="partnerTitle" name="title" required>
-      </div>
-      <div class="form-group">
-        <label for="partnerDescription">Descrição:</label>
-        <textarea id="partnerDescription" name="description" required></textarea>
-      </div>
-      <div class="form-group">
-        <label for="partnerContent">Conteúdo:</label>
-        <textarea id="partnerContent" name="content" required></textarea>
-      </div>
-      <button type="submit">Adicionar Parceiro</button>
-    </form>
+  </form>
   </div>
-</div>
+  </div>
 
 
   </div>

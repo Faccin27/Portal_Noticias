@@ -19,13 +19,13 @@ router.get('/', async (req, res) => {
   let listaNoticias = await NoticiaDAO.getLatest(6);
   let listaParceiros = await ParceiroDAO.getLatest(3);
 
-  if(usuarioLogado){
+  if (usuarioLogado) {
     res.status(200).render("dashboard", {
       usuarioLogado: usuarioLogado.get(),
       listaNoticias: listaNoticias,
       listaParceiros: listaParceiros
     })
-  } else{
+  } else {
     res.status(200).render("dashboard", {
       listaNoticias: listaNoticias,
       listaParceiros: listaParceiros
@@ -35,37 +35,37 @@ router.get('/', async (req, res) => {
 
 router.get('/login', async (req, res) => {
   await getUsuarioLogado(req)
- if(!usuarioLogado){
-  res.status(200).render("login")
- } else {
-   return res.redirect('/');
- }
+  if (!usuarioLogado) {
+    res.status(200).render("login")
+  } else {
+    return res.redirect('/');
+  }
 });
 
 router.get('/parceiros', async (req, res) => {
   await getUsuarioLogado(req);
   let listaParceiros = await ParceiroDAO.getAll();
 
-  if(usuarioLogado){
-    res.status(200).render("partners",{
+  if (usuarioLogado) {
+    res.status(200).render("partners", {
       usuarioLogado: usuarioLogado.get(),
       listaParceiros: listaParceiros
     })
-  } else{
-    res.status(200).render("partners",{
+  } else {
+    res.status(200).render("partners", {
       listaParceiros: listaParceiros
     })
   }
 })
 
-router.get('/noticias', async (req, res) => {  
-  await getUsuarioLogado(req);  
+router.get('/noticias', async (req, res) => {
+  await getUsuarioLogado(req);
   let listaNoticias = await NoticiaDAO.getAll();
 
   if (usuarioLogado) {
     res.status(200).render("all-news", {
       usuarioLogado: usuarioLogado.get(),
-      listaNoticias: listaNoticias  
+      listaNoticias: listaNoticias
     });
   } else {
     res.status(200).render("all-news", {
@@ -104,16 +104,16 @@ router.get('/noticia/:id', async (req, res) => {
 router.get('/register', async (req, res) => {
   await getUsuarioLogado(req);
 
-  if(usuarioLogado){
+  if (!usuarioLogado) {
     res.status(200).render("register")
-  } else{res.redirect('/')}
+  } else { res.redirect('/') }
 
 });
 
 router.post('/register', RegisterController.register);
 router.post('/login', LoginController.login);
 
-//postar
+//postar noticia
 router.post('/noticias/create', async (req, res) => {
   await getUsuarioLogado(req);
 
@@ -121,7 +121,7 @@ router.post('/noticias/create', async (req, res) => {
     const { title, description, content, category } = req.body;
     try {
       const newNoticia = await NoticiaDAO.create({
-        idUsuario: usuarioLogado.id, categoria : category, titulo: title, descricao: description, conteudo: content
+        idUsuario: usuarioLogado.id, categoria: category, titulo: title, descricao: description, conteudo: content
       });
       res.status(201).redirect("/noticias");
 
@@ -129,9 +129,29 @@ router.post('/noticias/create', async (req, res) => {
       res.status(500).json({ error: 'erro ao criar postagem' })
     }
   } else {
-    res.redirect('/login');
+    res.redirect('/');
   }
 });
+
+// criar novo parceiro
+router.post('/parceiros/create', async (req, res) => {
+  await getUsuarioLogado(req);
+
+  if (usuarioLogado) {
+    const { ptitle, pdescription, pcontent } = req.body;
+    console.log(ptitle, pdescription, pcontent);
+    try {
+      const newParceiro = await ParceiroDAO.create({
+        titulo: ptitle, descricao: pdescription, conteudo: pcontent
+      });
+      res.status(201).redirect("/parceiros");
+    } catch (error) {
+      res.status(500).json({ error: 'erro ao criar parceiro' })
+    }
+  } else {
+    res.redirect('/')
+  }
+})
 
 
 router.get('/deslogar', (req, res) => {

@@ -1,15 +1,11 @@
 console.log("Script dashboard carregado!");
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // modal notícias
     const newsModal = document.getElementById("addNewsModal");
     const openNewsBtn = document.getElementById("openModal");
     const closeNewsBtn = newsModal.querySelector(".close");
 
-    // modlal parceiro
-    const partnerModal = document.getElementById("addPartnerModal");
-    const openPartnerBtn = document.getElementById("openPartnerModal");
-    const closePartnerBtn = partnerModal.querySelector(".close");
 
     // abre modal
     function openModal(modal) {
@@ -23,46 +19,56 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event listeners para o modal de notícias
     if (openNewsBtn) {
-        openNewsBtn.addEventListener('click', function() {
+        openNewsBtn.addEventListener('click', function () {
             openModal(newsModal);
         });
     }
 
     if (closeNewsBtn) {
-        closeNewsBtn.addEventListener('click', function() {
+        closeNewsBtn.addEventListener('click', function () {
             closeModal(newsModal);
         });
     }
 
-    // Event listeners para o modal de parceiros
-    if (openPartnerBtn) {
-        openPartnerBtn.addEventListener('click', function() {
-            openModal(partnerModal);
-        });
-    }
 
-    if (closePartnerBtn) {
-        closePartnerBtn.addEventListener('click', function() {
-            closeModal(partnerModal);
-        });
-    }
 
     // Fechar ambos os modais ao clicar fora deles
-    window.addEventListener('click', function(event) {
+    window.addEventListener('click', function (event) {
         if (event.target == newsModal) {
             closeModal(newsModal);
-        }
-        if (event.target == partnerModal) {
-            closeModal(partnerModal);
         }
     });
 
     // depurar
     console.log("Botão de notícias:", openNewsBtn);
     console.log("Modal de notícias:", newsModal);
-    console.log("Botão de parceiros:", openPartnerBtn);
-    console.log("Modal de parceiros:", partnerModal);
 
+    const botaoAdicionarParceiro = document.querySelector('.parceiro-botao-abrir');
+    botaoAdicionarParceiro.addEventListener('click', abrirModalParceiro);
+
+
+    function abrirModalParceiro() {
+        document.getElementById("parceiro-modal").style.display = "block";
+    }
+
+    var spanFechar = document.getElementsByClassName("parceiro-fechar-modal")[0];
+    if (spanFechar) {
+        spanFechar.onclick = function () {
+            document.getElementById("parceiro-modal").style.display = "none";
+        };
+    }
+
+    var parceiroFormulario = document.getElementById("parceiro-formulario");
+    if (parceiroFormulario) {
+        parceiroFormulario.onsubmit = function (e) {
+            e.preventDefault();
+            // Adicione a lógica para enviar os dados do formulário aqui
+            console.log("Formulário enviado");
+            document.getElementById("parceiro-modal").style.display = "none";
+        };
+    } else {
+        console.error("Formulário com ID 'parceiro-formulario' não encontrado.");
+    }
 
     //  carrossel
     const carousel = document.querySelector('.carousel');
