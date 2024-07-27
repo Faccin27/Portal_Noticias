@@ -6,7 +6,6 @@ const RegisterController = require('../controllers/RegisterController');
 const UsuarioDAO = require('../models/dao/UsuarioDAO');
 const NoticiaDAO = require('../models/dao/NoticiaDAO');
 const ParceiroDAO = require("../models/dao/ParceiroDAO");
-const EmpregoDAO = require('../models/dao/EmpregoDAO');
 
 let usuarioLogado;
 
@@ -17,10 +16,8 @@ async function getUsuarioLogado(req) {
 router.get('/', async (req, res) => {
   await getUsuarioLogado(req)
 
-  let listaEmpregos = await EmpregoDAO.getLatest(3);
   let listaNoticias = await NoticiaDAO.getLatest(6);
   let listaParceiros = await ParceiroDAO.getLatest(3);
-  console.log("empregos", listaEmpregos);
   if (usuarioLogado) {
     res.status(200).render("dashboard", {
       usuarioLogado: usuarioLogado.get(),

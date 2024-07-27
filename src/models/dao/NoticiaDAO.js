@@ -4,10 +4,10 @@ const Noticia = require('../Noticia');
 
 class NoticiaDAO {
   // Cria e persiste uma notícia
-  async create({ idUsuario, categoria, titulo, descricao, conteudo }) {
+  async create({ titulo, descricao, conteudo }) {
     let newNoticia;
     try {
-      newNoticia = await Noticia.create({ idUsuario, categoria, titulo, descricao, conteudo });
+      newNoticia = await Noticia.create({ titulo, descricao, conteudo });
     } catch (error) {
       console.error('Erro ao criar notícia:', error);
     } finally {
@@ -15,7 +15,7 @@ class NoticiaDAO {
     }
   }
 
-  // Buscar todas as notícias e inserindo nome do autor
+  // buscar todas as noticias e inserindo nome do autor
   async getAll() {
     let newNoticias;
     try {
@@ -35,30 +35,31 @@ class NoticiaDAO {
     }
   }
 
-  // Busca uma notícia no banco de dados pela sua ID, incluindo o nome do autor
-  async getById(noticiaId) {
-    let noticia;
-    try {
-      noticia = await sequelize.query(
-        `SELECT noticia.*, usuarios.nome
-         FROM noticia
-         LEFT JOIN usuarios
-         ON noticia.idUsuario = usuarios.id
-         WHERE noticia.id = :noticiaId`,
-        {
-          replacements: { noticiaId: noticiaId },
-          type: Sequelize.QueryTypes.SELECT,
-        }
-      );
+// Busca uma notícia no banco de dados pela sua ID, incluindo o nome do autor
+async getById(noticiaId) {
+  let noticia;
+  try {
+    noticia = await sequelize.query(
+      `SELECT noticia.*, usuarios.nome
+       FROM noticia
+       LEFT JOIN usuarios
+       ON noticia.idUsuario = usuarios.id
+       WHERE noticia.id = :noticiaId`,
+      {
+        replacements: { noticiaId: noticiaId },
+        type: Sequelize.QueryTypes.SELECT,
+      }
+    );
 
-      // As consultas SELECT com sequelize.query retornam um array, então pegamos o primeiro elemento.
-      noticia = noticia[0];
-    } catch (error) {
-      console.error('Erro ao buscar notícia por ID:', error);
-    } finally {
-      return noticia;
-    }
+    // As consultas SELECT com sequelize.query retornam um array, então pegamos o primeiro elemento.
+    noticia = noticia[0];
+  } catch (error) {
+    console.error('Erro ao buscar notícia por ID:', error);
+  } finally {
+    return noticia;
   }
+}
+
 
   // Atualiza uma notícia no banco de dados
   async update(noticiaId, noticiaAtualizada) {
@@ -66,8 +67,7 @@ class NoticiaDAO {
     try {
       noticia = await Noticia.findByPk(noticiaId);
       if (noticia) {
-        noticia.idUsuario = noticiaAtualizada.idUsuario || noticia.idUsuario;
-        noticia.categoria = noticiaAtualizada.categoria || noticia.categoria;
+
         noticia.titulo = noticiaAtualizada.titulo || noticia.titulo;
         noticia.descricao = noticiaAtualizada.descricao || noticia.descricao;
         noticia.conteudo = noticiaAtualizada.conteudo || noticia.conteudo;
@@ -112,18 +112,13 @@ class NoticiaDAO {
     }
   }
 
-  // Buscar últimas notícias inserindo nome do autor
+  // Buscar ultimas noticias inserindo nome do autor
   async getLatest(limit = 3) {
     let noticias;
     try {
       noticias = await Noticia.findAll({
         order: [['id', 'DESC']],
-        limit: limit,
-        include: {
-          model: Usuario,
-          as: 'autor',
-          attributes: ['nome']
-        }
+        limit: limit
       });
     } catch (error) {
       console.error('Erro ao buscar as últimas notícias:', error);
