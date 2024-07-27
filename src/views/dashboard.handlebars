@@ -148,15 +148,11 @@
               </svg>
               <span>Entretenimento</span>
             </a>
-
-
           </nav>
-
         </div>
       </div>
       <button id="openModal">Adicionar Notícia</button>
-      <button class="parceiro-botao-abrir"> Adicionar Parceiro</button>
-
+      <button id="openPartnerModal">Adicionar Parceiro</button>
     </aside>
   </div>
 
@@ -192,38 +188,35 @@
           </select>
         </div>
         <button type="submit">Adicionar Notícia</button>
+      </div>
+    </div>
   </form>
 
-  <form method="POST" action="/parceiros/create" id="parceiro-formulario">
-
-    <div id="parceiro-modal" class="parceiro-modal-container">
-      <div class="parceiro-modal-conteudo">
-        <span class="parceiro-fechar-modal">&times;</span>
-        <h2 class="parceiro-titulo-modal">Adicionar Novo Parceiro</h2>
-
-        <div class="parceiro-form-grupo">
-          <label for="parceiro-titulo" class="parceiro-rotulo">Título:</label>
-          <input type="text" id="parceiro-titulo" class="parceiro-entrada" required>
+  <form method="POST" action="/parceiros/create">
+    <div id="addPartnerModal" class="modal partner-modal">
+      <div class="modal-content partner-modal-content">
+        <div class="modal-header partner-modal-header">
+          <h2 class="modal-title">Adicionar Novo Parceiro</h2>
+          <span class="close">&times;</span>
         </div>
-        <div class="parceiro-form-grupo">
-          <label for="parceiro-descricao" class="parceiro-rotulo">Descrição:</label>
-          <textarea id="parceiro-descricao" class="parceiro-textarea" required></textarea>
+        <div class="form-group">
+          <label for="partnerTitle">Nome: </label>
+          <input type="text" id="partnerTitle" name="ptitle" required>
         </div>
-        <div class="parceiro-form-grupo">
-          <label for="parceiro-conteudo" class="parceiro-rotulo">Conteúdo:</label>
-          <textarea id="parceiro-conteudo" class="parceiro-textarea" required></textarea>
+        <div class="form-group">
+          <label for="partnerDescription">Descrição:</label>
+          <textarea id="partnerDescription" name="pdescription" required></textarea>
         </div>
-        <button type="submit" class="parceiro-botao-enviar">Adicionar Parceiro</button>
+        <div class="form-group">
+          <label for="partnerContent">Conteúdo:</label>
+          <textarea id="partnerContent" name="pcontent" required></textarea>
+        </div>
+        <button type="submit" class="partner-submit-btn">Adicionar Parceiro</button>
 
       </div>
     </div>
   </form>
-  </div>
-  </div>
 
-
-  </div>
-  </div>
 
   <footer>
     {{> footer}}

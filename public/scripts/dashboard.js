@@ -32,43 +32,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    // Fechar ambos os modais ao clicar fora deles
     window.addEventListener('click', function (event) {
         if (event.target == newsModal) {
             closeModal(newsModal);
         }
     });
 
+    var modal = document.getElementById("addPartnerModal");
+    var btn = document.getElementById("openPartnerModal");
+    var span = modal.querySelector(".close");
+  
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+  
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+  
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
     // depurar
     console.log("Botão de notícias:", openNewsBtn);
     console.log("Modal de notícias:", newsModal);
 
-    const botaoAdicionarParceiro = document.querySelector('.parceiro-botao-abrir');
-    botaoAdicionarParceiro.addEventListener('click', abrirModalParceiro);
 
-
-    function abrirModalParceiro() {
-        document.getElementById("parceiro-modal").style.display = "block";
-    }
-
-    var spanFechar = document.getElementsByClassName("parceiro-fechar-modal")[0];
-    if (spanFechar) {
-        spanFechar.onclick = function () {
-            document.getElementById("parceiro-modal").style.display = "none";
-        };
-    }
-
-    var parceiroFormulario = document.getElementById("parceiro-formulario");
-    if (parceiroFormulario) {
-        parceiroFormulario.onsubmit = function (e) {
-            e.preventDefault();
-            // Adicione a lógica para enviar os dados do formulário aqui
-            console.log("Formulário enviado");
-            document.getElementById("parceiro-modal").style.display = "none";
-        };
-    } else {
-        console.error("Formulário com ID 'parceiro-formulario' não encontrado.");
-    }
 
     //  carrossel
     const carousel = document.querySelector('.carousel');

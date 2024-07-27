@@ -6,6 +6,7 @@ const RegisterController = require('../controllers/RegisterController');
 const UsuarioDAO = require('../models/dao/UsuarioDAO');
 const NoticiaDAO = require('../models/dao/NoticiaDAO');
 const ParceiroDAO = require("../models/dao/ParceiroDAO");
+const EmpregoDAO = require('../models/dao/EmpregoDAO');
 
 let usuarioLogado;
 
@@ -16,14 +17,15 @@ async function getUsuarioLogado(req) {
 router.get('/', async (req, res) => {
   await getUsuarioLogado(req)
 
+  let listaEmpregos = await EmpregoDAO.getLatest(3);
   let listaNoticias = await NoticiaDAO.getLatest(6);
   let listaParceiros = await ParceiroDAO.getLatest(3);
-
+  console.log("empregos", listaEmpregos);
   if (usuarioLogado) {
     res.status(200).render("dashboard", {
       usuarioLogado: usuarioLogado.get(),
       listaNoticias: listaNoticias,
-      listaParceiros: listaParceiros
+      listaParceiros: listaParceiros,
     })
   } else {
     res.status(200).render("dashboard", {
@@ -41,6 +43,9 @@ router.get('/login', async (req, res) => {
     return res.redirect('/');
   }
 });
+
+
+
 
 router.get('/parceiros', async (req, res) => {
   await getUsuarioLogado(req);
@@ -139,7 +144,6 @@ router.post('/parceiros/create', async (req, res) => {
 
   if (usuarioLogado) {
     const { ptitle, pdescription, pcontent } = req.body;
-    console.log(ptitle, pdescription, pcontent);
     try {
       const newParceiro = await ParceiroDAO.create({
         titulo: ptitle, descricao: pdescription, conteudo: pcontent
