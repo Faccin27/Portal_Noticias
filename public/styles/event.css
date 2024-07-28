@@ -11,7 +11,7 @@ body {
     max-width: 900px;
     margin: 20px auto;
     padding: 20px;
-    margin-top: 5%;
+    margin-top: 10dvh;
 }
 .card-header {
     display: flex;

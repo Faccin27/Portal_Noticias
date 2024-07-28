@@ -8,6 +8,7 @@ const NoticiaDAO = require('../models/dao/NoticiaDAO');
 const ParceiroDAO = require("../models/dao/ParceiroDAO");
 const EmpregoDAO = require('../models/dao/EmpregoDAO');
 const EventoDAO = require('../models/dao/EventoDAO');
+const { formatDate, formatDateWithoutTime, formatarData } = require('../utils/dateUtils');
 
 let usuarioLogado;
 
@@ -22,22 +23,35 @@ router.get('/', async (req, res) => {
   let listaEmpregos = await EmpregoDAO.getLatest(3);
   let listaNoticias = await NoticiaDAO.getLatest(6);
   let listaParceiros = await ParceiroDAO.getLatest(3);
+  
+
+  listaEventos = listaEventos.map(evento => ({
+    ...evento.dataValues,
+    dataInicio: formatDate(evento.dataValues.dataInicio),
+    dataFim: formatDate(evento.dataValues.dataFim),
+    dataCriacao: formatDate(evento.dataValues.dataCriacao)
+  }));
+
+  listaParceiros = listaParceiros.map(parceiro => ({
+    ...parceiro.dataValues,
+    data_criacao: formatDateWithoutTime(parceiro.dataValues.data_criacao)
+  }));
+
   if (usuarioLogado) {
     res.status(200).render("dashboard", {
       usuarioLogado: usuarioLogado.get(),
-      listaNoticias: listaNoticias,
-      listaParceiros: listaParceiros,
-      listaEmpregos: listaEmpregos,
-      listaEventos: listaEventos
-    })
+      listaNoticias,
+      listaParceiros,
+      listaEmpregos,
+      listaEventos
+    });
   } else {
     res.status(200).render("dashboard", {
-      listaNoticias: listaNoticias,
-      listaParceiros: listaParceiros,
-      listaEmpregos: listaEmpregos,
-      listaEventos: listaEventos
-
-    })
+      listaNoticias,
+      listaParceiros,
+      listaEmpregos,
+      listaEventos
+    });
   }
 });
 
@@ -53,18 +67,25 @@ router.get('/login', async (req, res) => {
 router.get('/eventos', async (req, res) => {
   await getUsuarioLogado(req);
   let listaEventos = await EventoDAO.getAll();
+  
+  listaEventos = listaEventos.map(evento => ({
+    ...evento.dataValues,
+    dataInicio: formatDate(evento.dataValues.dataInicio),
+    dataFim: formatDate(evento.dataValues.dataFim),
+    dataCriacao: formatDate(evento.dataValues.dataCriacao)
+  }));
 
   if (usuarioLogado) {
     res.status(200).render("all-events", {
       usuarioLogado: usuarioLogado.get(),
-      listaEventos: listaEventos
-    })
+      listaEventos
+    });
   } else {
     res.status(200).render("all-events", {
-      listaEventos: listaEventos
-    })
+      listaEventos
+    });
   }
-})
+});
 
 router.get('/evento/:id', async (req, res) => {
   await getUsuarioLogado(req);
@@ -72,19 +93,25 @@ router.get('/evento/:id', async (req, res) => {
 
   try {
     const evento = await EventoDAO.getById(eventoId);
-
     if (!evento) {
       return res.status(404).render("error", { message: "evento não encontrado" });
     }
 
+    const eventoFormatado = {
+      ...evento.dataValues,
+      dataInicio: formatDate(evento.dataValues.dataInicio),
+      dataFim: formatDate(evento.dataValues.dataFim),
+      dataCriacao: formatDateWithoutTime(evento.dataValues.dataCriacao)
+    };
+
     if (usuarioLogado) {
       res.status(200).render("events", {
         usuarioLogado: usuarioLogado.get(),
-        evento: evento
+        evento: eventoFormatado
       });
     } else {
       res.status(200).render("events", {
-        evento: evento
+        evento: eventoFormatado
       });
     }
   } catch (error) {
@@ -97,17 +124,22 @@ router.get('/empregos', async (req, res) => {
   await getUsuarioLogado(req);
   let listaEmpregos = await EmpregoDAO.getAll();
 
+  listaEmpregos = listaEmpregos.map(emprego => ({
+    ...emprego.dataValues,
+    data_criacao: formatDateWithoutTime(emprego.dataValues.data_criacao)
+  }));
+
   if (usuarioLogado) {
     res.status(200).render("all-jobs", {
       usuarioLogado: usuarioLogado.get(),
-      listaEmpregos: listaEmpregos
-    })
+      listaEmpregos
+    });
   } else {
     res.status(200).render("all-jobs", {
-      listaEmpregos: listaEmpregos
-    })
+      listaEmpregos
+    });
   }
-})
+});
 
 router.get('/emprego/:id', async (req, res) => {
   await getUsuarioLogado(req);
@@ -123,11 +155,11 @@ router.get('/emprego/:id', async (req, res) => {
     if (usuarioLogado) {
       res.status(200).render("jobs", {
         usuarioLogado: usuarioLogado.get(),
-        emprego: emprego
+        emprego
       });
     } else {
       res.status(200).render("jobs", {
-        emprego: emprego
+        emprego
       });
     }
   } catch (error) {
@@ -143,11 +175,11 @@ router.get('/parceiros', async (req, res) => {
   if (usuarioLogado) {
     res.status(200).render("all-partners", {
       usuarioLogado: usuarioLogado.get(),
-      listaParceiros: listaParceiros
+      listaParceiros
     })
   } else {
     res.status(200).render("all-partners", {
-      listaParceiros: listaParceiros
+      listaParceiros
     })
   }
 });
@@ -159,11 +191,11 @@ router.get('/noticias', async (req, res) => {
   if (usuarioLogado) {
     res.status(200).render("all-news", {
       usuarioLogado: usuarioLogado.get(),
-      listaNoticias: listaNoticias
+      listaNoticias
     });
   } else {
     res.status(200).render("all-news", {
-      listaNoticias: listaNoticias
+      listaNoticias
     });
   }
 });
@@ -179,14 +211,21 @@ router.get('/noticia/:id', async (req, res) => {
       return res.status(404).render("error", { message: "Notícia não encontrada" });
     }
 
+    const noticiaFormatada = {
+      ...noticia,
+      data_criacao: noticia.data_criacao ? formatarData(noticia.data_criacao) : 'Data não disponível',
+      createdAt: noticia.createdAt ? formatarData(noticia.createdAt) : 'Data não disponível',
+      updatedAt: noticia.updatedAt ? formatarData(noticia.updatedAt) : 'Data não disponível'
+    };
+
     if (usuarioLogado) {
       res.status(200).render("news", {
         usuarioLogado: usuarioLogado.get(),
-        noticia: noticia
+        noticia: noticiaFormatada
       });
     } else {
       res.status(200).render("news", {
-        noticia: noticia
+        noticia: noticiaFormatada
       });
     }
   } catch (error) {
@@ -200,8 +239,9 @@ router.get('/register', async (req, res) => {
 
   if (!usuarioLogado) {
     res.status(200).render("register")
-  } else { res.redirect('/') }
-
+  } else { 
+    res.redirect('/') 
+  }
 });
 
 router.post('/register', RegisterController.register);
@@ -215,7 +255,11 @@ router.post('/noticias/create', async (req, res) => {
     const { title, description, content, category } = req.body;
     try {
       const newNoticia = await NoticiaDAO.create({
-        idUsuario: usuarioLogado.id, categoria: category, titulo: title, descricao: description, conteudo: content
+        idUsuario: usuarioLogado.id, 
+        categoria: category, 
+        titulo: title, 
+        descricao: description, 
+        conteudo: content
       });
       res.status(201).redirect("/noticias");
     } catch (error) {
@@ -227,7 +271,6 @@ router.post('/noticias/create', async (req, res) => {
   }
 });
 
-
 // criar novo parceiro
 router.post('/parceiros/create', async (req, res) => {
   await getUsuarioLogado(req);
@@ -236,7 +279,9 @@ router.post('/parceiros/create', async (req, res) => {
     const { ptitle, pdescription, pcontent } = req.body;
     try {
       const newParceiro = await ParceiroDAO.create({
-        titulo: ptitle, descricao: pdescription, conteudo: pcontent
+        titulo: ptitle, 
+        descricao: pdescription, 
+        conteudo: pcontent
       });
       res.status(201).redirect("/parceiros");
     } catch (error) {
@@ -247,12 +292,9 @@ router.post('/parceiros/create', async (req, res) => {
   }
 })
 
-
 router.get('/deslogar', (req, res) => {
   res.clearCookie('tokenJWT');
   return res.redirect(301, '/');
 });
-
-
 
 module.exports = router;
