@@ -6,6 +6,7 @@ const RegisterController = require('../controllers/RegisterController');
 const UsuarioDAO = require('../models/dao/UsuarioDAO');
 const NoticiaDAO = require('../models/dao/NoticiaDAO');
 const ParceiroDAO = require("../models/dao/ParceiroDAO");
+const EmpregoDAO = require('../models/dao/EmpregoDAO');
 
 let usuarioLogado;
 
@@ -16,6 +17,7 @@ async function getUsuarioLogado(req) {
 router.get('/', async (req, res) => {
   await getUsuarioLogado(req)
 
+  let listaEmpregos = await EmpregoDAO.getLatest(3);
   let listaNoticias = await NoticiaDAO.getLatest(6);
   let listaParceiros = await ParceiroDAO.getLatest(3);
   if (usuarioLogado) {
@@ -23,11 +25,13 @@ router.get('/', async (req, res) => {
       usuarioLogado: usuarioLogado.get(),
       listaNoticias: listaNoticias,
       listaParceiros: listaParceiros,
+      listaEmpregos: listaEmpregos
     })
   } else {
     res.status(200).render("dashboard", {
       listaNoticias: listaNoticias,
-      listaParceiros: listaParceiros
+      listaParceiros: listaParceiros,
+      listaEmpregos: listaEmpregos
     })
   }
 });
@@ -121,19 +125,21 @@ router.post('/noticias/create', async (req, res) => {
 
   if (usuarioLogado) {
     const { title, description, content, category } = req.body;
+    console.log(req.body); // Adicione este log para verificar os dados recebidos
     try {
       const newNoticia = await NoticiaDAO.create({
         idUsuario: usuarioLogado.id, categoria: category, titulo: title, descricao: description, conteudo: content
       });
       res.status(201).redirect("/noticias");
-
     } catch (error) {
-      res.status(500).json({ error: 'erro ao criar postagem' })
+      console.error('Erro ao criar notícia:', error);
+      res.status(500).json({ error: 'erro ao criar postagem' });
     }
   } else {
     res.redirect('/');
   }
 });
+
 
 // criar novo parceiro
 router.post('/parceiros/create', async (req, res) => {

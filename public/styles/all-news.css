@@ -71,8 +71,17 @@
     margin: 0.5rem 0;
   }
   .news-description {
-    font-size: 1rem;
-    color: #555;
+    flex-grow: 1;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Número de linhas visíveis */
+    line-clamp: 3; /* Propriedade padrão para compatibilidade */
+    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0)); /* Gradiente para desvanecer a última linha */
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0)); /* Propriedade padrão para compatibilidade */
   }
   .read-more {
     display: flex;

@@ -4,16 +4,17 @@ const Noticia = require('../Noticia');
 
 class NoticiaDAO {
   // Cria e persiste uma notícia
-  async create({ titulo, descricao, conteudo }) {
+  async create({ idUsuario, categoria, titulo, descricao, conteudo }) {
     let newNoticia;
     try {
-      newNoticia = await Noticia.create({ titulo, descricao, conteudo });
+      newNoticia = await Noticia.create({ idUsuario, categoria, titulo, descricao, conteudo });
     } catch (error) {
       console.error('Erro ao criar notícia:', error);
     } finally {
       return newNoticia; // Retorne a notícia criada
     }
   }
+  
 
   // buscar todas as noticias e inserindo nome do autor
   async getAll() {
