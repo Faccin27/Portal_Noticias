@@ -308,6 +308,8 @@ button:hover {
   margin-bottom: 0.5em;
 }
 
+
+
 .news-description {
   flex-grow: 1;
   font-size: 0.9rem;
@@ -409,6 +411,14 @@ button:hover {
   font-size: 1rem;
   color: #555;
   margin-bottom: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Número de linhas visíveis */
+  line-clamp: 3; /* Propriedade padrão para compatibilidade */
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0)); /* Gradiente para desvanecer a última linha */
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0)); /* Propriedade padrão para compatibilidade */
 }
 
 .read-more-g {
@@ -566,6 +576,14 @@ button:hover {
 .job-title {
   font-size: 1.25rem;
   margin: 0.5rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Número de linhas a serem exibidas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2; /* Altura da linha */
+  max-height: 2.4em; /* Deve ser igual a line-height * number of lines */
+  margin-bottom: 0.5em;
 }
 
 .job-company {
@@ -578,6 +596,14 @@ button:hover {
   font-size: 1rem;
   color: #555;
   margin-bottom: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Número de linhas visíveis */
+  line-clamp: 3; /* Propriedade padrão para compatibilidade */
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0)); /* Gradiente para desvanecer a última linha */
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0)); /* Propriedade padrão para compatibilidade */
 }
 
 .read-more-g {
@@ -594,6 +620,95 @@ button:hover {
 
 @media (max-width: 768px) {
   .jobs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.events {
+  margin: 0 auto;
+  max-width: 1200px;
+  margin-top: 5rem;
+}
+
+.events-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.events-header h2 {
+  font-size: 1.5rem;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.event-card {
+  background: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.event-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.event-body {
+  padding: 1rem;
+}
+
+.event-title {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Número de linhas a serem exibidas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2; /* Altura da linha */
+  max-height: 2.4em; /* Deve ser igual a line-height * number of lines */
+  margin-bottom: 0.5em;
+}
+
+.event-date {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.event-description {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Número de linhas visíveis */
+  line-clamp: 3; /* Propriedade padrão para compatibilidade */
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0)); /* Gradiente para desvanecer a última linha */
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0)); /* Propriedade padrão para compatibilidade */
+}
+
+.read-more-g {
+  display: flex;
+  align-items: center;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.read-more-icon-g {
+  margin-left: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .events-grid {
     grid-template-columns: 1fr;
   }
 }

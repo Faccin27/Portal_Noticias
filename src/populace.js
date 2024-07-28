@@ -2,6 +2,7 @@ const Usuario = require('./models/Usuario');
 const Noticia = require('./models/Noticia');
 const Parceiro = require('./models/Parceiro');
 const Emprego = require('./models/Emprego');
+const Evento = require('./models/Evento');
 
 // Sincronize os modelos com o banco de dados
 async function syncModels() {
@@ -9,6 +10,7 @@ async function syncModels() {
   await Noticia.sync({ force: true });
   await Parceiro.sync({ force: true });
   await Emprego.sync({ force: true });
+  await Evento.sync({ force: true });
 }
 
 // Função para popular o banco de dados com dados de exemplo
@@ -77,6 +79,75 @@ async function populate() {
     { idUsuario: usuarios[10].id, nomeEmpresa: 'CyberShield Segurança', titulo: 'Analista de Segurança Cibernética', conteudo: 'Procuramos um analista de segurança cibernética para proteger nossos sistemas e clientes contra ameaças digitais.', localizacao: 'Recife', tipoEmprego: 'Tempo Integral', salario: 9500, requisitos: 'Formação em Segurança da Informação ou área relacionada, certificações relevantes (CISSP, CEH).', beneficios: 'Home office flexível, plano de saúde, subsídio para certificações.', contato: 'security-jobs@cybershield.com', data_criacao: new Date('2024-06-15') }
   ]);
 
+  await Evento.bulkCreate([
+    {
+      nomeEvento: 'Workshop de Desenvolvimento Web',
+      descricao: 'Um workshop intensivo de desenvolvimento web cobrindo HTML, CSS, JavaScript e frameworks modernos.',
+      localizacao: 'Auditório Principal',
+      dataInicio: new Date('2024-08-15T09:00:00'),
+      dataFim: new Date('2024-08-15T17:00:00'),
+      tipoEvento: 'Workshop',
+      preco: 100.00,
+      imagem: 'https://t3.ftcdn.net/jpg/05/31/71/02/360_F_531710260_ByieqNe7Ut6QBHgIR7xgdsxH7gICrHr1.jpg',
+      linkInscricao: 'https://t3.ftcdn.net/jpg/05/31/71/02/360_F_531710260_ByieqNe7Ut6QBHgIR7xgdsxH7gICrHr1.jpg'
+    },
+    {
+      nomeEvento: 'Seminário de Inteligência Artificial',
+      descricao: 'Discussões sobre os avanços mais recentes em IA e como aplicar técnicas de aprendizado de máquina em problemas do mundo real.',
+      localizacao: 'Centro de Convenções',
+      dataInicio: new Date('2024-09-10T10:00:00'),
+      dataFim: new Date('2024-09-10T16:00:00'),
+      tipoEvento: 'Seminário',
+      preco: 150.00,
+      imagem: 'https://t3.ftcdn.net/jpg/05/31/71/02/360_F_531710260_ByieqNe7Ut6QBHgIR7xgdsxH7gICrHr1.jpg',
+      linkInscricao: 'https://t3.ftcdn.net/jpg/05/31/71/02/360_F_531710260_ByieqNe7Ut6QBHgIR7xgdsxH7gICrHr1.jpg'
+    },
+    {
+      nomeEvento: 'Conferência de Segurança Cibernética',
+      descricao: 'Conferência anual sobre as últimas tendências e ameaças em segurança cibernética.',
+      localizacao: 'Sala de Conferências 3',
+      dataInicio: new Date('2024-10-05T14:00:00'),
+      dataFim: new Date('2024-10-05T18:00:00'),
+      tipoEvento: 'Conferência',
+      preco: 200.00,
+      imagem: 'https://t3.ftcdn.net/jpg/05/31/71/02/360_F_531710260_ByieqNe7Ut6QBHgIR7xgdsxH7gICrHr1.jpg',
+      linkInscricao: 'https://t3.ftcdn.net/jpg/05/31/71/02/360_F_531710260_ByieqNe7Ut6QBHgIR7xgdsxH7gICrHr1.jpg'
+    },
+    {
+      nomeEvento: 'Hackathon de Inovação',
+      descricao: 'Um evento de hackathon focado em criar soluções inovadoras para problemas reais, com prêmios e mentorias.',
+      localizacao: 'Centro de Inovação',
+      dataInicio: new Date('2024-11-12T08:00:00'),
+      dataFim: new Date('2024-11-12T20:00:00'),
+      tipoEvento: 'Hackathon',
+      preco: 75.00,
+      imagem: 'https://t3.ftcdn.net/jpg/05/31/71/02/360_F_531710260_ByieqNe7Ut6QBHgIR7xgdsxH7gICrHr1.jpg',
+      linkInscricao: 'https://t3.ftcdn.net/jpg/05/31/71/02/360_F_531710260_ByieqNe7Ut6QBHgIR7xgdsxH7gICrHr1.jpg'
+    },
+    {
+      nomeEvento: 'Fórum de Desenvolvimento Sustentável',
+      descricao: 'Discussões e workshops sobre práticas sustentáveis no desenvolvimento de projetos e tecnologias.',
+      localizacao: 'Auditório Verde',
+      dataInicio: new Date('2024-11-25T09:00:00'),
+      dataFim: new Date('2024-11-25T15:00:00'),
+      tipoEvento: 'Fórum',
+      preco: 120.00,
+      imagem: 'https://t3.ftcdn.net/jpg/05/31/71/02/360_F_531710260_ByieqNe7Ut6QBHgIR7xgdsxH7gICrHr1.jpg',
+      linkInscricao: 'https://t3.ftcdn.net/jpg/05/31/71/02/360_F_531710260_ByieqNe7Ut6QBHgIR7xgdsxH7gICrHr1.jpg'
+    },
+    {
+      nomeEvento: 'Mesa Redonda sobre Transformação Digital',
+      descricao: 'Evento com especialistas discutindo as tendências e desafios da transformação digital nas empresas.',
+      localizacao: 'Sala de Reuniões 2',
+      dataInicio: new Date('2024-12-08T13:00:00'),
+      dataFim: new Date('2024-12-08T17:00:00'),
+      tipoEvento: 'Mesa Redonda',
+      preco: 180.00,
+      imagem: 'https://t3.ftcdn.net/jpg/05/31/71/02/360_F_531710260_ByieqNe7Ut6QBHgIR7xgdsxH7gICrHr1.jpg',
+      linkInscricao: 'https://t3.ftcdn.net/jpg/05/31/71/02/360_F_531710260_ByieqNe7Ut6QBHgIR7xgdsxH7gICrHr1.jpg'
+    }
+  ]);
+  
   console.log('Dados de exemplo inseridos com sucesso.');
 }
 

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{emprego.nomeEmpresa}}</title>
+    <link rel="stylesheet" href="/styles/event.css">
+</head>
+
+<body>
+    <header>
+        {{> navbar}}
+    </header>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{evento.nomeEvento}}</h3>
+            <span class="badge">Novo</span>
+        </div>
+        
+        <p class="card-description">{{evento.descricao}}</p>
+        <div class="card-content">
+            <div class="event-image">
+                <img src="{{evento.imagem}}" alt="{{this.nomeEvento}}">
+            </div>
+            <div class="event-details">
+                <div class="form-group">
+                    <label for="event-name">{{evento.nomeEvento}}</label>
+                    <input type="text" id="event-name" value="Publicado em: {{evento.dataCriacao}}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="event-description">Descrição</label>
+                    <textarea id="event-description"
+                        readonly>{{evento.descricao}}</textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="event-location">Localização</label>
+                        <input type="text" id="event-location" value="{{evento.localizacao}}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-type">Tipo de Evento</label>
+                        <input type="text" id="event-type" value="{{evento.tipoEvento}}" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="event-start-date">Data de Início</label>
+                        <input type="text" id="event-start-date" value="{{evento.dataInicio}}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-end-date">Data de Término</label>
+                        <input type="text" id="event-end-date" value="{{evento.dataFim}}" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="event-price">Preço</label>
+                    <input type="text" id="event-price" value="R$: {{evento.preco}}" readonly>
+                </div>
+                <a href="{{evento.linkInscricao}}" class="register-button">Inscrever-se</a>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

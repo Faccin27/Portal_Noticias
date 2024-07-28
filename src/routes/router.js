@@ -7,6 +7,7 @@ const UsuarioDAO = require('../models/dao/UsuarioDAO');
 const NoticiaDAO = require('../models/dao/NoticiaDAO');
 const ParceiroDAO = require("../models/dao/ParceiroDAO");
 const EmpregoDAO = require('../models/dao/EmpregoDAO');
+const EventoDAO = require('../models/dao/EventoDAO');
 
 let usuarioLogado;
 
@@ -17,6 +18,7 @@ async function getUsuarioLogado(req) {
 router.get('/', async (req, res) => {
   await getUsuarioLogado(req)
 
+  let listaEventos = await EventoDAO.getLatest(3);
   let listaEmpregos = await EmpregoDAO.getLatest(3);
   let listaNoticias = await NoticiaDAO.getLatest(6);
   let listaParceiros = await ParceiroDAO.getLatest(3);
@@ -25,13 +27,16 @@ router.get('/', async (req, res) => {
       usuarioLogado: usuarioLogado.get(),
       listaNoticias: listaNoticias,
       listaParceiros: listaParceiros,
-      listaEmpregos: listaEmpregos
+      listaEmpregos: listaEmpregos,
+      listaEventos: listaEventos
     })
   } else {
     res.status(200).render("dashboard", {
       listaNoticias: listaNoticias,
       listaParceiros: listaParceiros,
-      listaEmpregos: listaEmpregos
+      listaEmpregos: listaEmpregos,
+      listaEventos: listaEventos
+
     })
   }
 });
@@ -45,6 +50,48 @@ router.get('/login', async (req, res) => {
   }
 });
 
+router.get('/eventos', async (req, res) => {
+  await getUsuarioLogado(req);
+  let listaEventos = await EventoDAO.getAll();
+
+  if (usuarioLogado) {
+    res.status(200).render("all-events", {
+      usuarioLogado: usuarioLogado.get(),
+      listaEventos: listaEventos
+    })
+  } else {
+    res.status(200).render("all-events", {
+      listaEventos: listaEventos
+    })
+  }
+})
+
+router.get('/evento/:id', async (req, res) => {
+  await getUsuarioLogado(req);
+  const eventoId = req.params.id;
+
+  try {
+    const evento = await EventoDAO.getById(eventoId);
+
+    if (!evento) {
+      return res.status(404).render("error", { message: "evento não encontrado" });
+    }
+
+    if (usuarioLogado) {
+      res.status(200).render("events", {
+        usuarioLogado: usuarioLogado.get(),
+        evento: evento
+      });
+    } else {
+      res.status(200).render("events", {
+        evento: evento
+      });
+    }
+  } catch (error) {
+    console.error('Erro ao buscar evento:', error);
+    res.status(500).render("error", { message: "Erro ao carregar o evento" });
+  }
+});
 
 router.get('/empregos', async (req, res) => {
   await getUsuarioLogado(req);
@@ -84,8 +131,8 @@ router.get('/emprego/:id', async (req, res) => {
       });
     }
   } catch (error) {
-    console.error('Erro ao buscar notícia:', error);
-    res.status(500).render("error", { message: "Erro ao carregar a notícia" });
+    console.error('Erro ao buscar emprego:', error);
+    res.status(500).render("error", { message: "Erro ao carregar a emprego" });
   }
 });
 
@@ -94,12 +141,12 @@ router.get('/parceiros', async (req, res) => {
   let listaParceiros = await ParceiroDAO.getAll();
 
   if (usuarioLogado) {
-    res.status(200).render("partners", {
+    res.status(200).render("all-partners", {
       usuarioLogado: usuarioLogado.get(),
       listaParceiros: listaParceiros
     })
   } else {
-    res.status(200).render("partners", {
+    res.status(200).render("all-partners", {
       listaParceiros: listaParceiros
     })
   }
@@ -166,7 +213,6 @@ router.post('/noticias/create', async (req, res) => {
 
   if (usuarioLogado) {
     const { title, description, content, category } = req.body;
-    console.log(req.body); // Adicione este log para verificar os dados recebidos
     try {
       const newNoticia = await NoticiaDAO.create({
         idUsuario: usuarioLogado.id, categoria: category, titulo: title, descricao: description, conteudo: content
