@@ -46,7 +46,48 @@ router.get('/login', async (req, res) => {
 });
 
 
+router.get('/empregos', async (req, res) => {
+  await getUsuarioLogado(req);
+  let listaEmpregos = await EmpregoDAO.getAll();
 
+  if (usuarioLogado) {
+    res.status(200).render("all-jobs", {
+      usuarioLogado: usuarioLogado.get(),
+      listaEmpregos: listaEmpregos
+    })
+  } else {
+    res.status(200).render("all-jobs", {
+      listaEmpregos: listaEmpregos
+    })
+  }
+})
+
+router.get('/emprego/:id', async (req, res) => {
+  await getUsuarioLogado(req);
+  const empregoId = req.params.id;
+
+  try {
+    const emprego = await EmpregoDAO.getById(empregoId);
+
+    if (!emprego) {
+      return res.status(404).render("error", { message: "Emprego não encontrada" });
+    }
+
+    if (usuarioLogado) {
+      res.status(200).render("jobs", {
+        usuarioLogado: usuarioLogado.get(),
+        emprego: emprego
+      });
+    } else {
+      res.status(200).render("jobs", {
+        emprego: emprego
+      });
+    }
+  } catch (error) {
+    console.error('Erro ao buscar notícia:', error);
+    res.status(500).render("error", { message: "Erro ao carregar a notícia" });
+  }
+});
 
 router.get('/parceiros', async (req, res) => {
   await getUsuarioLogado(req);
@@ -62,7 +103,7 @@ router.get('/parceiros', async (req, res) => {
       listaParceiros: listaParceiros
     })
   }
-})
+});
 
 router.get('/noticias', async (req, res) => {
   await getUsuarioLogado(req);

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{emprego.nomeEmpresa}}</title>
+    <link rel="stylesheet" href="/styles/jobs.css">
+</head>
+<body>
+    <header>
+        {{> navbar}}
+    </header>
+    
+    <div class="card">
+        <h1>{{emprego.nomeEmpresa}}</h1>
+        <p>{{emprego.titulo}}</p>
+
+        <h2>Descrição do Cargo</h2>
+        <p>{{emprego.conteudo}}</p>
+
+        <div class="job-details">
+            <div class="job-detail">
+                <h3>Localização</h3>
+                <p>{{emprego.localizacao}}</p>
+            </div>
+            <div class="job-detail">
+                <h3>Tipo de Emprego</h3>
+                <p>{{emprego.tipoEmprego}}</p>
+            </div>
+            <div class="job-detail">
+                <h3>Faixa Salarial</h3>
+                <p>R$: {{emprego.salario}}</p>
+            </div>
+            <div class="job-detail">
+                <h3>Tipo de Cargo</h3>
+                <p>A definir</p>
+            </div>
+        </div>
+
+        <h2>Requisitos</h2>
+        <ul>
+           <li>{{emprego.requisitos}}</li>
+        </ul>
+
+        <h2>Benefícios</h2>
+        <ul>
+            <li>{{emprego.beneficios}}</li>
+        </ul>
+
+        <h2>Como se Candidatar</h2>
+        <p>Se você estiver interessado nesta oportunidade, envie seu currículo e carta de apresentação para {{emprego.contato}}</p>
+    </div>
+
+
+    
+</body>
+</html>
