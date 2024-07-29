@@ -290,7 +290,37 @@ router.post('/parceiros/create', async (req, res) => {
   } else {
     res.redirect('/')
   }
-})
+});
+//postar emprego
+router.post('/empregos/create', async (req, res) => {
+  await getUsuarioLogado(req);
+
+  if (usuarioLogado) {
+    const { nomeEmpresa, titulo, conteudo, localizacao, tipoEmprego, salario, requisitos, beneficios,  contato} = req.body;
+    try {
+      const newEmprego = await EmpregoDAO.create({
+        idUsuario: usuarioLogado.id, 
+        nomeEmpresa: nomeEmpresa,
+        titulo: titulo,
+        conteudo: conteudo,
+        localizacao: localizacao,
+        tipoEmprego: tipoEmprego,
+        salario: salario,
+        requisitos: requisitos,
+        beneficios: beneficios,
+        contato: contato
+      });
+      res.status(201).redirect("/empregos");
+    } catch (error) {
+      console.error('Erro ao criar emprego:', error);
+      res.status(500).json({ error: 'erro ao criar emprego' });
+    }
+  } else {
+    res.redirect('/');
+  }
+});
+
+
 
 router.get('/deslogar', (req, res) => {
   res.clearCookie('tokenJWT');

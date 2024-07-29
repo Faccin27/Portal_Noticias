@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Site de Notícias</title>
-  <link rel="stylesheet" href="styles/dashboard.css">
+  <link rel="stylesheet" href="/styles/dashboard.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <script src="scripts/dashboard.js" defer></script>
 </head>
@@ -214,12 +214,15 @@
         </nav>
       </div>
     </div>
-    <button id="openModal">Adicionar Notícia</button>
-    <button id="openPartnerModal">Adicionar Parceiro</button>
+    <div class="dashboard-buttons">
+      <button id="openModal" class="dashboard-button">Adicionar Notícia</button>
+      <button id="openPartnerModal" class="dashboard-button">Adicionar Parceiro</button>
+      <button id="openJobModal" class="dashboard-button">Adicionar Vaga de Emprego</button>
+    </div>
   </aside>
   </div>
 
-  <form method="POST" action="/noticias/create">
+<form method="POST" action="/noticias/create">
     <div id="addNewsModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
@@ -254,6 +257,59 @@
       </div>
     </div>
   </form>
+
+
+  <form method="POST" action="/empregos/create">
+    <div id="addJobModal" class="modal job-modal">
+      <div class="modal-content job-modal-content">
+        <div class="modal-header job-modal-header">
+          <h2 class="modal-title">Adicionar Nova Oportunidade de Emprego</h2>
+          <span class="close">&times;</span>
+        </div>
+        <div class="form-group">
+          <label for="nomeEmpresa">Nome da Empresa:</label>
+          <input type="text" id="nomeEmpresa" name="nomeEmpresa" required>
+        </div>
+        <div class="form-group">
+          <label for="titulo">Título da Vaga:</label>
+          <input type="text" id="titulo" name="titulo" required>
+        </div>
+        <div class="form-group">
+          <label for="conteudo">Descrição da Vaga:</label>
+          <textarea id="conteudo" name="conteudo" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="localizacao">Localização:</label>
+          <input type="text" id="localizacao" name="localizacao" required>
+        </div>
+        <div class="form-group">
+          <label for="tipoEmprego">Tipo de Emprego:</label>
+          <select id="tipoEmprego" name="tipoEmprego" required>
+            <option value="">Selecione o tipo</option>
+            <option value="Tempo Integral">Tempo Integral</option>
+            <option value="Meio Período">Meio Período</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="salario">Salário:</label>
+          <input type="number" id="salario" name="salario" required min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label for="requisitos">Requisitos:</label>
+          <textarea id="requisitos" name="requisitos" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="beneficios">Benefícios:</label>
+          <textarea id="beneficios" name="beneficios" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="contato">Contato:</label>
+          <input type="text" id="contato" name="contato" required>
+        </div>
+        <button type="submit" class="job-submit-btn">Adicionar Vaga</button>
+  </form>
+  </div>
+  </div>
 
 
 

@@ -1,23 +1,46 @@
 console.log("Script dashboard carregado!");
 
 document.addEventListener('DOMContentLoaded', function () {
-    // modal notícias
+    function lockScroll() {
+        document.body.style.overflow = 'hidden';
+        document.body.style.paddingRight = getScrollbarWidth() + 'px'; // Evita o salto da página
+    }
+
+    function unlockScroll() {
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+    }
+
+    // Função para obter a largura da barra de rolagem
+    function getScrollbarWidth() {
+        const outer = document.createElement('div');
+        outer.style.visibility = 'hidden';
+        outer.style.overflow = 'scroll';
+        document.body.appendChild(outer);
+        const inner = document.createElement('div');
+        outer.appendChild(inner);
+        const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+        outer.parentNode.removeChild(outer);
+        return scrollbarWidth;
+    }
+
+    // Função para abrir modal
+    function openModal(modal) {
+        modal.style.display = "block";
+        lockScroll();
+    }
+
+    // Função para fechar modal
+    function closeModal(modal) {
+        modal.style.display = "none";
+        unlockScroll();
+    }
+
+    // Modal de notícias
     const newsModal = document.getElementById("addNewsModal");
     const openNewsBtn = document.getElementById("openModal");
     const closeNewsBtn = newsModal.querySelector(".close");
 
-
-    // abre modal
-    function openModal(modal) {
-        modal.style.display = "block";
-    }
-
-    // fecha 
-    function closeModal(modal) {
-        modal.style.display = "none";
-    }
-
-    // Event listeners para o modal de notícias
     if (openNewsBtn) {
         openNewsBtn.addEventListener('click', function () {
             openModal(newsModal);
@@ -30,37 +53,50 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Modal de parceiros
+    const partnerModal = document.getElementById("addPartnerModal");
+    const openPartnerBtn = document.getElementById("openPartnerModal");
+    const closePartnerBtn = partnerModal.querySelector(".close");
 
+    if (openPartnerBtn) {
+        openPartnerBtn.addEventListener('click', function () {
+            openModal(partnerModal);
+        });
+    }
 
+    if (closePartnerBtn) {
+        closePartnerBtn.addEventListener('click', function () {
+            closeModal(partnerModal);
+        });
+    }
+
+    // Modal de empregos
+    const jobModal = document.getElementById("addJobModal");
+    const openJobBtn = document.getElementById("openJobModal");
+    const closeJobBtn = jobModal.querySelector(".close");
+
+    if (openJobBtn) {
+        openJobBtn.addEventListener('click', function () {
+            openModal(jobModal);
+        });
+    }
+
+    if (closeJobBtn) {
+        closeJobBtn.addEventListener('click', function () {
+            closeModal(jobModal);
+        });
+    }
+
+    // Fechar modais ao clicar fora deles
     window.addEventListener('click', function (event) {
         if (event.target == newsModal) {
             closeModal(newsModal);
+        } else if (event.target == partnerModal) {
+            closeModal(partnerModal);
+        } else if (event.target == jobModal) {
+            closeModal(jobModal);
         }
     });
-
-    var modal = document.getElementById("addPartnerModal");
-    var btn = document.getElementById("openPartnerModal");
-    var span = modal.querySelector(".close");
-  
-    btn.onclick = function() {
-      modal.style.display = "block";
-    }
-  
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-  
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
-
-    // depurar
-    console.log("Botão de notícias:", openNewsBtn);
-    console.log("Modal de notícias:", newsModal);
-
-
 
     //  carrossel
     const carousel = document.querySelector('.carousel');
