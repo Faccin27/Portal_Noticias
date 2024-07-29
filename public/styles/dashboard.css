@@ -915,9 +915,25 @@ background-color: #c53030;
 }
 
 
+.event-modal-content{
+ 
+    background-color: #fefefe;
+    margin: 10dvh auto; /* Centraliza o modal verticalmente */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Ajuste a largura do modal */
+    max-width: 900px; /* Defina um máximo para a largura */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border-radius: 5px; /* Cantos arredondados */
+    height: auto; /* Ajusta a altura automaticamente */
+    max-height: 80vh; /* Define uma altura máxima, útil para rolar se necessário */
+    overflow-y: auto; /* Permite rolar verticalmente se o conteúdo for maior que a altura máxima */
+  
+}
 
 /* Removendo quaisquer margens ou paddings que possam afetar o alinhamento */
 #openModal, #openPartnerModal, #openJobModal {
 margin: 0;
 padding: 10px 15px;
 }
+

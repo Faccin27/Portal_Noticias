@@ -20,6 +20,7 @@ router.get('/', async (req, res) => {
   await getUsuarioLogado(req)
 
   let listaEventos = await EventoDAO.getLatest(3);
+  console.log('listaEventos:', listaEventos);
   let listaEmpregos = await EmpregoDAO.getLatest(3);
   let listaNoticias = await NoticiaDAO.getLatest(6);
   let listaParceiros = await ParceiroDAO.getLatest(3);
@@ -320,6 +321,33 @@ router.post('/empregos/create', async (req, res) => {
   }
 });
 
+//postar evento
+router.post('/eventos/create', async (req, res) => {
+  await getUsuarioLogado(req);
+
+  if (usuarioLogado) {
+    const {nomeEvento, descricao, localizacao, dataInicio, dataFim, tipoEvento, preco, imagem, linkInscricao} = req.body;
+    try {
+      const newEvento = await EventoDAO.create({
+        nomeEvento: nomeEvento,
+        descricao: descricao,
+        localizacao: localizacao,
+        dataInicio: dataInicio,
+        dataFim: dataFim,
+        tipoEvento: tipoEvento,
+        preco: preco,
+        imagem: imagem,
+        linkInscricao: linkInscricao
+      });
+      res.status(201).redirect("/eventos");
+    } catch (error) {
+      console.error('Erro ao criar evento:', error);
+      res.status(500).json({ error: 'erro ao criar evento' });
+    }
+  } else {
+    res.redirect('/');
+  }
+});
 
 
 router.get('/deslogar', (req, res) => {

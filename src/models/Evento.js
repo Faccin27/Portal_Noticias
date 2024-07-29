@@ -2,7 +2,9 @@
 const db = require('../config/database');
 const { Model, DataTypes } = require('sequelize');
 
-class Evento extends Model {}
+class Evento extends Model {
+    
+}
 
 // Inicializando a classe Evento com o esquema do banco de dados
 Evento.init({

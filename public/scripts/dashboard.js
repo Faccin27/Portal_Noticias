@@ -3,7 +3,7 @@ console.log("Script dashboard carregado!");
 document.addEventListener('DOMContentLoaded', function () {
     function lockScroll() {
         document.body.style.overflow = 'hidden';
-        document.body.style.paddingRight = getScrollbarWidth() + 'px'; // Evita o salto da página
+        document.body.style.paddingRight = getScrollbarWidth() + 'px';
     }
 
     function unlockScroll() {
@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.style.paddingRight = '';
     }
 
-    // Função para obter a largura da barra de rolagem
     function getScrollbarWidth() {
         const outer = document.createElement('div');
         outer.style.visibility = 'hidden';
@@ -24,81 +23,47 @@ document.addEventListener('DOMContentLoaded', function () {
         return scrollbarWidth;
     }
 
-    // Função para abrir modal
     function openModal(modal) {
         modal.style.display = "block";
         lockScroll();
     }
 
-    // Função para fechar modal
     function closeModal(modal) {
         modal.style.display = "none";
         unlockScroll();
     }
 
-    // Modal de notícias
-    const newsModal = document.getElementById("addNewsModal");
-    const openNewsBtn = document.getElementById("openModal");
-    const closeNewsBtn = newsModal.querySelector(".close");
+    function setupModal(modalId, openBtnId) {
+        const modal = document.getElementById(modalId);
+        const openBtn = document.getElementById(openBtnId);
+        const closeBtn = modal.querySelector(".close");
 
-    if (openNewsBtn) {
-        openNewsBtn.addEventListener('click', function () {
-            openModal(newsModal);
-        });
-    }
-
-    if (closeNewsBtn) {
-        closeNewsBtn.addEventListener('click', function () {
-            closeModal(newsModal);
-        });
-    }
-
-    // Modal de parceiros
-    const partnerModal = document.getElementById("addPartnerModal");
-    const openPartnerBtn = document.getElementById("openPartnerModal");
-    const closePartnerBtn = partnerModal.querySelector(".close");
-
-    if (openPartnerBtn) {
-        openPartnerBtn.addEventListener('click', function () {
-            openModal(partnerModal);
-        });
-    }
-
-    if (closePartnerBtn) {
-        closePartnerBtn.addEventListener('click', function () {
-            closeModal(partnerModal);
-        });
-    }
-
-    // Modal de empregos
-    const jobModal = document.getElementById("addJobModal");
-    const openJobBtn = document.getElementById("openJobModal");
-    const closeJobBtn = jobModal.querySelector(".close");
-
-    if (openJobBtn) {
-        openJobBtn.addEventListener('click', function () {
-            openModal(jobModal);
-        });
-    }
-
-    if (closeJobBtn) {
-        closeJobBtn.addEventListener('click', function () {
-            closeModal(jobModal);
-        });
-    }
-
-    // Fechar modais ao clicar fora deles
-    window.addEventListener('click', function (event) {
-        if (event.target == newsModal) {
-            closeModal(newsModal);
-        } else if (event.target == partnerModal) {
-            closeModal(partnerModal);
-        } else if (event.target == jobModal) {
-            closeModal(jobModal);
+        if (openBtn) {
+            openBtn.addEventListener('click', function () {
+                openModal(modal);
+            });
         }
-    });
 
-    //  carrossel
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function () {
+                closeModal(modal);
+            });
+        }
+
+        window.addEventListener('click', function (event) {
+            if (event.target == modal) {
+                closeModal(modal);
+            }
+        });
+    }
+
+    // Setup modals
+    setupModal("addNewsModal", "openModal");
+    setupModal("addPartnerModal", "openPartnerModal");
+    setupModal("addJobModal", "openJobModal");
+    setupModal("addEventModal", "openEventModal");
+
+    // Carousel code (unchanged)
     const carousel = document.querySelector('.carousel');
     const items = carousel.querySelectorAll('.carousel-item');
     const prevBtn = document.querySelector('.carousel-nav.prev');
