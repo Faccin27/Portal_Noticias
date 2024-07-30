@@ -3,7 +3,7 @@ const db = require('../config/database');
 const { Model, DataTypes } = require('sequelize');
 
 class Evento extends Model {
-    
+
 }
 
 // Inicializando a classe Evento com o esquema do banco de dados
@@ -22,10 +22,11 @@ Evento.init({
     tipoEvento: { type: DataTypes.STRING, allowNull: false },
     // Preço do ingresso pode ser null
     preco: { type: DataTypes.DECIMAL, allowNull: true },
-    // URL da imagem do evento pode ser null
-    imagem: { type: DataTypes.STRING, allowNull: true },
+    // URL da imagem, pode ser null
+    imagemUrl: { type: DataTypes.STRING, allowNull: true },
     // Link para inscrição ou compra de ingressos pode ser null
     linkInscricao: { type: DataTypes.STRING, allowNull: true },
+
     // Data de criação é preenchida automaticamente com a data e hora atuais
     dataCriacao: {
         type: DataTypes.DATE,

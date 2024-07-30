@@ -4,9 +4,9 @@ const Parceiro = require('../Parceiro');
 
 class ParceiroDAO {
   // Cria e persiste um parceiro
-  async create({ idUsuario, categoria, titulo, descricao, conteudo }) {
+  async create({ idUsuario, categoria, titulo, descricao, conteudo, imagemUrl }) {
     try {
-      const newParceiro = await Parceiro.create({ idUsuario, categoria, titulo, descricao, conteudo });
+      const newParceiro = await Parceiro.create({ idUsuario, categoria, titulo, descricao, conteudo, imagemUrl });
       return newParceiro;
     } catch (error) {
       console.error('Erro ao criar parceiro:', error);

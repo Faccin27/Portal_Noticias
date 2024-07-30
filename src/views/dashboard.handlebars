@@ -19,7 +19,7 @@
       {{#each (limit listaNoticias 5)}}
       <div class="carousel-item">
         <div class="carousel-card">
-          <img src="images/profile.jpg" class="news-image" alt="{{this.titulo}}">
+          <img src="{{this.imagemUrl}}" class="news-image" alt="{{this.titulo}}">
           <div class="news-content">
             <h3 class="news-title">{{this.titulo}}</h3>
             <p class="news-description">{{this.descricao}}</p>
@@ -74,7 +74,7 @@
           <div class="partners-grid">
             {{#each (limit listaParceiros 3)}}
             <div class="partner-card" data-id={{this.id}}>
-              <img src="images/logo.png" class="partner-logo" alt="{{this.nome}}">
+              <img src="{{this.imagemUrl}}" class="news-image">
               <div class="partner-body">
                 <div class="news-category">Parceiros desde: {{this.data_criacao}}</div>
                 <h3 class="partner-name">{{this.titulo}}</h3>
@@ -102,7 +102,7 @@
           <div class="jobs-grid">
             {{#each (limit listaEmpregos 3)}}
             <div class="job-card" data-id={{this.id}}>
-              <img src="images/profile.jpg" class="news-image" alt="{{this.titulo}}">
+              <img src="{{this.imagemUrl}}" class="news-image" alt="{{this.titulo}}">
               <div class="job-body">
                 <div class="news-category">{{this.localizacao}}</div>
                 <h3 class="job-title">{{this.nomeEmpresa}}</h3>
@@ -131,7 +131,7 @@
           <div class="events-grid">
             {{#each (limit listaEventos 3)}}
             <div class="event-card" data-id={{this.id}}>
-              <img src="{{this.imagem}}" class="event-image" alt="{{this.titulo}}">
+              <img src="{{this.imagemUrl}}" class="event-image" alt="{{this.titulo}}">
               <div class="event-body">
                 <p class="event-date">{{this.dataInicio}}</p>
                 <h3 class="event-title">{{this.nomeEvento}}</h3>
@@ -223,49 +223,49 @@
   </aside>
   </div>
 
-<form method="POST" action="/noticias/create" enctype="multipart/form-data">
-  <div id="addNewsModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title">Adicionar Nova Notícia</h2>
-        <span class="close">&times;</span>
-      </div>
+  <form method="POST" action="/noticias/create" enctype="multipart/form-data">
+    <div id="addNewsModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Adicionar Nova Notícia</h2>
+          <span class="close">&times;</span>
+        </div>
 
-      <div class="form-group">
-        <label for="title">Título:</label>
-        <input type="text" id="title" name="title" required maxlength="100">
+        <div class="form-group">
+          <label for="title">Título:</label>
+          <input type="text" id="title" name="title" required maxlength="100">
+        </div>
+        <div class="form-group">
+          <label for="description">Descrição:</label>
+          <textarea id="description" name="description" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="content">Conteúdo:</label>
+          <textarea id="content" name="content" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="category">Categoria:</label>
+          <select id="category" name="category" required>
+            <option value="">Selecione uma categoria</option>
+            <option value="Esportes">Esportes</option>
+            <option value="Negocios">Negócios</option>
+            <option value="Tecnologia">Tecnologia</option>
+            <option value="Entretenimento">Entretenimento</option>
+            <option value="Ciencias">Ciências</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="image">Imagem:</label>
+          <input type="file" id="image" name="image" accept="image/*">
+        </div>
+        <button type="submit">Adicionar Notícia</button>
       </div>
-      <div class="form-group">
-        <label for="description">Descrição:</label>
-        <textarea id="description" name="description" required></textarea>
-      </div>
-      <div class="form-group">
-        <label for="content">Conteúdo:</label>
-        <textarea id="content" name="content" required></textarea>
-      </div>
-      <div class="form-group">
-        <label for="category">Categoria:</label>
-        <select id="category" name="category" required>
-          <option value="">Selecione uma categoria</option>
-          <option value="Esportes">Esportes</option>
-          <option value="Negocios">Negócios</option>
-          <option value="Tecnologia">Tecnologia</option>
-          <option value="Entretenimento">Entretenimento</option>
-          <option value="Ciencias">Ciências</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="image">Imagem:</label>
-        <input type="file" id="image" name="image" accept="image/*">
-      </div>
-      <button type="submit">Adicionar Notícia</button>
     </div>
-  </div>
-</form>
+  </form>
 
 
 
-  <form method="POST" action="/empregos/create">
+  <form method="POST" action="/empregos/create" enctype="multipart/form-data">
     <div id="addJobModal" class="modal job-modal">
       <div class="modal-content job-modal-content">
         <div class="modal-header job-modal-header">
@@ -312,6 +312,10 @@
           <label for="contato">Contato:</label>
           <input type="text" id="contato" name="contato" required>
         </div>
+        <div class="form-group">
+          <label for="image">Imagem:</label>
+          <input type="file" id="image" name="image" accept="image/*">
+        </div>
         <button type="submit" class="job-submit-btn">Adicionar Vaga</button>
   </form>
   </div>
@@ -319,7 +323,7 @@
 
 
 
-  <form method="POST" action="/parceiros/create">
+  <form method="POST" action="/parceiros/create" enctype="multipart/form-data">
     <div id="addPartnerModal" class="modal partner-modal">
       <div class="modal-content partner-modal-content">
         <div class="modal-header partner-modal-header">
@@ -338,13 +342,17 @@
           <label for="partnerContent">Conteúdo:</label>
           <textarea id="partnerContent" name="pcontent" required></textarea>
         </div>
+        <div class="form-group">
+          <label for="image">Imagem:</label>
+          <input type="file" id="image" name="image" accept="image/*">
+        </div>
         <button type="submit" class="partner-submit-btn">Adicionar Parceiro</button>
 
       </div>
     </div>
   </form>
 
-  <form method="POST" action="/eventos/create">
+  <form method="POST" action="/eventos/create" enctype="multipart/form-data">
     <div id="addEventModal" class="modal event-modal">
       <div class="modal-content event-modal-content">
         <div class="modal-header event-modal-header">
@@ -393,6 +401,10 @@
         <div class="form-group">
           <label for="linkInscricao">Link para Inscrição:</label>
           <input type="url" id="linkInscricao" name="linkInscricao" required>
+        </div>
+        <div class="form-group">
+          <label for="image">Imagem:</label>
+          <input type="file" id="image" name="image" accept="image/*">
         </div>
         <button type="submit" class="event-submit-btn">Adicionar Evento</button>
       </div>

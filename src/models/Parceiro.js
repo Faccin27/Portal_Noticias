@@ -12,20 +12,22 @@ class Parceiro extends Model {
 
 // Inicializando a classe Parceiro com o esquema do banco de dados
 Parceiro.init({
-  titulo: { 
-    type: DataTypes.STRING, 
-    allowNull: false 
+  titulo: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
-  descricao: { 
-    type: DataTypes.TEXT, 
-    allowNull: false 
+  descricao: {
+    type: DataTypes.TEXT,
+    allowNull: false
   },
-  conteudo: { 
-    type: DataTypes.TEXT, 
-    allowNull: false 
+  conteudo: {
+    type: DataTypes.TEXT,
+    allowNull: false
   },
-  data_criacao: { 
-    type: DataTypes.DATE, 
+  // URL da imagem, pode ser null
+  imagemUrl: { type: DataTypes.STRING, allowNull: true },
+  data_criacao: {
+    type: DataTypes.DATE,
     allowNull: false,
     defaultValue: DataTypes.NOW
   },

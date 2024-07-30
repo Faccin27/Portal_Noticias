@@ -21,7 +21,7 @@
         <div class="news-grid">
           {{#each listaNoticias}}
           <div class="news-card" data-id="{{this.id}}">
-            <img src="images/profile.jpg" class="news-image" alt="News image">
+              <img src="{{this.imagemUrl}}" class="news-image">
             <div class="news-body">
               <div class="news-category">{{this.categoria}}</div>
               <h3 class="news-title">{{this.titulo}}</h3>

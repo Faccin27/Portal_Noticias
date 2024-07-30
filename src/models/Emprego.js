@@ -40,6 +40,8 @@ Emprego.init({
   beneficios: { type: DataTypes.TEXT, allowNull: false },
   // Contato não pode ser null
   contato: { type: DataTypes.STRING, allowNull: false },
+  // URL da imagem, pode ser null
+  imagemUrl: { type: DataTypes.STRING, allowNull: true },
   // Data de criação é preenchida automaticamente com a data e hora atuais
   data_criacao: { 
     type: DataTypes.DATE, 

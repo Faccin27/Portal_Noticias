@@ -23,9 +23,9 @@ router.get('/', async (req, res) => {
   let listaEventos = await EventoDAO.getLatest(3);
   let listaEmpregos = await EmpregoDAO.getLatest(3);
   let listaNoticias = await NoticiaDAO.getLatest(6);
-  console.log(listaNoticias)
   let listaParceiros = await ParceiroDAO.getLatest(3);
-  
+  console.log(listaParceiros)
+
 
   listaEventos = listaEventos.map(evento => ({
     ...evento.dataValues,
@@ -276,32 +276,39 @@ router.post('/noticias/create', upload.single('image'), async (req, res) => {
   }
 });
 
-// criar novo parceiro
-router.post('/parceiros/create', async (req, res) => {
+// Criar novo parceiro
+router.post('/parceiros/create', upload.single('image'), async (req, res) => {
   await getUsuarioLogado(req);
 
   if (usuarioLogado) {
     const { ptitle, pdescription, pcontent } = req.body;
+    const imagemUrl = req.file ? `/uploads/${req.file.filename}` : null; // URL da imagem
+
     try {
       const newParceiro = await ParceiroDAO.create({
         titulo: ptitle, 
         descricao: pdescription, 
-        conteudo: pcontent
+        conteudo: pcontent,
+        imagemUrl: imagemUrl
       });
       res.status(201).redirect("/parceiros");
     } catch (error) {
-      res.status(500).json({ error: 'erro ao criar parceiro' })
+      console.error('Erro ao criar parceiro:', error);
+      res.status(500).json({ error: 'erro ao criar parceiro' });
     }
   } else {
-    res.redirect('/')
+    res.redirect('/');
   }
 });
-//postar emprego
-router.post('/empregos/create', async (req, res) => {
+
+// Postar emprego
+router.post('/empregos/create', upload.single('image'), async (req, res) => {
   await getUsuarioLogado(req);
 
   if (usuarioLogado) {
-    const { nomeEmpresa, titulo, conteudo, localizacao, tipoEmprego, salario, requisitos, beneficios,  contato} = req.body;
+    const { nomeEmpresa, titulo, conteudo, localizacao, tipoEmprego, salario, requisitos, beneficios, contato } = req.body;
+    const imagemUrl = req.file ? `/uploads/${req.file.filename}` : null; // URL da imagem
+
     try {
       const newEmprego = await EmpregoDAO.create({
         idUsuario: usuarioLogado.id, 
@@ -313,7 +320,8 @@ router.post('/empregos/create', async (req, res) => {
         salario: salario,
         requisitos: requisitos,
         beneficios: beneficios,
-        contato: contato
+        contato: contato,
+        imagemUrl: imagemUrl
       });
       res.status(201).redirect("/empregos");
     } catch (error) {
@@ -325,12 +333,14 @@ router.post('/empregos/create', async (req, res) => {
   }
 });
 
-//postar evento
-router.post('/eventos/create', async (req, res) => {
+// Postar evento
+router.post('/eventos/create', upload.single('image'), async (req, res) => {
   await getUsuarioLogado(req);
 
   if (usuarioLogado) {
-    const {nomeEvento, descricao, localizacao, dataInicio, dataFim, tipoEvento, preco, imagem, linkInscricao} = req.body;
+    const { nomeEvento, descricao, localizacao, dataInicio, dataFim, tipoEvento, preco, linkInscricao } = req.body;
+    const imagemUrl = req.file ? `/uploads/${req.file.filename}` : null; // URL da imagem
+
     try {
       const newEvento = await EventoDAO.create({
         nomeEvento: nomeEvento,
@@ -340,7 +350,7 @@ router.post('/eventos/create', async (req, res) => {
         dataFim: dataFim,
         tipoEvento: tipoEvento,
         preco: preco,
-        imagem: imagem,
+        imagemUrl: imagemUrl,
         linkInscricao: linkInscricao
       });
       res.status(201).redirect("/eventos");

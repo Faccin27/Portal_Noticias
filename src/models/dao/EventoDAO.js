@@ -4,10 +4,10 @@ const Evento = require('../Evento');
 
 class EventoDAO {
   // Cria e persiste um evento
-  async create({ nomeEvento, descricao, localizacao, dataInicio, dataFim, tipoEvento, preco, imagem, linkInscricao }) {
+  async create({ nomeEvento, descricao, localizacao, dataInicio, dataFim, tipoEvento, preco,  linkInscricao, imagemUrl }) {
     let newEvento;
     try {
-      newEvento = await Evento.create({ nomeEvento, descricao, localizacao, dataInicio, dataFim, tipoEvento, preco, imagem, linkInscricao });
+      newEvento = await Evento.create({ nomeEvento, descricao, localizacao, dataInicio, dataFim, tipoEvento, preco,  linkInscricao, imagemUrl });
     } catch (error) {
       console.error('Erro ao criar evento:', error);
     } finally {

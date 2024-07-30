@@ -4,10 +4,10 @@ const Emprego = require('../Emprego');
 
 class EmpregoDAO {
   // Cria e persiste um emprego
-  async create({ idUsuario ,nomeEmpresa, titulo, conteudo, localizacao, tipoEmprego, salario, requisitos, beneficios, contato }) {
+  async create({ idUsuario ,nomeEmpresa, titulo, conteudo, localizacao, tipoEmprego, salario, requisitos, beneficios, contato, imagemUrl }) {
     let newEmprego;
     try {
-      newEmprego = await Emprego.create({ idUsuario, nomeEmpresa, titulo, conteudo, localizacao, tipoEmprego, salario, requisitos, beneficios, contato });
+      newEmprego = await Emprego.create({ idUsuario, nomeEmpresa, titulo, conteudo, localizacao, tipoEmprego, salario, requisitos, beneficios, contato, imagemUrl });
     } catch (error) {
       console.error('Erro ao criar emprego:', error);
     } finally {
