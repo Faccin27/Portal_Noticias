@@ -364,6 +364,15 @@ router.post('/eventos/create', upload.single('image'), async (req, res) => {
 });
 
 
+router.get('/profile', async (req, res) => {
+  await getUsuarioLogado(req);
+  if (usuarioLogado) {
+    res.render('profile', { usuarioLogado: usuarioLogado.get() });
+  } else {
+    res.status(403).send("Acesso negado!")
+  }
+});
+
 router.get('/deslogar', (req, res) => {
   res.clearCookie('tokenJWT');
   return res.redirect(301, '/');
