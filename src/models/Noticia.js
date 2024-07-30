@@ -29,6 +29,8 @@ Noticia.init({
   descricao: { type: DataTypes.TEXT, allowNull: false },
   // Conteúdo não pode ser null
   conteudo: { type: DataTypes.TEXT, allowNull: false },
+  // URL da imagem, pode ser null
+  imagemUrl: { type: DataTypes.STRING, allowNull: true },
   // Data de criação é preenchida automaticamente com a data e hora atuais
   data_criacao: { 
     type: DataTypes.DATE, 

@@ -18,6 +18,8 @@ class App {
   middleweres() {
     // Configurando a pasta 'public' como estática para servir arquivos estáticos como CSS, imagens e JavaScript
     this.server.use(express.static('public'))
+    this.server.use('/uploads', express.static('src/uploads'));
+
 
     // Configurando o body-parser para analisar o corpo das solicitações HTTP
     this.server.use(bodyParser.json());

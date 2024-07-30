@@ -45,7 +45,7 @@
           <div class="news-grid">
             {{#each (limit listaNoticias 3)}}
             <div class="news-card" data-id{{this.id}}>
-              <img src="images/profile.jpg" class="news-image">
+              <img src="{{this.imagemUrl}}" class="news-image">
               <div class="news-body">
                 <div class="news-category">{{this.categoria}}</div>
                 <h3 class="news-title">{{this.titulo}}</h3>
@@ -223,41 +223,46 @@
   </aside>
   </div>
 
-  <form method="POST" action="/noticias/create">
-    <div id="addNewsModal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title">Adicionar Nova Notícia</h2>
-          <span class="close">&times;</span>
-        </div>
-
-        <div class="form-group">
-          <label for="title">Título:</label>
-          <input type="text" id="title" name="title" required maxlength="100">
-        </div>
-        <div class="form-group">
-          <label for="description">Descrição:</label>
-          <textarea id="description" name="description" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="content">Conteúdo:</label>
-          <textarea id="content" name="content" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="category">Categoria:</label>
-          <select id="category" name="category" required>
-            <option value="">Selecione uma categoria</option>
-            <option value="Esportes">Esportes</option>
-            <option value="Negocios">Negócios</option>
-            <option value="Tecnologia">Tecnologia</option>
-            <option value="Entretenimento">Entretenimento</option>
-            <option value="Ciencias">Ciências</option>
-          </select>
-        </div>
-        <button type="submit">Adicionar Notícia</button>
+<form method="POST" action="/noticias/create" enctype="multipart/form-data">
+  <div id="addNewsModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Adicionar Nova Notícia</h2>
+        <span class="close">&times;</span>
       </div>
+
+      <div class="form-group">
+        <label for="title">Título:</label>
+        <input type="text" id="title" name="title" required maxlength="100">
+      </div>
+      <div class="form-group">
+        <label for="description">Descrição:</label>
+        <textarea id="description" name="description" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="content">Conteúdo:</label>
+        <textarea id="content" name="content" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="category">Categoria:</label>
+        <select id="category" name="category" required>
+          <option value="">Selecione uma categoria</option>
+          <option value="Esportes">Esportes</option>
+          <option value="Negocios">Negócios</option>
+          <option value="Tecnologia">Tecnologia</option>
+          <option value="Entretenimento">Entretenimento</option>
+          <option value="Ciencias">Ciências</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="image">Imagem:</label>
+        <input type="file" id="image" name="image" accept="image/*">
+      </div>
+      <button type="submit">Adicionar Notícia</button>
     </div>
-  </form>
+  </div>
+</form>
+
 
 
   <form method="POST" action="/empregos/create">

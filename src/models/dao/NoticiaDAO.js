@@ -3,11 +3,11 @@ const { sequelize } = require("../../config/database");
 const Noticia = require('../Noticia');
 
 class NoticiaDAO {
-  // Cria e persiste uma notícia
-  async create({ idUsuario, categoria, titulo, descricao, conteudo }) {
+  // Cria e persiste uma notícia com suporte para imagem
+  async create({ idUsuario, categoria, titulo, descricao, conteudo, imagemUrl }) {
     let newNoticia;
     try {
-      newNoticia = await Noticia.create({ idUsuario, categoria, titulo, descricao, conteudo });
+      newNoticia = await Noticia.create({ idUsuario, categoria, titulo, descricao, conteudo, imagemUrl });
     } catch (error) {
       console.error('Erro ao criar notícia:', error);
     } finally {
@@ -15,12 +15,11 @@ class NoticiaDAO {
     }
   }
   
-
-  // buscar todas as noticias e inserindo nome do autor
+  // Buscar todas as notícias e inserir nome do autor
   async getAll() {
-    let newNoticias;
+    let noticias;
     try {
-      newNoticias = await sequelize.query(
+      noticias = await sequelize.query(
         `SELECT noticia.*, usuarios.nome
          FROM noticia
          LEFT JOIN usuarios
@@ -32,35 +31,34 @@ class NoticiaDAO {
     } catch (error) {
       console.error('Erro ao buscar notícias:', error);
     } finally {
-      return newNoticias;
+      return noticias;
     }
   }
 
-// Busca uma notícia no banco de dados pela sua ID, incluindo o nome do autor
-async getById(noticiaId) {
-  let noticia;
-  try {
-    noticia = await sequelize.query(
-      `SELECT noticia.*, usuarios.nome
-       FROM noticia
-       LEFT JOIN usuarios
-       ON noticia.idUsuario = usuarios.id
-       WHERE noticia.id = :noticiaId`,
-      {
-        replacements: { noticiaId: noticiaId },
-        type: Sequelize.QueryTypes.SELECT,
-      }
-    );
+  // Busca uma notícia no banco de dados pela sua ID, incluindo o nome do autor
+  async getById(noticiaId) {
+    let noticia;
+    try {
+      noticia = await sequelize.query(
+        `SELECT noticia.*, usuarios.nome
+         FROM noticia
+         LEFT JOIN usuarios
+         ON noticia.idUsuario = usuarios.id
+         WHERE noticia.id = :noticiaId`,
+        {
+          replacements: { noticiaId: noticiaId },
+          type: Sequelize.QueryTypes.SELECT,
+        }
+      );
 
-    // As consultas SELECT com sequelize.query retornam um array, então pegamos o primeiro elemento.
-    noticia = noticia[0];
-  } catch (error) {
-    console.error('Erro ao buscar notícia por ID:', error);
-  } finally {
-    return noticia;
+      // As consultas SELECT com sequelize.query retornam um array, então pegamos o primeiro elemento.
+      noticia = noticia[0];
+    } catch (error) {
+      console.error('Erro ao buscar notícia por ID:', error);
+    } finally {
+      return noticia;
+    }
   }
-}
-
 
   // Atualiza uma notícia no banco de dados
   async update(noticiaId, noticiaAtualizada) {
@@ -68,10 +66,10 @@ async getById(noticiaId) {
     try {
       noticia = await Noticia.findByPk(noticiaId);
       if (noticia) {
-
         noticia.titulo = noticiaAtualizada.titulo || noticia.titulo;
         noticia.descricao = noticiaAtualizada.descricao || noticia.descricao;
         noticia.conteudo = noticiaAtualizada.conteudo || noticia.conteudo;
+        noticia.imagemUrl = noticiaAtualizada.imagemUrl || noticia.imagemUrl; // Atualiza a URL da imagem
         await noticia.save();
       } else {
         console.log('Notícia não encontrada para atualização.');
@@ -113,7 +111,7 @@ async getById(noticiaId) {
     }
   }
 
-  // Buscar ultimas noticias inserindo nome do autor
+  // Buscar últimas notícias inserindo nome do autor
   async getLatest(limit = 3) {
     let noticias;
     try {

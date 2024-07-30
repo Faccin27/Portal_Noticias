@@ -9,6 +9,7 @@ const ParceiroDAO = require("../models/dao/ParceiroDAO");
 const EmpregoDAO = require('../models/dao/EmpregoDAO');
 const EventoDAO = require('../models/dao/EventoDAO');
 const { formatDate, formatDateWithoutTime, formatarData } = require('../utils/dateUtils');
+const upload = require('../config/multer');
 
 let usuarioLogado;
 
@@ -20,9 +21,9 @@ router.get('/', async (req, res) => {
   await getUsuarioLogado(req)
 
   let listaEventos = await EventoDAO.getLatest(3);
-  console.log('listaEventos:', listaEventos);
   let listaEmpregos = await EmpregoDAO.getLatest(3);
   let listaNoticias = await NoticiaDAO.getLatest(6);
+  console.log(listaNoticias)
   let listaParceiros = await ParceiroDAO.getLatest(3);
   
 
@@ -248,27 +249,30 @@ router.get('/register', async (req, res) => {
 router.post('/register', RegisterController.register);
 router.post('/login', LoginController.login);
 
-//postar noticia
-router.post('/noticias/create', async (req, res) => {
+// Postar notícia
+router.post('/noticias/create', upload.single('image'), async (req, res) => {
   await getUsuarioLogado(req);
 
   if (usuarioLogado) {
     const { title, description, content, category } = req.body;
+    const imagemUrl = req.file ? `/uploads/${req.file.filename}` : null; // URL da imagem
+
     try {
       const newNoticia = await NoticiaDAO.create({
-        idUsuario: usuarioLogado.id, 
-        categoria: category, 
-        titulo: title, 
-        descricao: description, 
-        conteudo: content
+        idUsuario: usuarioLogado.id,
+        categoria: category,
+        titulo: title,
+        descricao: description,
+        conteudo: content,
+        imagemUrl: imagemUrl
       });
       res.status(201).redirect("/noticias");
     } catch (error) {
       console.error('Erro ao criar notícia:', error);
-      res.status(500).json({ error: 'erro ao criar postagem' });
+      res.status(500).json({ error: 'Erro ao criar postagem' });
     }
   } else {
-    res.redirect('/');
+    res.redirect('/login');
   }
 });
 
