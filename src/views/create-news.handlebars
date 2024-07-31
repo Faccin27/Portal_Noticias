@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Nova Notícia</title>
+    <link rel="stylesheet" href="styles/nova.css">
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
+</head>
+
+<body>
+    <h1>Adicionar Nova Notícia</h1>
+
+    <form method="POST" action="/noticias/create" enctype="multipart/form-data" id="newsForm">
+        <div class="form-group">
+            <label for="title">Título:</label>
+            <input type="text" id="title" name="title" required maxlength="100">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Descrição:</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="content">Conteúdo:</label>
+            <textarea id="content" name="content"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="category">Categoria:</label>
+            <select id="category" name="category" required>
+                <option value="">Selecione uma categoria</option>
+                <option value="Esportes">Esportes</option>
+                <option value="Negocios">Negócios</option>
+                <option value="Tecnologia">Tecnologia</option>
+                <option value="Entretenimento">Entretenimento</option>
+                <option value="Ciencias">Ciências</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Imagem de capa:</label>
+            <input type="file" id="image" name="image" accept="image/*">
+        </div>
+
+        <button type="submit">Adicionar Notícia</button>
+    </form>
+
+    <script src="/scripts/ckeditor-custom-upload-adapter.js"></script>
+</body>
+
+</html>

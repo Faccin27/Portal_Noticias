@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "ckeditor5": "^42.0.2",
     "cookie-parser": "^1.4.6",
     "date-fns": "^3.6.0",
     "express": "^4.19.2",

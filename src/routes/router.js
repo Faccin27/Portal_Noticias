@@ -249,30 +249,47 @@ router.get('/register', async (req, res) => {
 router.post('/register', RegisterController.register);
 router.post('/login', LoginController.login);
 
-// Postar notícia
+router.post('/upload-image', upload.single('upload'), (req, res) => {
+  if (!req.file) {
+      return res.status(400).json({
+          error: {
+              message: "Não foi possível fazer o upload da imagem."
+          }
+      });
+  }
+
+  // Construa a URL da imagem
+  const imageUrl = `/uploads/${req.file.filename}`;
+
+  res.json({
+      url: imageUrl
+  });
+});
+
+// Rota para criar notícia
 router.post('/noticias/create', upload.single('image'), async (req, res) => {
   await getUsuarioLogado(req);
 
   if (usuarioLogado) {
-    const { title, description, content, category } = req.body;
-    const imagemUrl = req.file ? `/uploads/${req.file.filename}` : null; // URL da imagem
+      const { title, description, content, category } = req.body;
+      const imagemUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
-    try {
-      const newNoticia = await NoticiaDAO.create({
-        idUsuario: usuarioLogado.id,
-        categoria: category,
-        titulo: title,
-        descricao: description,
-        conteudo: content,
-        imagemUrl: imagemUrl
-      });
-      res.status(201).redirect("/noticias");
-    } catch (error) {
-      console.error('Erro ao criar notícia:', error);
-      res.status(500).json({ error: 'Erro ao criar postagem' });
-    }
+      try {
+          const newNoticia = await NoticiaDAO.create({
+              idUsuario: usuarioLogado.id,
+              categoria: category,
+              titulo: title,
+              descricao: description,
+              conteudo: content, // O CKEditor 5 já envia o conteúdo processado
+              imagemUrl: imagemUrl
+          });
+          res.status(201).redirect("/noticias");
+      } catch (error) {
+          console.error('Erro ao criar notícia:', error);
+          res.status(500).json({ error: 'Erro ao criar postagem' });
+      }
   } else {
-    res.redirect('/login');
+      res.redirect('/login');
   }
 });
 
@@ -372,6 +389,15 @@ router.get('/profile', async (req, res) => {
     res.status(403).send("Acesso negado!")
   }
 });
+
+router.get('/nova', async(req, res) => {
+  await getUsuarioLogado(req)
+
+  if(usuarioLogado){
+    res.render('create-news', {usuarioLogado: usuarioLogado.get()});
+  }
+})
+
 
 router.get('/deslogar', (req, res) => {
   res.clearCookie('tokenJWT');
