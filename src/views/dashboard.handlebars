@@ -215,55 +215,13 @@
       </div>
     </div>
     <div class="dashboard-buttons">
-      <button id="openModal" class="dashboard-button">Adicionar Notícia</button>
+     <a href="/criar-noticia"><button class="dashboard-button">Adicionar Notícia</button></a> 
       <button id="openPartnerModal" class="dashboard-button">Adicionar Parceiro</button>
       <button id="openJobModal" class="dashboard-button">Adicionar Vaga de Emprego</button>
       <button id="openEventModal" class="dashboard-button">Adicionar Evento</button>
     </div>
   </aside>
   </div>
-
-  <form method="POST" action="/noticias/create" enctype="multipart/form-data">
-    <div id="addNewsModal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title">Adicionar Nova Notícia</h2>
-          <span class="close">&times;</span>
-        </div>
-
-        <div class="form-group">
-          <label for="title">Título:</label>
-          <input type="text" id="title" name="title" required maxlength="100">
-        </div>
-        <div class="form-group">
-          <label for="description">Descrição:</label>
-          <textarea id="description" name="description" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="content">Conteúdo:</label>
-          <textarea id="content" name="content" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="category">Categoria:</label>
-          <select id="category" name="category" required>
-            <option value="">Selecione uma categoria</option>
-            <option value="Esportes">Esportes</option>
-            <option value="Negocios">Negócios</option>
-            <option value="Tecnologia">Tecnologia</option>
-            <option value="Entretenimento">Entretenimento</option>
-            <option value="Ciencias">Ciências</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="image">Imagem:</label>
-          <input type="file" id="image" name="image" accept="image/*">
-        </div>
-        <button type="submit">Adicionar Notícia</button>
-      </div>
-    </div>
-  </form>
-
-
 
   <form method="POST" action="/empregos/create" enctype="multipart/form-data">
     <div id="addJobModal" class="modal job-modal">
@@ -352,64 +310,62 @@
     </div>
   </form>
 
-  <form method="POST" action="/eventos/create" enctype="multipart/form-data">
-    <div id="addEventModal" class="modal event-modal">
-      <div class="modal-content event-modal-content">
-        <div class="modal-header event-modal-header">
-          <h2 class="modal-title">Adicionar Novo Evento</h2>
-          <span class="close">&times;</span>
-        </div>
-        <div class="form-group">
-          <label for="nomeEvento">Nome do Evento:</label>
-          <input type="text" id="nomeEvento" name="nomeEvento" required>
-        </div>
-        <div class="form-group">
-          <label for="descricao">Descrição:</label>
-          <textarea id="descricao" name="descricao" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="localizacao">Localização:</label>
-          <input type="text" id="localizacao" name="localizacao" required>
-        </div>
-        <div class="form-group">
-          <label for="dataInicio">Data de Início:</label>
-          <input type="datetime-local" id="dataInicio" name="dataInicio" required>
-        </div>
-        <div class="form-group">
-          <label for="dataFim">Data de Fim:</label>
-          <input type="datetime-local" id="dataFim" name="dataFim" required>
-        </div>
-        <div class="form-group">
-          <label for="tipoEvento">Tipo de Evento:</label>
-          <select id="tipoEvento" name="tipoEvento" required>
-            <option value="">Selecione o tipo de evento</option>
-            <option value="Conferência">Conferência</option>
-            <option value="Workshop">Workshop</option>
-            <option value="Seminário">Seminário</option>
-            <option value="Feira">Feira</option>
-            <option value="Outro">Outro</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="preco">Preço:</label>
-          <input type="number" id="preco" name="preco" min="0" step="0.01" required>
-        </div>
-        <div class="form-group">
-          <label for="imagem">URL da Imagem:</label>
-          <input type="url" id="imagem" name="imagem" required>
-        </div>
-        <div class="form-group">
-          <label for="linkInscricao">Link para Inscrição:</label>
-          <input type="url" id="linkInscricao" name="linkInscricao" required>
-        </div>
-        <div class="form-group">
-          <label for="image">Imagem:</label>
-          <input type="file" id="image" name="image" accept="image/*">
-        </div>
-        <button type="submit" class="event-submit-btn">Adicionar Evento</button>
+<form method="POST" action="/eventos/create" enctype="multipart/form-data">
+  <div id="addEventModal" class="modal event-modal">
+    <div class="modal-content event-modal-content">
+      <div class="modal-header event-modal-header">
+        <h2 class="modal-title">Adicionar Novo Evento</h2>
+        <span class="close">&times;</span>
       </div>
+      <div class="form-group">
+        <label for="nomeEvento">Nome do Evento:</label>
+        <input type="text" id="nomeEvento" name="nomeEvento" required>
+      </div>
+      <div class="form-group">
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="localizacao">Localização:</label>
+        <input type="text" id="localizacao" name="localizacao" required>
+      </div>
+      <div class="form-group">
+        <label for="dataInicio">Data de Início:</label>
+        <input type="datetime-local" id="dataInicio" name="dataInicio" required>
+      </div>
+      <div class="form-group">
+        <label for="dataFim">Data de Fim:</label>
+        <input type="datetime-local" id="dataFim" name="dataFim" required>
+      </div>
+      <div class="form-group">
+        <label for="tipoEvento">Tipo de Evento:</label>
+        <select id="tipoEvento" name="tipoEvento" required>
+          <option value="">Selecione o tipo de evento</option>
+          <option value="Conferência">Conferência</option>
+          <option value="Workshop">Workshop</option>
+          <option value="Seminário">Seminário</option>
+          <option value="Feira">Feira</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="preco">Preço:</label>
+        <input type="number" id="preco" name="preco" min="0" step="0.01" required>
+      </div>
+
+      <div class="form-group">
+        <label for="linkInscricao">Link para Inscrição:</label>
+        <input type="url" id="linkInscricao" name="linkInscricao">
+      </div>
+      <div class="form-group">
+        <label for="image">Imagem:</label>
+        <input type="file" id="image" name="image" accept="image/*">
+      </div>
+      <button type="submit" class="event-submit-btn">Adicionar Evento</button>
     </div>
-  </form>
+  </div>
+</form>
+
 
   <footer>
     {{> footer}}

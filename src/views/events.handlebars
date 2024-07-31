@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{emprego.nomeEmpresa}}</title>
+    <title>{{evento.nomeEvento}}</title>
     <link rel="stylesheet" href="/styles/event.css">
 </head>
 
@@ -22,7 +22,7 @@
         <p class="card-description">{{evento.descricao}}</p>
         <div class="card-content">
             <div class="event-image">
-                <img src="{{evento.imagem}}" alt="{{this.nomeEvento}}">
+                <img src="{{evento.imagemUrl}}" alt="{{evento.nomeEvento}}">
             </div>
             <div class="event-details">
                 <div class="form-group">
@@ -31,8 +31,7 @@
                 </div>
                 <div class="form-group">
                     <label for="event-description">Descrição</label>
-                    <textarea id="event-description"
-                        readonly>{{evento.descricao}}</textarea>
+                    <textarea id="event-description" readonly>{{evento.descricao}}</textarea>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
@@ -58,13 +57,20 @@
                     <label for="event-price">Preço</label>
                     <input type="text" id="event-price" value="R$: {{evento.preco}}" readonly>
                 </div>
-                <a href="{{evento.linkInscricao}}" class="register-button">Inscrever-se</a>
+                <a href="{{evento.linkInscricao}}" id="register-button" class="register-button">Inscrever-se</a>
             </div>
         </div>
     </div>
 
-
-
+<script>
+            document.getElementById('register-button').addEventListener('click', function(event) {
+            var link = this.href;
+            if (!link || link === '#') {
+                event.preventDefault(); // Previne o redirecionamento
+                alert('O link para inscrição não está disponível.');
+            }
+        });
+</script>
 </body>
 
 </html>

@@ -5,17 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Nova Notícia</title>
-    <link rel="stylesheet" href="styles/nova.css">
+    <link rel="stylesheet" href="styles/create-news.css">
     <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
 </head>
 
 <body>
+
+    {{>navbar}}
     <h1>Adicionar Nova Notícia</h1>
 
     <form method="POST" action="/noticias/create" enctype="multipart/form-data" id="newsForm">
         <div class="form-group">
             <label for="title">Título:</label>
             <input type="text" id="title" name="title" required maxlength="100">
+        </div>
+
+        <div class="form-group">
+            <label for="image">Imagem de capa:</label>
+            <input type="file" id="image" name="image" accept="image/*">
         </div>
 
         <div class="form-group">
@@ -40,13 +47,12 @@
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="image">Imagem de capa:</label>
-            <input type="file" id="image" name="image" accept="image/*">
-        </div>
+
 
         <button type="submit">Adicionar Notícia</button>
     </form>
+
+    {{> footer}}
 
     <script src="/scripts/ckeditor-custom-upload-adapter.js"></script>
 </body>

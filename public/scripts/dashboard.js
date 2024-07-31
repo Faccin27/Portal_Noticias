@@ -1,6 +1,7 @@
 console.log("Script dashboard carregado!");
 
 document.addEventListener('DOMContentLoaded', function () {
+    
     function lockScroll() {
         document.body.style.overflow = 'hidden';
         document.body.style.paddingRight = getScrollbarWidth() + 'px';
@@ -58,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Setup modals
-    setupModal("addNewsModal", "openModal");
+
     setupModal("addPartnerModal", "openPartnerModal");
     setupModal("addJobModal", "openJobModal");
     setupModal("addEventModal", "openEventModal");

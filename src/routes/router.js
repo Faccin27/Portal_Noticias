@@ -390,12 +390,12 @@ router.get('/profile', async (req, res) => {
   }
 });
 
-router.get('/nova', async(req, res) => {
+router.get('/criar-noticia', async(req, res) => {
   await getUsuarioLogado(req)
 
   if(usuarioLogado){
     res.render('create-news', {usuarioLogado: usuarioLogado.get()});
-  }
+  } else{res.redirect('/login')}
 })
 
 
