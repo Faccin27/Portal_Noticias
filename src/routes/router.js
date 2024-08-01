@@ -24,7 +24,6 @@ router.get('/', async (req, res) => {
   let listaEmpregos = await EmpregoDAO.getLatest(3);
   let listaNoticias = await NoticiaDAO.getLatest(6);
   let listaParceiros = await ParceiroDAO.getLatest(3);
-  console.log(listaParceiros)
 
 
   listaEventos = listaEventos.map(evento => ({
@@ -69,7 +68,7 @@ router.get('/login', async (req, res) => {
 router.get('/eventos', async (req, res) => {
   await getUsuarioLogado(req);
   let listaEventos = await EventoDAO.getAll();
-  
+
   listaEventos = listaEventos.map(evento => ({
     ...evento.dataValues,
     dataInicio: formatDate(evento.dataValues.dataInicio),
@@ -241,8 +240,8 @@ router.get('/register', async (req, res) => {
 
   if (!usuarioLogado) {
     res.status(200).render("register")
-  } else { 
-    res.redirect('/') 
+  } else {
+    res.redirect('/')
   }
 });
 
@@ -251,18 +250,18 @@ router.post('/login', LoginController.login);
 
 router.post('/upload-image', upload.single('upload'), (req, res) => {
   if (!req.file) {
-      return res.status(400).json({
-          error: {
-              message: "Não foi possível fazer o upload da imagem."
-          }
-      });
+    return res.status(400).json({
+      error: {
+        message: "Não foi possível fazer o upload da imagem."
+      }
+    });
   }
 
   // Construa a URL da imagem
   const imageUrl = `/uploads/${req.file.filename}`;
 
   res.json({
-      url: imageUrl
+    url: imageUrl
   });
 });
 
@@ -270,26 +269,26 @@ router.post('/upload-image', upload.single('upload'), (req, res) => {
 router.post('/noticias/create', upload.single('image'), async (req, res) => {
   await getUsuarioLogado(req);
 
-  if (usuarioLogado) {
-      const { title, description, content, category } = req.body;
-      const imagemUrl = req.file ? `/uploads/${req.file.filename}` : null;
+  if (usuarioLogado.role == 'admin') {
+    const { title, description, content, category } = req.body;
+    const imagemUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
-      try {
-          const newNoticia = await NoticiaDAO.create({
-              idUsuario: usuarioLogado.id,
-              categoria: category,
-              titulo: title,
-              descricao: description,
-              conteudo: content, // O CKEditor 5 já envia o conteúdo processado
-              imagemUrl: imagemUrl
-          });
-          res.status(201).redirect("/noticias");
-      } catch (error) {
-          console.error('Erro ao criar notícia:', error);
-          res.status(500).json({ error: 'Erro ao criar postagem' });
-      }
+    try {
+      const newNoticia = await NoticiaDAO.create({
+        idUsuario: usuarioLogado.id,
+        categoria: category,
+        titulo: title,
+        descricao: description,
+        conteudo: content, // O CKEditor 5 já envia o conteúdo processado
+        imagemUrl: imagemUrl
+      });
+      res.status(201).redirect("/noticias");
+    } catch (error) {
+      console.error('Erro ao criar notícia:', error);
+      res.status(500).json({ error: 'Erro ao criar postagem' });
+    }
   } else {
-      res.redirect('/login');
+    res.redirect('/login');
   }
 });
 
@@ -297,14 +296,14 @@ router.post('/noticias/create', upload.single('image'), async (req, res) => {
 router.post('/parceiros/create', upload.single('image'), async (req, res) => {
   await getUsuarioLogado(req);
 
-  if (usuarioLogado) {
+  if (usuarioLogado.role == 'admin') {
     const { ptitle, pdescription, pcontent } = req.body;
     const imagemUrl = req.file ? `/uploads/${req.file.filename}` : null; // URL da imagem
 
     try {
       const newParceiro = await ParceiroDAO.create({
-        titulo: ptitle, 
-        descricao: pdescription, 
+        titulo: ptitle,
+        descricao: pdescription,
         conteudo: pcontent,
         imagemUrl: imagemUrl
       });
@@ -322,13 +321,13 @@ router.post('/parceiros/create', upload.single('image'), async (req, res) => {
 router.post('/empregos/create', upload.single('image'), async (req, res) => {
   await getUsuarioLogado(req);
 
-  if (usuarioLogado) {
+  if (usuarioLogado.role == 'admin') {
     const { nomeEmpresa, titulo, conteudo, localizacao, tipoEmprego, salario, requisitos, beneficios, contato } = req.body;
     const imagemUrl = req.file ? `/uploads/${req.file.filename}` : null; // URL da imagem
 
     try {
       const newEmprego = await EmpregoDAO.create({
-        idUsuario: usuarioLogado.id, 
+        idUsuario: usuarioLogado.id,
         nomeEmpresa: nomeEmpresa,
         titulo: titulo,
         conteudo: conteudo,
@@ -354,7 +353,7 @@ router.post('/empregos/create', upload.single('image'), async (req, res) => {
 router.post('/eventos/create', upload.single('image'), async (req, res) => {
   await getUsuarioLogado(req);
 
-  if (usuarioLogado) {
+  if (usuarioLogado.role == 'admin') {
     const { nomeEvento, descricao, localizacao, dataInicio, dataFim, tipoEvento, preco, linkInscricao } = req.body;
     const imagemUrl = req.file ? `/uploads/${req.file.filename}` : null; // URL da imagem
 
@@ -390,20 +389,20 @@ router.get('/profile', async (req, res) => {
   }
 });
 
-router.get('/criar-noticia', async(req, res) => {
+router.get('/criar-noticia', async (req, res) => {
   await getUsuarioLogado(req)
 
-  if(usuarioLogado){
-    res.render('create-news', {usuarioLogado: usuarioLogado.get()});
-  } else{res.redirect('/login')}
+  if (usuarioLogado.role == 'admin') {
+    res.render('create-news', { usuarioLogado: usuarioLogado.get() });
+  } else { res.redirect('/login') }
 })
 
-router.get('/contato', async(req, res) => {
+router.get('/contato', async (req, res) => {
   await getUsuarioLogado(req)
 
-  if(usuarioLogado){
-    res.render('contact', {usuarioLogado: usuarioLogado.get()});
-  } else{
+  if (usuarioLogado) {
+    res.render('contact', { usuarioLogado: usuarioLogado.get() });
+  } else {
     res.render('contact')
   }
 })

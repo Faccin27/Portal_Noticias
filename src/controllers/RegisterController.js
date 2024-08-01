@@ -26,7 +26,7 @@ class RegisterController {
 
       // Retorna uma resposta de sucesso
       console.log(newUser);
-      return res.redirect("/produtos");
+      return res.redirect("/");
     } catch (error) {
       console.error('Erro ao registrar usuário:', error);
       return res.send('Erro ao registrar usuário');

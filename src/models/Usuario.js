@@ -23,6 +23,11 @@ Usuario.init({
   email: { type: DataTypes.STRING, allowNull: false, unique: true },
   // Senha não pode ser null
   senha: { type: DataTypes.STRING, allowNull: false },
+  role: {
+    type: DataTypes.ENUM('admin', 'user'),
+    allowNull: false,
+    defaultValue: 'user',
+  },
 }, {
   sequelize: db.sequelize, // Conexão com o banco de dados
   modelName: 'Usuario', // Nome do modelo
