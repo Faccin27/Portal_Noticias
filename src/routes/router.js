@@ -398,6 +398,16 @@ router.get('/criar-noticia', async(req, res) => {
   } else{res.redirect('/login')}
 })
 
+router.get('/contato', async(req, res) => {
+  await getUsuarioLogado(req)
+
+  if(usuarioLogado){
+    res.render('contact', {usuarioLogado: usuarioLogado.get()});
+  } else{
+    res.render('contact')
+  }
+})
+
 
 router.get('/deslogar', (req, res) => {
   res.clearCookie('tokenJWT');
