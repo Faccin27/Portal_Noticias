@@ -114,15 +114,15 @@ router.get('/eventos', async (req, res) => {
   });
 });
 
-router.post('/eventos/curtida/:id', async (req, res) =>{
+router.post('/eventos/curtida/:id', async (req, res) => {
   await getUsuarioLogado(req);
 
-  if(usuarioLogado){
+  if (usuarioLogado) {
     let idEvento = req.params.id;
 
     let curtida = await Curtida.findOne({
       where: {
-        tipo_item: 'evento', 
+        tipo_item: 'evento',
         item_id: idEvento,
         usuario_id: usuarioLogado.id
       }
@@ -134,12 +134,12 @@ router.post('/eventos/curtida/:id', async (req, res) =>{
       CurtidaDAO.create({
         usuario_id: usuarioLogado.id,
         item_id: idEvento,
-        tipo_item: 'evento'  
+        tipo_item: 'evento'
       });
     }
-    
+
     res.redirect(req.get('Referer') || '/');
-  } else{
+  } else {
     res.redirect('/login')
   }
 })
@@ -198,15 +198,15 @@ router.get('/empregos', async (req, res) => {
 
 
 
-router.post('/empregos/curtida/:id', async (req, res) =>{
+router.post('/empregos/curtida/:id', async (req, res) => {
   await getUsuarioLogado(req);
 
-  if(usuarioLogado){
+  if (usuarioLogado) {
     let idEmprego = req.params.id;
 
     let curtida = await Curtida.findOne({
       where: {
-        tipo_item: 'emprego', 
+        tipo_item: 'emprego',
         item_id: idEmprego,
         usuario_id: usuarioLogado.id
       }
@@ -218,12 +218,12 @@ router.post('/empregos/curtida/:id', async (req, res) =>{
       CurtidaDAO.create({
         usuario_id: usuarioLogado.id,
         item_id: idEmprego,
-        tipo_item: 'emprego'  
+        tipo_item: 'emprego'
       });
     }
-    
+
     res.redirect(req.get('Referer') || '/');
-  } else{
+  } else {
     res.redirect('/login')
   }
 })
@@ -277,15 +277,15 @@ router.get('/parceiros', async (req, res) => {
   });
 });
 
-router.post('/parceiros/curtida/:id', async (req, res) =>{
+router.post('/parceiros/curtida/:id', async (req, res) => {
   await getUsuarioLogado(req);
 
-  if(usuarioLogado){
+  if (usuarioLogado) {
     let idParceiro = req.params.id;
 
     let curtida = await Curtida.findOne({
       where: {
-        tipo_item: 'parceiro', 
+        tipo_item: 'parceiro',
         item_id: idParceiro,
         usuario_id: usuarioLogado.id
       }
@@ -297,12 +297,12 @@ router.post('/parceiros/curtida/:id', async (req, res) =>{
       CurtidaDAO.create({
         usuario_id: usuarioLogado.id,
         item_id: idParceiro,
-        tipo_item: 'parceiro'  
+        tipo_item: 'parceiro'
       });
     }
-    
+
     res.redirect(req.get('Referer') || '/');
-  } else{
+  } else {
     res.redirect('/login')
   }
 })
@@ -334,15 +334,95 @@ router.get('/noticias', async (req, res) => {
 });
 
 
-router.post('/noticias/curtida/:id', async (req, res) =>{
+router.delete('/noticias/:id', async (req, res) => {
+  await getUsuarioLogado(req);
+  if (usuarioLogado.role == 'admin') {
+    const noticiaId = req.params.id;
+
+    try {
+      const result = await NoticiaDAO.delete(noticiaId);
+      if (result.sucess) {
+        res.status(200).json({ message: result.message })
+      } else {
+        res.status(404).json({ message: result.message })
+      }
+    } catch (error) {
+      res.status(500).json({ error: 'erro ao deletar noticia' })
+    }
+  } else {
+    res.status(403).json({ error: 'Usuario não autenticado' })
+  }
+});
+
+router.delete('/eventos/:id', async (req, res) => {
+  await getUsuarioLogado(req);
+  if (usuarioLogado.role == 'admin') {
+    const eventoId = req.params.id;
+
+    try {
+      const result = await EventoDAO.delete(eventoId);
+      if (result.sucess) {
+        res.status(200).json({ message: result.message })
+      } else {
+        res.status(404).json({ message: result.message })
+      }
+    } catch (error) {
+      res.status(500).json({ error: 'erro ao deletar evento' })
+    }
+  } else {
+    res.status(403).json({ error: 'Usuario não autenticado' })
+  }
+});
+
+router.delete('/empregos/:id', async (req, res) => {
+  await getUsuarioLogado(req);
+  if (usuarioLogado.role == 'admin') {
+    const empregoId = req.params.id;
+
+    try {
+      const result = await EmpregoDAO.delete(empregoId);
+      if (result.sucess) {
+        res.status(200).json({ message: result.message })
+      } else {
+        res.status(404).json({ message: result.message })
+      }
+    } catch (error) {
+      res.status(500).json({ error: 'erro ao deletar emprego' })
+    }
+  } else {
+    res.status(403).json({ error: 'Usuario não autenticado' })
+  }
+});
+
+router.delete('/parceiros/:id', async (req, res) => {
+  await getUsuarioLogado(req);
+  if (usuarioLogado.role == 'admin') {
+    const parceiroId = req.params.id;
+
+    try {
+      const result = await ParceiroDAO.delete(parceiroId);
+      if (result.sucess) {
+        res.status(200).json({ message: result.message })
+      } else {
+        res.status(404).json({ message: result.message })
+      }
+    } catch (error) {
+      res.status(500).json({ error: 'erro ao deletar parceiro' })
+    }
+  } else {
+    res.status(403).json({ error: 'Usuario não autenticado' })
+  }
+});
+
+router.post('/noticias/curtida/:id', async (req, res) => {
   await getUsuarioLogado(req);
 
-  if(usuarioLogado){
+  if (usuarioLogado) {
     let idNoticia = req.params.id;
 
     let curtida = await Curtida.findOne({
       where: {
-        tipo_item: 'noticia', 
+        tipo_item: 'noticia',
         item_id: idNoticia,
         usuario_id: usuarioLogado.id
       }
@@ -354,12 +434,12 @@ router.post('/noticias/curtida/:id', async (req, res) =>{
       CurtidaDAO.create({
         usuario_id: usuarioLogado.id,
         item_id: idNoticia,
-        tipo_item: 'noticia'  
+        tipo_item: 'noticia'
       });
     }
-    
+
     res.redirect(req.get('Referer') || '/');
-  } else{
+  } else {
     res.redirect('/login')
   }
 })
