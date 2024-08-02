@@ -21,20 +21,33 @@
         <div class="news-grid">
           {{#each listaNoticias}}
           <div class="news-card" data-id="{{this.id}}">
-              <img src="{{this.imagemUrl}}" class="news-image">
+            <img src="{{this.imagemUrl}}" class="news-image">
             <div class="news-body">
               <div class="news-category">{{this.categoria}}</div>
               <h3 class="news-title">{{this.titulo}}</h3>
               <p class="news-description">{{this.descricao}}</p>
-              <a href="/noticia/{{this.id}}" class="read-more">Read More
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="read-more-icon">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </a>
-              
+              <div class="card-footer">
+                <a href="/noticia/{{this.id}}" class="read-more">Read More
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="read-more-icon">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+                <div class="card-actions">
+                  <span class="like-count">{{total_curtidas}}</span>
+                  <form action="/empregos/curtida/{{this.id}}" method="POST">
+                    {{#if this.curtido}}
+                    <button class="cleberson" type="submit"><i class="favorite fa-solid fa-heart"></i></button>
+                    {{else}}
+                    <button class="cleberson" type="submit"><i class="favorite fa-regular fa-heart"></i></button>
+                    {{/if}}
+                  </form>
+                  <button class="edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                  <button class="delete"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+              </div>
             </div>
           </div>
           {{/each}}

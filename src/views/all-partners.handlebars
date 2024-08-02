@@ -21,22 +21,36 @@
         <div class="partners-grid">
           {{#each listaParceiros}}
           <div class="partner-card" data-id="{{this.id}}">
-              <img src="{{this.imagemUrl}}" class="news-image">
+            <img src="{{this.imagemUrl}}" class="news-image">
             <div class="partner-body">
               <h3 class="partner-name">{{this.titulo}}</h3>
               <p class="partner-description">{{this.descricao}}</p>
-              <a href="#" class="read-more-g" data-content="{{this.conteudo}}">Learn More
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="read-more-icon-g">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </a>
+              <div class="card-footer">
+                <a href="#" class="read-more-g" data-content="{{this.conteudo}}">Learn More
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="read-more-icon-g">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+                <div class="card-actions">
+                  <form action="/empregos/curtida/{{this.id}}" method="POST">
+                    {{#if this.curtido}}
+                    <button class="cleberson" type="submit"><i class="favorite fa-solid fa-heart"></i></button>
+                    {{else}}
+                    <button class="cleberson" type="submit"><i class="favorite fa-regular fa-heart"></i></button>
+                    {{/if}}
+                  </form>
+                  <span class="like-count">{{total_curtidas}}</span>
+                  <button class="edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                  <button class="delete"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+                </div>
+              </div>
             </div>
+            {{/each}}
           </div>
-          {{/each}}
-        </div>
       </section>
     </main>
   </div>
@@ -55,9 +69,6 @@
 
 
 
-  <footer>
-    {{> footer}}
-  </footer>
 </body>
 
 </html>

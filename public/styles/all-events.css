@@ -1,87 +1,188 @@
+/* Reset básico e estilos globais */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  padding-top: 60px;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.main {
+  flex: 1;
+  padding: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 .events {
-    margin: 0 auto;
-    max-width: 1200px;
-    margin-top: 5rem;
-  }
-  
-  .events-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-  
-  .events-header h2 {
-    font-size: 1.5rem;
-  }
-  
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.section-content {
+  width: 100%;
+}
+
+.events-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.events-header h2 {
+  font-size: 2rem;
+}
+
+.viewall {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.event-card {
+  background: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.news-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.event-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.event-date {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.event-title {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+}
+
+.event-description {
+  flex-grow: 1;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, #000 70%, transparent);
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.read-more-g {
+  display: flex;
+  align-items: center;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.read-more-icon-g {
+  margin-left: 0.5rem;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+}
+
+.card-actions form {
+  margin-right: 0.5rem;
+}
+
+.card-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.cleberson {
+  color: #e74c3c;
+}
+
+.cleberson:hover {
+  color: #c0392b;
+}
+
+.edit {
+  color: #3498db;
+}
+
+.edit:hover {
+  color: #2980b9;
+}
+
+.delete {
+  color: #e74c3c;
+}
+
+.delete:hover {
+  color: #c0392b;
+}
+
+.like-count {
+  font-size: 0.8rem;
+  color: #555;
+  margin-right: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
   .events-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1rem;
-  }
-  
-  .event-card {
-    background: #f9f9f9;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  }
-  
-  .event-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-  
-  .event-body {
-    padding: 1rem;
-  }
-  
-  .event-title {
-    font-size: 1.25rem;
-    margin: 0.5rem 0;
-  }
-  
-  .event-date {
-    font-size: 0.875rem;
-    color: #666;
-  }
-  
-  .event-description {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 1rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2; /* Número de linhas visíveis */
-    line-clamp: 3; /* Propriedade padrão para compatibilidade */
-    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0)); /* Gradiente para desvanecer a última linha */
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0)); /* Propriedade padrão para compatibilidade */
-  }
-  
-  .read-more-g {
-    display: flex;
-    align-items: center;
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .read-more-icon-g {
-    margin-left: 0.5rem;
-  }
-  
-  @media (max-width: 768px) {
-    .events-grid {
       grid-template-columns: 1fr;
-    }
   }
-  
-  .news-image {
-    width: 100%;
-    height: auto;
-    max-height: 200px; 
-    object-fit: cover; 
-  }
+}
