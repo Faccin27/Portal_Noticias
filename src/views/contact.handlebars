@@ -4,93 +4,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fale Conosco</title>
+    <title>Contato</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/styles/contact.css">
 </head>
 
 <body>
-    {{>navbar}}
-    <h1 class="page-title">Fale Conosco</h1>
+    <header>
+        {{> navbar}}
+    </header>
 
     <div class="container">
         <div class="grid">
-            <div class="form-section">
-                <h2 class="heading">Fale conosco</h2>
-                <p class="subheading">
-                    O que buscamos.
-                </p>
-                <ol>
-                    <li>Divulgação de noticias.</li>
-                    <li>Divulgação de vagas de emprego.</li>
-                    <li>Divulgação de eventos (Pode ser cobrado taxa)</li>
-                    <li>Divulgação de parceiros (Pode ser cobrado taxa)</li>
-                </ol>
-
-                <h2 class="heading">Sobre o contato</h2>
-                <p class="subheading">
-                    Informações adicionais
-                </p>
-                <ul>
-                    <li>Para entrar em contato nos chame por alguma rede social</li>
-                    <li>Todas as informações fornecidas serão verificadas.</li>
-                    <li>Passar informações falsas é crime.</li>
-                </ul>
+            <div class="space-y-8">
+                <img src="images/teste.png" width="500" height="450">
+                <div>
+                    <h2>Como podemos ajudar?</h2>
+                    <ul>
+                        <li> • Divulgação de notícias
+                        <li> • Publicação de anúncios e comunicados
+                        <li> • Promoção de eventos locais e regionais
+                        <li> • Entrevistas e reportagens especiais
+                        <li> • Criação de conteúdo patrocinado
+                        <li> • Marketing e publicidade digital
+                        <li> • Atualizações em tempo real sobre eventos importantes
+                        <li> • Cobertura de esportes locais
+                        <li> • Publicação de editoriais e artigos de opinião
+                        <li> • Informações sobre oportunidades de emprego
+                        <li> • Destacar parcerias com empresas locais
+                    </ul>
+                </div>
             </div>
-            <div class="info-section">
-                <h2 class="heading">Informações de contato</h2>
-                <p class="subheading">Você também pode entrar em contato conosco pelos seguintes canais:</p>
-                <div class="contact-info">
-    <div class="info-item">
-        <i class="fas fa-map-marker-alt"></i>
-        <div>
-            <div class="info-label">Endereço</div>
-            <p class="info-text">Rua Exemplo, 123 - Cidade, Estado</p>
+            <div class="space-y-8 bg-gray-100">
+                <div>
+                    <h2>Tem perguntas? Envie-nos um e-mail.</h2>
+                    <p class="text-muted">
+                        Somos uma publicação líder no setor, dedicada a fornecer as últimas notícias e insights sobre
+                        eventos locais, nacionais e internacionais. Nosso compromisso é manter você informado sobre os
+                        temas mais relevantes que impactam sua vida, negócios e comunidade.
+                    </p>
+                    <p class="text-muted">
+                        Se você tiver perguntas, sugestões ou feedback, estamos aqui para ouvir. Por favor, clique na
+                        categoria mais apropriada e preencha o formulário para entrar em contato conosco. Sua opinião é
+                        importante para nós e nos ajuda a melhorar continuamente nossos serviços.
+                    </p>
+
+                </div>
+                <form>
+                    <div>
+                        <label for="category">Quem eu sou?</label>
+                        <select id="category" name="category">
+                            <option value="">Selecione a categoria</option>
+                            <option value="Trabalho">Sou empresario e quero divulgar vagas de emprego</option>
+                            <option value="Evento">Sou administrador de um evento e quero divulga-lo</option>
+                            <option value="Noticia">Sou um cidadão e quero contar uma noticia.</option>
+                            <option value="Parceiro">Sou dono de um negocio e quero ser parceiro do site.</option>
+
+                        </select>
+                    </div>
+                    <div>
+                        <label for="name">Seu Nome *</label>
+                        <input type="text" id="name" name="name" placeholder="Digite seu nome" required>
+                    </div>
+                    <div>
+                        <label for="email">Seu Email *</label>
+                        <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+                    </div>
+                    <div>
+                        <label for="message">Sua Mensagem *</label>
+                        <textarea id="message" name="message" placeholder="Digite sua mensagem" required></textarea>
+                    </div>
+                    <div>
+                        <label for="screenshot">Captura de Tela (opcional)</label>
+                        <input type="file" id="screenshot" name="screenshot">
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="captcha" name="captcha">
+                        <label for="captcha">Não sou um robô</label>
+                    </div>
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="info-item">
-        <i class="fas fa-phone"></i>
-        <div>
-            <div class="info-label">Telefone</div>
-            <p class="info-text">(11) 1234-5678</p>
-        </div>
-    </div>
-    <div class="info-item">
-        <i class="fas fa-envelope"></i>
-        <div>
-            <div class="info-label">Email</div>
-            <p class="info-text">contato@empresa.com</p>
-        </div>
-    </div>
-    <div class="parent">
-        <div class="child child-1">
-            <button class="button btn-1">
-                <i class="fab fa-twitter"></i>
-            </button>
-        </div>
-        <div class="child child-2">
-            <button class="button btn-2">
-                <i class="fab fa-facebook-f"></i>
-            </button>
-        </div>
-        <div class="child child-3">
-            <button class="button btn-3">
-                <i class="fab fa-instagram"></i>
-            </button>
-        </div>
-        <div class="child child-4">
-            <button class="button btn-4">
-                <i class="fab fa-whatsapp"></i>
-            </button>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-</div>
-<footer>
-    {{>footer}}
-</footer>
+    <footer>
+        {{>footer}}
+    </footer>
 
 </body>
 

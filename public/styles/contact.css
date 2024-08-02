@@ -1,198 +1,91 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    line-height: 1.6;
     margin: 0;
     padding: 0;
 }
-
 .container {
-    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
-    padding-top:10dvh;
-    padding-bottom: 10dvh;
+    padding: 2rem;
+    padding-top: 13dvh;
 }
-
 .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
 }
-
-.form-section, .info-section {
-    border: rgba(196, 60, 60, 0.301) 1px solid;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
 }
-
-.heading {
-    font-size: 24px;
+.space-y-8 > * + * {
+    margin-top: 2rem;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+h2 {
+    font-size: 1.5rem;
     font-weight: bold;
-    margin: 0 0 10px;
+    margin-bottom: 1rem;
 }
-
-.subheading {
-    font-size: 16px;
-    color: #666;
+ul {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
 }
+li {
+    margin-bottom: 0.5rem;
+}
+.bg-gray-100 {
+    background-color: #dfdfdf52;
+    border-radius: 0.8rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
-.contact-form {
+}
+.text-muted {
+    color: #a0a4ad;
+}
+form {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
 }
-
-.form-group {
-    margin-bottom: 15px;
+label {
+    font-size: 0.875rem;
+    font-weight: 500;
 }
-
-.form-group label {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-}
-
-.form-group input, .form-group textarea {
+input, select, textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
 }
-
-.form-group textarea {
-    min-height: 150px;
+textarea {
+    min-height: 100px;
 }
-
-
-
-.contact-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.info-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.info-item svg {
-    margin-right: 10px;
-}
-
-.info-label {
-    font-weight: bold;
-}
-
-.info-text {
-    margin: 0;
-}
-
-.about-owner {
-    margin-top: 30px;
-}
-
-.tabs {
-    display: flex;
-}
-
-.tab {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: #fff;
-    margin-right: 5px;
-}
-
-.tab.active {
-    background-color: #007bff;
-    color: #fff;
-}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-.owner-info {
-    display: flex;
-    align-items: center;
-}
-
-.owner-avatar {
-    width: 60px;
-    height: 60px;
-    background-color: #007bff;
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    margin-right: 20px;
-}
-
-.text {
-    font-size: 16px;
-}
-
-
-.parent {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .child {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform-style: preserve-3d;
-    transition: all 0.5s ease-in-out;
-    border-radius: 50%;
-    margin: 0 5px;
-  }
-  
-  .child:hover {
-    background-color: white;
-    background-position: -100px 100px, -100px 100px;
-    transform: rotate3d(0.5, 1, 0, 30deg);
-    transform: perspective(180px) rotateX(60deg) translateY(2px);
-    box-shadow: 0px 10px 10px rgb(1, 49, 182);
-  }
-  
-  button {
+button {
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.5rem 1rem;
     border: none;
-    background-color: transparent;
-    font-size: 20px;
-  }
-  
-  .button:hover {
-    width: inherit;
-    height: inherit;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+button:hover {
+    background-color: #2563eb;
+}
+.checkbox-container {
     display: flex;
-    justify-content: center;
     align-items: center;
-    transform: translate3d(0px, 0px, 15px) perspective(180px) rotateX(-35deg) translateY(2px);
-    border-radius: 50%;
-  }
-
-
-  .page-title {
-    padding-top: 10dvh;
-    text-align: center;
-    margin-top: 20px;
-    font-size: 2em;
-    font-weight: bold;
+    gap: 0.5rem;
+}
+.checkbox-container input[type="checkbox"] {
+    width: auto;
 }
