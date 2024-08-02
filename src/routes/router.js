@@ -19,6 +19,29 @@ async function getUsuarioLogado(req) {
   usuarioLogado = await UsuarioDAO.getById(req.id);
 }
 
+
+const processCurtidas = async (tipo_item, usuarioLogado) => {
+  const todasCurtidas = await CurtidaDAO.getAll();
+  const curtidas = {};
+  const curtido = new Set();
+  const usuarioId = usuarioLogado ? usuarioLogado.id : null;
+
+  todasCurtidas.forEach(curtida => {
+    if (curtida.tipo_item === tipo_item) {
+      if (!curtidas[curtida.item_id]) {
+        curtidas[curtida.item_id] = 0;
+      }
+      curtidas[curtida.item_id]++;
+      if (usuarioId && curtida.usuario_id === usuarioId) {
+        curtido.add(curtida.item_id);
+      }
+    }
+  });
+
+  return { curtidas, curtido };
+};
+
+
 router.get('/', async (req, res) => {
   await getUsuarioLogado(req)
 
@@ -71,24 +94,26 @@ router.get('/eventos', async (req, res) => {
   await getUsuarioLogado(req);
   let listaEventos = await EventoDAO.getAll();
 
-  listaEventos = listaEventos.map(evento => ({
-    ...evento.dataValues,
-    dataInicio: formatDate(evento.dataValues.dataInicio),
-    dataFim: formatDate(evento.dataValues.dataFim),
-    dataCriacao: formatDate(evento.dataValues.dataCriacao)
-  }));
+  const { curtidas, curtido } = await processCurtidas('evento', usuarioLogado);
 
-  if (usuarioLogado) {
-    res.status(200).render("all-events", {
-      usuarioLogado: usuarioLogado.get(),
-      listaEventos
-    });
-  } else {
-    res.status(200).render("all-events", {
-      listaEventos
-    });
-  }
+  listaEventos = listaEventos.map(evento => {
+    const dataValues = evento.dataValues || evento;
+    return {
+      ...dataValues,
+      dataInicio: formatDate(dataValues.dataInicio),
+      dataFim: formatDate(dataValues.dataFim),
+      dataCriacao: formatDate(dataValues.dataCriacao || dataValues.createdAt),
+      total_curtidas: curtidas[dataValues.id] || 0,
+      curtido: curtido.has(dataValues.id)
+    };
+  });
+
+  res.status(200).render("all-events", {
+    usuarioLogado: usuarioLogado ? usuarioLogado.get() : null,
+    listaEventos
+  });
 });
+
 
 router.get('/evento/:id', async (req, res) => {
   await getUsuarioLogado(req);
@@ -125,35 +150,10 @@ router.get('/evento/:id', async (req, res) => {
 
 router.get('/empregos', async (req, res) => {
   await getUsuarioLogado(req);
-
-  // Obtém todos os empregos
   let listaEmpregos = await EmpregoDAO.getAll();
 
-  // Obtém todas as curtidas
-  const todasCurtidas = await CurtidaDAO.getAll();
+  const { curtidas, curtido } = await processCurtidas('emprego', usuarioLogado);
 
-  // Inicializa variáveis para armazenar as curtidas e os empregos curtidos pelo usuário logado
-  let curtidas = {};
-  let curtido = new Set();
-
-  // Se houver um usuário logado, armazena o ID do usuário
-  const usuarioId = usuarioLogado ? usuarioLogado.id : null;
-
-  // Contabiliza as curtidas por emprego e verifica se o usuário logado curtiu algum emprego
-  todasCurtidas.forEach(curtida => {
-    if (curtida.tipo_item === 'emprego') {
-      if (!curtidas[curtida.item_id]) {
-        curtidas[curtida.item_id] = 0;
-      }
-      curtidas[curtida.item_id]++;
-
-      if (usuarioId && curtida.usuario_id === usuarioId) {
-        curtido.add(curtida.item_id);
-      }
-    }
-  });
-
-  // Formata os dados dos empregos e adiciona as curtidas e o estado de curtido
   listaEmpregos = listaEmpregos.map(emprego => ({
     ...emprego.dataValues,
     data_criacao: formatDateWithoutTime(emprego.dataValues.data_criacao),
@@ -161,8 +161,6 @@ router.get('/empregos', async (req, res) => {
     curtido: curtido.has(emprego.dataValues.id)
   }));
 
-  // Renderiza a página com as informações de curtidas
-  console.log(listaEmpregos)
   res.status(200).render("all-jobs", {
     usuarioLogado: usuarioLogado ? usuarioLogado.get() : null,
     listaEmpregos
@@ -170,15 +168,16 @@ router.get('/empregos', async (req, res) => {
 });
 
 
-router.post('/empregos/curtida/:id', async (req, res) => {
+
+router.post('/empregos/curtida/:id', async (req, res) =>{
   await getUsuarioLogado(req);
 
-  if (usuarioLogado) {
+  if(usuarioLogado){
     let idEmprego = req.params.id;
 
     let curtida = await Curtida.findOne({
       where: {
-        tipo_item: 'emprego',
+        tipo_item: 'emprego', 
         item_id: idEmprego,
         usuario_id: usuarioLogado.id
       }
@@ -190,12 +189,12 @@ router.post('/empregos/curtida/:id', async (req, res) => {
       CurtidaDAO.create({
         usuario_id: usuarioLogado.id,
         item_id: idEmprego,
-        tipo_item: 'emprego'
+        tipo_item: 'emprego'  
       });
     }
-
+    
     res.redirect(req.get('Referer') || '/');
-  } else {
+  } else{
     res.redirect('/login')
   }
 
@@ -230,50 +229,24 @@ router.get('/emprego/:id', async (req, res) => {
 
 router.get('/parceiros', async (req, res) => {
   await getUsuarioLogado(req);
-
-  // Obtém todos os parceiros
   let listaParceiros = await ParceiroDAO.getAll();
 
-  // Obtém todas as curtidas
-  const todasCurtidas = await CurtidaDAO.getAll();
+  const { curtidas, curtido } = await processCurtidas('parceiro', usuarioLogado);
 
-  // Inicializa variáveis para armazenar as curtidas e os parceiros curtidos pelo usuário logado
-  let curtidas = {};
-  let curtido = new Set();
-
-  // Se houver um usuário logado, armazena o ID do usuário
-  const usuarioId = usuarioLogado ? usuarioLogado.id : null;
-
-  // Contabiliza as curtidas por parceiro e verifica se o usuário logado curtiu algum parceiro
-  todasCurtidas.forEach(curtida => {
-    if (curtida.tipo_item === 'parceiro') {
-      if (!curtidas[curtida.item_id]) {
-        curtidas[curtida.item_id] = 0;
-      }
-      curtidas[curtida.item_id]++;
-
-      if (usuarioId && curtida.usuario_id === usuarioId) {
-        curtido.add(curtida.item_id);
-      }
-    }
+  listaParceiros = listaParceiros.map(parceiro => {
+    const dataValues = parceiro.dataValues || parceiro;
+    return {
+      ...dataValues,
+      data_criacao: formatDateWithoutTime(dataValues.data_criacao || dataValues.createdAt),
+      total_curtidas: curtidas[dataValues.id] || 0,
+      curtido: curtido.has(dataValues.id)
+    };
   });
 
-
-  // Renderiza a página de parceiros com as informações necessárias
-  if (usuarioLogado) {
-    res.status(200).render("all-partners", {
-      usuarioLogado: usuarioLogado.get(),
-      listaParceiros,
-      curtidas,
-      curtido: Array.from(curtido)
-    });
-  } else {
-    res.status(200).render("all-partners", {
-      listaParceiros,
-      curtidas,
-      curtido: Array.from(curtido)
-    });
-  }
+  res.status(200).render("all-partners", {
+    usuarioLogado: usuarioLogado ? usuarioLogado.get() : null,
+    listaParceiros
+  });
 });
 
 
@@ -281,17 +254,28 @@ router.get('/noticias', async (req, res) => {
   await getUsuarioLogado(req);
   let listaNoticias = await NoticiaDAO.getAll();
 
-  if (usuarioLogado) {
-    res.status(200).render("all-news", {
-      usuarioLogado: usuarioLogado.get(),
-      listaNoticias
-    });
-  } else {
-    res.status(200).render("all-news", {
-      listaNoticias
-    });
-  }
+  // Log para verificar a estrutura dos dados
+  console.log(listaNoticias);
+
+  const { curtidas, curtido } = await processCurtidas('noticia', usuarioLogado);
+
+  listaNoticias = listaNoticias.map(noticia => {
+    const dataValues = noticia.dataValues || noticia;
+    return {
+      ...dataValues,
+      data_criacao: formatDateWithoutTime(dataValues.data_criacao || dataValues.createdAt),
+      total_curtidas: curtidas[dataValues.id] || 0,
+      curtido: curtido.has(dataValues.id)
+    };
+  });
+
+  res.status(200).render("all-news", {
+    usuarioLogado: usuarioLogado ? usuarioLogado.get() : null,
+    listaNoticias
+  });
 });
+
+
 
 router.get('/noticia/:id', async (req, res) => {
   await getUsuarioLogado(req);
