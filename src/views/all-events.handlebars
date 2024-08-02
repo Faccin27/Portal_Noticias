@@ -40,7 +40,7 @@
                   </a>
                   <div class="card-actions">
                     <span class="like-count">{{total_curtidas}}</span>
-                    <form action="/empregos/curtida/{{this.id}}" method="POST">
+                    <form action="/eventos/curtida/{{this.id}}" method="POST">
                       {{#if this.curtido}}
                       <button class="cleberson" type="submit"><i class="favorite fa-solid fa-heart"></i></button>
                       {{else}}

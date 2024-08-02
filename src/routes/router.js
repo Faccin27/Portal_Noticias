@@ -114,6 +114,35 @@ router.get('/eventos', async (req, res) => {
   });
 });
 
+router.post('/eventos/curtida/:id', async (req, res) =>{
+  await getUsuarioLogado(req);
+
+  if(usuarioLogado){
+    let idEvento = req.params.id;
+
+    let curtida = await Curtida.findOne({
+      where: {
+        tipo_item: 'evento', 
+        item_id: idEvento,
+        usuario_id: usuarioLogado.id
+      }
+    });
+
+    if (curtida) {
+      CurtidaDAO.delete(curtida.id);
+    } else {
+      CurtidaDAO.create({
+        usuario_id: usuarioLogado.id,
+        item_id: idEvento,
+        tipo_item: 'evento'  
+      });
+    }
+    
+    res.redirect(req.get('Referer') || '/');
+  } else{
+    res.redirect('/login')
+  }
+})
 
 router.get('/evento/:id', async (req, res) => {
   await getUsuarioLogado(req);
@@ -197,7 +226,6 @@ router.post('/empregos/curtida/:id', async (req, res) =>{
   } else{
     res.redirect('/login')
   }
-
 })
 
 router.get('/emprego/:id', async (req, res) => {
@@ -249,6 +277,36 @@ router.get('/parceiros', async (req, res) => {
   });
 });
 
+router.post('/parceiros/curtida/:id', async (req, res) =>{
+  await getUsuarioLogado(req);
+
+  if(usuarioLogado){
+    let idParceiro = req.params.id;
+
+    let curtida = await Curtida.findOne({
+      where: {
+        tipo_item: 'parceiro', 
+        item_id: idParceiro,
+        usuario_id: usuarioLogado.id
+      }
+    });
+
+    if (curtida) {
+      CurtidaDAO.delete(curtida.id);
+    } else {
+      CurtidaDAO.create({
+        usuario_id: usuarioLogado.id,
+        item_id: idParceiro,
+        tipo_item: 'parceiro'  
+      });
+    }
+    
+    res.redirect(req.get('Referer') || '/');
+  } else{
+    res.redirect('/login')
+  }
+})
+
 
 router.get('/noticias', async (req, res) => {
   await getUsuarioLogado(req);
@@ -275,6 +333,36 @@ router.get('/noticias', async (req, res) => {
   });
 });
 
+
+router.post('/noticias/curtida/:id', async (req, res) =>{
+  await getUsuarioLogado(req);
+
+  if(usuarioLogado){
+    let idNoticia = req.params.id;
+
+    let curtida = await Curtida.findOne({
+      where: {
+        tipo_item: 'noticia', 
+        item_id: idNoticia,
+        usuario_id: usuarioLogado.id
+      }
+    });
+
+    if (curtida) {
+      CurtidaDAO.delete(curtida.id);
+    } else {
+      CurtidaDAO.create({
+        usuario_id: usuarioLogado.id,
+        item_id: idNoticia,
+        tipo_item: 'noticia'  
+      });
+    }
+    
+    res.redirect(req.get('Referer') || '/');
+  } else{
+    res.redirect('/login')
+  }
+})
 
 
 router.get('/noticia/:id', async (req, res) => {
