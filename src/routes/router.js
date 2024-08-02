@@ -170,15 +170,15 @@ router.get('/empregos', async (req, res) => {
 });
 
 
-router.post('/empregos/curtida/:id', async (req, res) =>{
+router.post('/empregos/curtida/:id', async (req, res) => {
   await getUsuarioLogado(req);
 
-  if(usuarioLogado){
+  if (usuarioLogado) {
     let idEmprego = req.params.id;
 
     let curtida = await Curtida.findOne({
       where: {
-        tipo_item: 'emprego', 
+        tipo_item: 'emprego',
         item_id: idEmprego,
         usuario_id: usuarioLogado.id
       }
@@ -190,12 +190,12 @@ router.post('/empregos/curtida/:id', async (req, res) =>{
       CurtidaDAO.create({
         usuario_id: usuarioLogado.id,
         item_id: idEmprego,
-        tipo_item: 'emprego'  
+        tipo_item: 'emprego'
       });
     }
-    
+
     res.redirect(req.get('Referer') || '/');
-  } else{
+  } else {
     res.redirect('/login')
   }
 
@@ -230,19 +230,52 @@ router.get('/emprego/:id', async (req, res) => {
 
 router.get('/parceiros', async (req, res) => {
   await getUsuarioLogado(req);
+
+  // Obtém todos os parceiros
   let listaParceiros = await ParceiroDAO.getAll();
 
+  // Obtém todas as curtidas
+  const todasCurtidas = await CurtidaDAO.getAll();
+
+  // Inicializa variáveis para armazenar as curtidas e os parceiros curtidos pelo usuário logado
+  let curtidas = {};
+  let curtido = new Set();
+
+  // Se houver um usuário logado, armazena o ID do usuário
+  const usuarioId = usuarioLogado ? usuarioLogado.id : null;
+
+  // Contabiliza as curtidas por parceiro e verifica se o usuário logado curtiu algum parceiro
+  todasCurtidas.forEach(curtida => {
+    if (curtida.tipo_item === 'parceiro') {
+      if (!curtidas[curtida.item_id]) {
+        curtidas[curtida.item_id] = 0;
+      }
+      curtidas[curtida.item_id]++;
+
+      if (usuarioId && curtida.usuario_id === usuarioId) {
+        curtido.add(curtida.item_id);
+      }
+    }
+  });
+
+
+  // Renderiza a página de parceiros com as informações necessárias
   if (usuarioLogado) {
     res.status(200).render("all-partners", {
       usuarioLogado: usuarioLogado.get(),
-      listaParceiros
-    })
+      listaParceiros,
+      curtidas,
+      curtido: Array.from(curtido)
+    });
   } else {
     res.status(200).render("all-partners", {
-      listaParceiros
-    })
+      listaParceiros,
+      curtidas,
+      curtido: Array.from(curtido)
+    });
   }
 });
+
 
 router.get('/noticias', async (req, res) => {
   await getUsuarioLogado(req);

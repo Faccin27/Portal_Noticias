@@ -22,7 +22,7 @@ Curtida.init({
     }
   },
   tipo_item: {
-    type: DataTypes.ENUM('noticia', 'emprego', 'trabalho', 'evento'),
+    type: DataTypes.ENUM('noticia', 'emprego', 'parceiro', 'evento'),
     allowNull: false
   },
   item_id: {
