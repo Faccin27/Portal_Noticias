@@ -1,127 +1,218 @@
 /* Basic reset and global styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  body {
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.6;
-    color: #333;
-    padding-top: 60px; /* Adiciona um espaço para o header */
-  }
-  .container {
-    display: flex;
-    min-height: 100vh;
-  }
-  header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #333;
-    color: #fff;
-    padding: 1rem;
-    z-index: 1000; /* Garante que o cabeçalho esteja acima de outros elementos */
-  }
-  .main {
-    flex: 1;
-    padding: 1rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-  .latest-news {
-    margin: 0 auto;
-    max-width: 1200px;
-  }
-  .latest-news-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-  .latest-news-header h2 {
-    font-size: 1.5rem;
-  }
-  .news-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1rem;
-  }
-  .news-card {
-    background: #f9f9f9;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  .news-image {
-    width: 100%;
-    height: auto;
-    max-height: 200px; /* Limita a altura máxima da imagem */
-    object-fit: cover; /* Ajusta a imagem dentro do contêiner */
-  }
-  .news-body {
-    padding: 1rem;
-  }
-  .news-category {
-    font-size: 0.875rem;
-    color: #666;
-  }
-  .news-title {
-    font-size: 1.25rem;
-    margin: 0.5rem 0;
-  }
-  .news-description {
-    flex-grow: 1;
-    font-size: 0.9rem;
-    margin-bottom: 15px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2; /* Número de linhas visíveis */
-    line-clamp: 3; /* Propriedade padrão para compatibilidade */
-    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0)); /* Gradiente para desvanecer a última linha */
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0)); /* Propriedade padrão para compatibilidade */
-  }
-  .read-more {
-    display: flex;
-    align-items: center;
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  .read-more-icon {
-    margin-left: 0.5rem;
-  }
-  .aside {
-    background-color: #f4f4f4;
-    padding: 1rem;
-    width: 300px; /* Ajusta a largura do aside */
-  }
-  .aside-content {
-    max-width: 100%;
-  }
-  .categories {
-    margin-bottom: 2rem;
-  }
-  .categories-nav a {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 0;
-    color: #333;
-    text-decoration: none;
-  }
-  .category-icon {
-    margin-right: 0.5rem;
-  }
-  .footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 1rem;
-  }
-  
-  .viewall{
-      color: #007bff;
-      text-decoration:underline;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  padding-top: 60px;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.main {
+  flex: 1;
+  padding: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.latest-news {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.latest-news-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.latest-news-header h2 {
+  font-size: 1.5rem;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.news-card {
+  background: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.news-image {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.news-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.news-category {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.news-title {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+}
+
+.news-description {
+  flex-grow: 1;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 3;
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0));
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0));
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.read-more {
+  display: flex;
+  align-items: center;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.read-more-icon {
+  margin-left: 0.5rem;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+}
+
+.card-actions form {
+  margin-right: 0.5rem;
+}
+
+.card-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.cleberson {
+  color: #e74c3c;
+}
+
+.cleberson:hover {
+  color: #c0392b;
+}
+
+.edit {
+  color: #3498db;
+}
+
+.edit:hover {
+  color: #2980b9;
+}
+
+.delete {
+  color: #e74c3c;
+}
+
+.delete:hover {
+  color: #c0392b;
+}
+
+.comment {
+  color: #2ecc71;
+}
+
+.comment:hover {
+  color: #27ae60;
+}
+
+.aside {
+  background-color: #f4f4f4;
+  padding: 1rem;
+  width: 300px;
+}
+
+.aside-content {
+  max-width: 100%;
+}
+
+.categories {
+  margin-bottom: 2rem;
+}
+
+.categories-nav a {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  color: #333;
+  text-decoration: none;
+}
+
+.category-icon {
+  margin-right: 0.5rem;
+}
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+}
+
+.viewall {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.like-count {
+  margin-left: -1dvh;
+  font-size: 14px;
+  color: #555;
+}

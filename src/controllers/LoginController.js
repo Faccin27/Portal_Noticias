@@ -20,7 +20,7 @@ class LoginController {
       }
 
       // Gera o token JWT
-      const token = jwt.sign({ id: usuario.id }, 'chave_secreta', { expiresIn: '1H' });
+      const token = jwt.sign({ id: usuario.id }, 'chave_secreta', { expiresIn: '1D' });
 
       // Define o cookie com o token JWT
       res.cookie("tokenJWT", token);

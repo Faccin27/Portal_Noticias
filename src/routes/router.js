@@ -8,8 +8,10 @@ const NoticiaDAO = require('../models/dao/NoticiaDAO');
 const ParceiroDAO = require("../models/dao/ParceiroDAO");
 const EmpregoDAO = require('../models/dao/EmpregoDAO');
 const EventoDAO = require('../models/dao/EventoDAO');
+const CurtidaDAO = require('../models/dao/CurtidaDAO');
 const { formatDate, formatDateWithoutTime, formatarData } = require('../utils/dateUtils');
 const upload = require('../config/multer');
+const Curtida = require('../models/Curtida');
 
 let usuarioLogado;
 
@@ -123,24 +125,81 @@ router.get('/evento/:id', async (req, res) => {
 
 router.get('/empregos', async (req, res) => {
   await getUsuarioLogado(req);
+
+  // Obtém todos os empregos
   let listaEmpregos = await EmpregoDAO.getAll();
 
+  // Obtém todas as curtidas
+  const todasCurtidas = await CurtidaDAO.getAll();
+
+  // Inicializa variáveis para armazenar as curtidas e os empregos curtidos pelo usuário logado
+  let curtidas = {};
+  let curtido = new Set();
+
+  // Se houver um usuário logado, armazena o ID do usuário
+  const usuarioId = usuarioLogado ? usuarioLogado.id : null;
+
+  // Contabiliza as curtidas por emprego e verifica se o usuário logado curtiu algum emprego
+  todasCurtidas.forEach(curtida => {
+    if (curtida.tipo_item === 'emprego') {
+      if (!curtidas[curtida.item_id]) {
+        curtidas[curtida.item_id] = 0;
+      }
+      curtidas[curtida.item_id]++;
+
+      if (usuarioId && curtida.usuario_id === usuarioId) {
+        curtido.add(curtida.item_id);
+      }
+    }
+  });
+
+  // Formata os dados dos empregos e adiciona as curtidas e o estado de curtido
   listaEmpregos = listaEmpregos.map(emprego => ({
     ...emprego.dataValues,
-    data_criacao: formatDateWithoutTime(emprego.dataValues.data_criacao)
+    data_criacao: formatDateWithoutTime(emprego.dataValues.data_criacao),
+    total_curtidas: curtidas[emprego.dataValues.id] || 0,
+    curtido: curtido.has(emprego.dataValues.id)
   }));
 
-  if (usuarioLogado) {
-    res.status(200).render("all-jobs", {
-      usuarioLogado: usuarioLogado.get(),
-      listaEmpregos
-    });
-  } else {
-    res.status(200).render("all-jobs", {
-      listaEmpregos
-    });
-  }
+  // Renderiza a página com as informações de curtidas
+  console.log(listaEmpregos)
+  res.status(200).render("all-jobs", {
+    usuarioLogado: usuarioLogado ? usuarioLogado.get() : null,
+    listaEmpregos
+  });
 });
+
+
+router.post('/empregos/curtida/:id', async (req, res) =>{
+  await getUsuarioLogado(req);
+
+  if(usuarioLogado){
+    let idEmprego = req.params.id;
+
+    let curtida = await Curtida.findOne({
+      where: {
+        tipo_item: 'emprego', 
+        item_id: idEmprego,
+        usuario_id: usuarioLogado.id
+      }
+    });
+
+    if (curtida) {
+      CurtidaDAO.delete(curtida.id);
+    } else {
+      CurtidaDAO.create({
+        usuario_id: usuarioLogado.id,
+        item_id: idEmprego,
+        tipo_item: 'emprego'  
+      });
+    }
+    
+    res.redirect(req.get('Referer') || '/');
+  } else{
+    res.redirect('/login')
+  }
+
+})
 
 router.get('/emprego/:id', async (req, res) => {
   await getUsuarioLogado(req);
