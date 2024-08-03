@@ -96,7 +96,7 @@ router.get('/eventos', async (req, res) => {
   let listaEventos = await EventoDAO.getAll();
   const { curtidas, curtido } = await processCurtidas('evento', usuarioLogado);
   const cargo = usuarioLogado.role;
-  const isAdmin =usuarioLogado.role;
+  const isAdmin = usuarioLogado.role;
 
   listaEventos = listaEventos.map(evento => {
     const dataValues = evento.dataValues || evento;
@@ -185,7 +185,7 @@ router.get('/evento/:id', async (req, res) => {
 router.get('/empregos', async (req, res) => {
   await getUsuarioLogado(req);
   let listaEmpregos = await EmpregoDAO.getAll();
-  const isAdmin =usuarioLogado.role;
+  const isAdmin = usuarioLogado.role;
 
   const { curtidas, curtido } = await processCurtidas('emprego', usuarioLogado);
 
@@ -265,7 +265,7 @@ router.get('/emprego/:id', async (req, res) => {
 router.get('/parceiros', async (req, res) => {
   await getUsuarioLogado(req);
   let listaParceiros = await ParceiroDAO.getAll();
-  const isAdmin =usuarioLogado.role;
+  const isAdmin = usuarioLogado.role;
 
 
   const { curtidas, curtido } = await processCurtidas('parceiro', usuarioLogado);
@@ -321,7 +321,7 @@ router.post('/parceiros/curtida/:id', async (req, res) => {
 router.get('/noticias', async (req, res) => {
   await getUsuarioLogado(req);
   let listaNoticias = await NoticiaDAO.getAll();
-  const isAdmin =usuarioLogado.role;
+  const isAdmin = usuarioLogado.role;
 
 
   // Log para verificar a estrutura dos dados
@@ -664,6 +664,18 @@ router.get('/contato', async (req, res) => {
   }
 })
 
+
+router.get('/usuarios', async (req, res) => {
+  await getUsuarioLogado(req);
+
+  let listaUsuarios = await UsuarioDAO.getAll()
+  console.log(listaUsuarios)
+  if (usuarioLogado.role == 'admin') {
+    res.render('usuarios', {
+      listaUsuarios: listaUsuarios
+    })
+  }
+})
 
 router.get('/deslogar', (req, res) => {
   res.clearCookie('tokenJWT');
