@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     <script src="/scripts/navbar.js" defer></script>
 </head>
+
 <body>
     <nav class="nav">
         <i class="uil uil-bars navOpenBtn"></i>
@@ -20,6 +22,9 @@
             <li><a href="/contato">Contato</a></li>
             <li><a href="/parceiros">Parceiros</a></li>
             <li><a href="/eventos">Eventos</a></li>
+            {{#ifCond usuarioLogado.role '==' 'admin' }}
+            <li><a href="/usuarios">Usuarios</a></li>
+            {{/ifCond}}
         </ul>
 
         <i class="uil uil-search search-icon" id="searchIcon"></i>
@@ -28,19 +33,23 @@
             <input type="text" id="searchInput" placeholder="Search here..." />
         </div>
 
-        {{#if usuarioLogado}}
-        <div class="profile-details" onclick="toggleCombobox()">
-            <img src="/images/profile.jpg" class="profile-image-sidebar">
-            <span class="admin_name">{{usuarioLogado.nome}}</span>
-            <i class="bx bx-chevron-down"></i>
-            <div class="combobox" id="profileCombobox">
-                <a href="/profile"> <i class="bx bx-user" style="font-size: 18px;"></i> Configurações</a>
-                <a href="/deslogar"> <i class="bx bx-log-out" style="font-size: 18px;"></i> Deslogar</a>
-            </div>
+{{#ifNotPage currentPage "usuarios"}}
+    {{#if usuarioLogado}}
+    <div class="profile-details" onclick="toggleCombobox()">
+        <img src="/images/profile.jpg" class="profile-image-sidebar">
+        <span class="admin_name">{{usuarioLogado.nome}}</span>
+        <i class="bx bx-chevron-down"></i>
+        <div class="combobox" id="profileCombobox">
+            <a href="/profile"> <i class="bx bx-user" style="font-size: 18px;"></i> Configurações</a>
+            <a href="/deslogar"> <i class="bx bx-log-out" style="font-size: 18px;"></i> Deslogar</a>
         </div>
-        {{else}}
-        <a href="/login" class="login-btn">Login</a>
-        {{/if}}
+    </div>
+    {{else}}
+    <a href="/login" class="login-btn">Login</a>
+    {{/if}}
+{{/ifNotPage}}
+
     </nav>
 </body>
+
 </html>

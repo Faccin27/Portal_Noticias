@@ -9,6 +9,7 @@ body {
     max-width: 56rem;
     margin: 0 auto;
     padding: 2rem 1rem;
+    padding-top: 10dvh;
 }
 h1 {
     font-size: 1.5rem;

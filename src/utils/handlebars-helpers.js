@@ -52,3 +52,15 @@ Handlebars.registerHelper('uniqueEmploymentTypes', function (listaEmpregos) {
   return Array.from(types);
 });
 
+Handlebars.registerHelper('eq', function (a, b) {
+  return a === b;
+});
+
+Handlebars.registerHelper('ifNotPage', function(currentPage, pageToCheck, options) {
+  // Compara a página atual com a página a ser verificada
+  if (currentPage !== pageToCheck) {
+      return options.fn(this); // Renderiza o bloco de código se a página não for a verificada
+  } else {
+      return options.inverse(this); // Renderiza o bloco 'else' se a página for a verificada
+  }
+});

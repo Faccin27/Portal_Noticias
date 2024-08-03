@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,13 @@
     <link rel="stylesheet" href="/styles/usuarios.css">
     <script src="/scripts/usuarios.js" defer></script>
 </head>
+
 <body>
+
+<header>
+    {{> navbar}}
+</header>
+
     <div class="container">
         <h1>Gerenciamento de Usuários</h1>
         <div class="card">
@@ -24,29 +31,39 @@
                 </thead>
                 <tbody>
                     {{#each listaUsuarios}}
-                        <tr>
-                            <td>{{this.id}}</td>
-                            <td>{{this.nome}}</td>
-                            <td>{{this.email}}</td>
-                            <td>{{this.senha}}</td>
-                            <td>{{this.role}}</td>
+                    <tr>
+                        <td>{{this.id}}</td>
+                        <td>{{this.nome}}</td>
+                        <td>{{this.email}}</td>
+                        <td>{{this.senha}}</td>
+                        <td>{{this.role}}</td>
+                        <td>
+                            <input type="checkbox" class="admin-checkbox" {{#if (eq this.role 'admin' )}}checked{{/if}}
+                                onchange="updateAdminStatus({{this.id}}, this.checked)">
+                        </td>
 
-                            <td style="text-align: right;">
-                                <button class="delete-btn" onclick="deleteUser({{this.id}})">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M3 6h18"></path>
-                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                                    </svg>
-                                    <span class="sr-only">Excluir usuário</span>
-                                </button>
-                            </td>
-                        </tr>
+                        <td style="text-align: right;">
+                            <button class="delete-btn" onclick="deleteUser({{this.id}})">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M3 6h18"></path>
+                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                                </svg>
+                                <span class="sr-only">Excluir usuário</span>
+                            </button>
+                        </td>
+                    </tr>
                     {{/each}}
                 </tbody>
             </table>
         </div>
     </div>
-    <script>
-</body>
-</html>
+
+<footer>
+    {{> footer}}
+</footer>
+
+</body >
+</html >

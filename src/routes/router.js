@@ -672,7 +672,8 @@ router.get('/usuarios', async (req, res) => {
   console.log(listaUsuarios)
   if (usuarioLogado.role == 'admin') {
     res.render('usuarios', {
-      listaUsuarios: listaUsuarios
+      listaUsuarios: listaUsuarios,
+      currentPage: 'usuarios'
     })
   }
 })
@@ -694,6 +695,32 @@ router.delete('/usuarios/:id', async (req, res) => {
     }
   } else {
     res.status(403).json({ error: 'Usuario não autenticado' })
+  }
+});
+
+router.put('/usuarios/update/:id', async (req, res) => {
+  await getUsuarioLogado(req);
+  if (usuarioLogado.role === 'admin') {
+    const usuarioId = req.params.id;
+    const novoRole = req.body.role;
+
+    if (novoRole !== 'admin' && novoRole !== 'user') {
+      return res.status(400).json({ error: 'Role inválido. Deve ser "admin" ou "user".' });
+    }
+
+    try {
+      const result = await UsuarioDAO.updateRole(usuarioId, novoRole);
+      if (result.success) {
+        res.status(200).json({ message: result.message });
+      } else {
+        res.status(404).json({ message: result.message });
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar role do usuário:', error);
+      res.status(500).json({ error: 'Erro ao atualizar role do usuário' });
+    }
+  } else {
+    res.status(403).json({ error: 'Usuário não autorizado' });
   }
 });
 
