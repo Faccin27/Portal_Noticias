@@ -677,6 +677,26 @@ router.get('/usuarios', async (req, res) => {
   }
 })
 
+router.delete('/usuarios/:id', async (req, res) => {
+  await getUsuarioLogado(req);
+  if (usuarioLogado.role == 'admin') {
+    const usuarioId = req.params.id;
+
+    try {
+      const result = await UsuarioDAO.delete(usuarioId);
+      if (result.sucess) {
+        res.status(200).json({ message: result.message })
+      } else {
+        res.status(404).json({ message: result.message })
+      }
+    } catch (error) {
+      res.status(500).json({ error: 'erro ao deletar usuario' })
+    }
+  } else {
+    res.status(403).json({ error: 'Usuario não autenticado' })
+  }
+});
+
 router.get('/deslogar', (req, res) => {
   res.clearCookie('tokenJWT');
   return res.redirect(301, '/');
