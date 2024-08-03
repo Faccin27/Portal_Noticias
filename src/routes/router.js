@@ -12,6 +12,7 @@ const CurtidaDAO = require('../models/dao/CurtidaDAO');
 const { formatDate, formatDateWithoutTime, formatarData } = require('../utils/dateUtils');
 const upload = require('../config/multer');
 const Curtida = require('../models/Curtida');
+const { is } = require("date-fns/locale");
 
 let usuarioLogado;
 
@@ -93,8 +94,9 @@ router.get('/login', async (req, res) => {
 router.get('/eventos', async (req, res) => {
   await getUsuarioLogado(req);
   let listaEventos = await EventoDAO.getAll();
-
   const { curtidas, curtido } = await processCurtidas('evento', usuarioLogado);
+  const cargo = usuarioLogado.role;
+  const isAdmin =usuarioLogado.role;
 
   listaEventos = listaEventos.map(evento => {
     const dataValues = evento.dataValues || evento;
@@ -104,13 +106,16 @@ router.get('/eventos', async (req, res) => {
       dataFim: formatDate(dataValues.dataFim),
       dataCriacao: formatDate(dataValues.dataCriacao || dataValues.createdAt),
       total_curtidas: curtidas[dataValues.id] || 0,
-      curtido: curtido.has(dataValues.id)
+      curtido: curtido.has(dataValues.id),
+      cargo: cargo
     };
   });
+  console.log(listaEventos)
 
   res.status(200).render("all-events", {
-    usuarioLogado: usuarioLogado ? usuarioLogado.get() : null,
-    listaEventos
+    usuarioLogado: usuarioLogado.get(),
+    listaEventos: listaEventos,
+    isAdmin: isAdmin
   });
 });
 
@@ -180,6 +185,7 @@ router.get('/evento/:id', async (req, res) => {
 router.get('/empregos', async (req, res) => {
   await getUsuarioLogado(req);
   let listaEmpregos = await EmpregoDAO.getAll();
+  const isAdmin =usuarioLogado.role;
 
   const { curtidas, curtido } = await processCurtidas('emprego', usuarioLogado);
 
@@ -192,7 +198,8 @@ router.get('/empregos', async (req, res) => {
 
   res.status(200).render("all-jobs", {
     usuarioLogado: usuarioLogado ? usuarioLogado.get() : null,
-    listaEmpregos
+    listaEmpregos,
+    isAdmin: isAdmin
   });
 });
 
@@ -258,6 +265,8 @@ router.get('/emprego/:id', async (req, res) => {
 router.get('/parceiros', async (req, res) => {
   await getUsuarioLogado(req);
   let listaParceiros = await ParceiroDAO.getAll();
+  const isAdmin =usuarioLogado.role;
+
 
   const { curtidas, curtido } = await processCurtidas('parceiro', usuarioLogado);
 
@@ -273,7 +282,8 @@ router.get('/parceiros', async (req, res) => {
 
   res.status(200).render("all-partners", {
     usuarioLogado: usuarioLogado ? usuarioLogado.get() : null,
-    listaParceiros
+    listaParceiros,
+    isAdmin: isAdmin
   });
 });
 
@@ -311,6 +321,8 @@ router.post('/parceiros/curtida/:id', async (req, res) => {
 router.get('/noticias', async (req, res) => {
   await getUsuarioLogado(req);
   let listaNoticias = await NoticiaDAO.getAll();
+  const isAdmin =usuarioLogado.role;
+
 
   // Log para verificar a estrutura dos dados
   console.log(listaNoticias);
@@ -329,7 +341,8 @@ router.get('/noticias', async (req, res) => {
 
   res.status(200).render("all-news", {
     usuarioLogado: usuarioLogado ? usuarioLogado.get() : null,
-    listaNoticias
+    listaNoticias,
+    isAdmin: isAdmin
   });
 });
 

@@ -6,7 +6,7 @@ Handlebars.registerHelper('limit', function(array, limit) {
     return array.slice(0, limit);
 });
 
-
+// Helper para comparações condicionais
 Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
   switch (operator) {
     case '==':
@@ -27,5 +27,14 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
       return (v1 >= v2) ? options.fn(this) : options.inverse(this);
     default:
       return options.inverse(this);
+  }
+});
+
+// Helper para verificar se o cargo é 'admin'
+Handlebars.registerHelper('isAdmin', function(cargo, options) {
+  if (cargo === 'admin') {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
   }
 });
