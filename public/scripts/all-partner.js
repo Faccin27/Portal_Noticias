@@ -14,6 +14,29 @@ function deleteProduct(id) {
   }
 }
 
+const searchInput = document.getElementById('searchInput');
+
+if (searchInput) {
+  searchInput.addEventListener('input', (event) => {
+    const query = event.target.value.toLowerCase();
+    const partnerCards = document.querySelectorAll('.partner-card');
+
+    partnerCards.forEach((card) => {
+      const title = card.querySelector('.partner-name').textContent.toLowerCase();
+      const description = card.querySelector('.partner-description').textContent.toLowerCase();
+      const content = card.querySelector('.read-more-g').getAttribute('data-content').toLowerCase();
+      const category = card.querySelector('.partner-category') ? card.querySelector('.partner-category').textContent.toLowerCase() : ''; // Ajuste para categorias opcionais
+
+      if (title.includes(query) || description.includes(query) || content.includes(query) || category.includes(query)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
 
 

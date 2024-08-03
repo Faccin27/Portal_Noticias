@@ -1,64 +1,76 @@
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-}
-.container {
+
+
+.contact-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
     padding-top: 13dvh;
 }
-.grid {
+
+.contact-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
 }
+
 @media (min-width: 768px) {
-    .grid {
+    .contact-grid {
         grid-template-columns: 1fr 1fr;
     }
 }
-.space-y-8 > * + * {
+
+.contact-info > * + * {
     margin-top: 2rem;
 }
+
 img {
     max-width: 100%;
     height: auto;
     object-fit: cover;
 }
+
 h2 {
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 1rem;
 }
+
 ul {
     list-style-type: decimal;
     padding-left: 1.5rem;
 }
+
 li {
     margin-bottom: 0.5rem;
 }
-.bg-gray-100 {
+
+.contact-form-section {
     background-color: #dfdfdf52;
     border-radius: 0.8rem;
     padding: 1.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-
 }
+
 .text-muted {
     color: #a0a4ad;
 }
-form {
+
+.contact-form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
 label {
     font-size: 0.875rem;
     font-weight: 500;
 }
+
 input, select, textarea {
     width: 100%;
     padding: 0.5rem;
@@ -66,9 +78,11 @@ input, select, textarea {
     border-radius: 0.25rem;
     font-size: 0.875rem;
 }
+
 textarea {
     min-height: 100px;
 }
+
 button {
     background-color: #3b82f6;
     color: white;
@@ -78,14 +92,17 @@ button {
     cursor: pointer;
     font-size: 0.875rem;
 }
+
 button:hover {
     background-color: #2563eb;
 }
+
 .checkbox-container {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
+
 .checkbox-container input[type="checkbox"] {
     width: auto;
 }

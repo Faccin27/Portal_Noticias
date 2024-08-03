@@ -15,3 +15,25 @@ function deleteProduct(id) {
       .catch((error) => console.error("Erro:", error));
   }
 }
+
+
+const searchInput = document.getElementById('searchInput');
+
+if (searchInput) {
+  searchInput.addEventListener('input', (event) => {
+    const query = event.target.value.toLowerCase();
+    const newsCards = document.querySelectorAll('.news-card');
+
+    newsCards.forEach((card) => {
+      const title = card.querySelector('.news-title').textContent.toLowerCase();
+      const category = card.querySelector('.news-category').textContent.toLowerCase();
+      const description = card.querySelector('.news-description').textContent.toLowerCase();
+      
+      if (title.includes(query) || category.includes(query) || description.includes(query)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+}

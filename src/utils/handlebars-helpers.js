@@ -38,3 +38,5 @@ Handlebars.registerHelper('isAdmin', function(cargo, options) {
     return options.inverse(this);
   }
 });
+
+

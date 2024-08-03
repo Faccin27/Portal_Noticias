@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -9,11 +8,10 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     <script src="/scripts/navbar.js" defer></script>
 </head>
-
 <body>
     <nav class="nav">
         <i class="uil uil-bars navOpenBtn"></i>
-        <a href="/" class="logo">NoticeDay </a>
+        <a href="/" class="logo">NoticeDay</a>
 
         <ul class="nav-links">
             <i class="uil uil-times navCloseBtn"></i>
@@ -27,7 +25,7 @@
         <i class="uil uil-search search-icon" id="searchIcon"></i>
         <div class="search-box">
             <i class="uil uil-search search-icon"></i>
-            <input type="text" placeholder="Search here..." />
+            <input type="text" id="searchInput" placeholder="Search here..." />
         </div>
 
         {{#if usuarioLogado}}
@@ -40,12 +38,9 @@
                 <a href="/deslogar"> <i class="bx bx-log-out" style="font-size: 18px;"></i> Deslogar</a>
             </div>
         </div>
-
         {{else}}
         <a href="/login" class="login-btn">Login</a>
-
         {{/if}}
     </nav>
 </body>
-
 </html>

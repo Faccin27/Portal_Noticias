@@ -16,3 +16,24 @@ function deleteProduct(id) {
     }
   }
   
+
+  const searchInput = document.getElementById('searchInput');
+
+if (searchInput) {
+  searchInput.addEventListener('input', (event) => {
+    const query = event.target.value.toLowerCase();
+    const eventCards = document.querySelectorAll('.event-card');
+
+    eventCards.forEach((card) => {
+      const title = card.querySelector('.event-title').textContent.toLowerCase();
+      const description = card.querySelector('.event-description').textContent.toLowerCase();
+      const content = card.querySelector('.read-more-g').textContent.toLowerCase();
+
+      if (title.includes(query) || description.includes(query) || content.includes(query)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+}

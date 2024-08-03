@@ -14,29 +14,29 @@
         {{> navbar}}
     </header>
 
-    <div class="container">
-        <div class="grid">
-            <div class="space-y-8">
+    <div class="contact-container">
+        <div class="contact-grid">
+            <div class="contact-info">
                 <img src="images/teste.png" width="500" height="450">
-                <div>
+                <div class="contact-services">
                     <h2>Como podemos ajudar?</h2>
                     <ul>
-                        <li> • Divulgação de notícias
-                        <li> • Publicação de anúncios e comunicados
-                        <li> • Promoção de eventos locais e regionais
-                        <li> • Entrevistas e reportagens especiais
-                        <li> • Criação de conteúdo patrocinado
-                        <li> • Marketing e publicidade digital
-                        <li> • Atualizações em tempo real sobre eventos importantes
-                        <li> • Cobertura de esportes locais
-                        <li> • Publicação de editoriais e artigos de opinião
-                        <li> • Informações sobre oportunidades de emprego
-                        <li> • Destacar parcerias com empresas locais
+                        <li> • Divulgação de notícias</li>
+                        <li> • Publicação de anúncios e comunicados</li>
+                        <li> • Promoção de eventos locais e regionais</li>
+                        <li> • Entrevistas e reportagens especiais</li>
+                        <li> • Criação de conteúdo patrocinado</li>
+                        <li> • Marketing e publicidade digital</li>
+                        <li> • Atualizações em tempo real sobre eventos importantes</li>
+                        <li> • Cobertura de esportes locais</li>
+                        <li> • Publicação de editoriais e artigos de opinião</li>
+                        <li> • Informações sobre oportunidades de emprego</li>
+                        <li> • Destacar parcerias com empresas locais</li>
                     </ul>
                 </div>
             </div>
-            <div class="space-y-8 bg-gray-100">
-                <div>
+            <div class="contact-form-section bg-gray-100">
+                <div class="contact-description">
                     <h2>Tem perguntas? Envie-nos um e-mail.</h2>
                     <p class="text-muted">
                         Somos uma publicação líder no setor, dedicada a fornecer as últimas notícias e insights sobre
@@ -48,10 +48,9 @@
                         categoria mais apropriada e preencha o formulário para entrar em contato conosco. Sua opinião é
                         importante para nós e nos ajuda a melhorar continuamente nossos serviços.
                     </p>
-
                 </div>
-                <form>
-                    <div>
+                <form class="contact-form">
+                    <div class="form-group">
                         <label for="category">Quem eu sou?</label>
                         <select id="category" name="category">
                             <option value="">Selecione a categoria</option>
@@ -59,26 +58,25 @@
                             <option value="Evento">Sou administrador de um evento e quero divulga-lo</option>
                             <option value="Noticia">Sou um cidadão e quero contar uma noticia.</option>
                             <option value="Parceiro">Sou dono de um negocio e quero ser parceiro do site.</option>
-
                         </select>
                     </div>
-                    <div>
+                    <div class="form-group">
                         <label for="name">Seu Nome *</label>
                         <input type="text" id="name" name="name" placeholder="Digite seu nome" required>
                     </div>
-                    <div>
+                    <div class="form-group">
                         <label for="email">Seu Email *</label>
                         <input type="email" id="email" name="email" placeholder="Digite seu email" required>
                     </div>
-                    <div>
+                    <div class="form-group">
                         <label for="message">Sua Mensagem *</label>
                         <textarea id="message" name="message" placeholder="Digite sua mensagem" required></textarea>
                     </div>
-                    <div>
+                    <div class="form-group">
                         <label for="screenshot">Captura de Tela (opcional)</label>
                         <input type="file" id="screenshot" name="screenshot">
                     </div>
-                    <div class="checkbox-container">
+                    <div class="form-group checkbox-container">
                         <input type="checkbox" id="captcha" name="captcha">
                         <label for="captcha">Não sou um robô</label>
                     </div>
@@ -88,7 +86,7 @@
         </div>
     </div>
     <footer>
-        {{>footer}}
+        {{> footer}}
     </footer>
 
 </body>
