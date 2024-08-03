@@ -37,3 +37,31 @@ if (searchInput) {
     });
   });
 }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const newsCards = document.querySelectorAll('.news-card');
+  const categoryCheckboxes = document.querySelectorAll('input[name="category"]');
+
+  function filterNews() {
+      const selectedCategories = Array.from(categoryCheckboxes)
+          .filter(checkbox => checkbox.checked)
+          .map(checkbox => checkbox.value);
+
+      newsCards.forEach(card => {
+          const cardCategory = card.querySelector('.news-category').textContent;
+          if (selectedCategories.length === 0 || selectedCategories.includes(cardCategory)) {
+              card.style.display = 'block';
+          } else {
+              card.style.display = 'none';
+          }
+      });
+  }
+
+  categoryCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', filterNews);
+  });
+
+  // Inicialmente, mostrar todas as notícias
+  filterNews();
+});

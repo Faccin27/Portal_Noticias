@@ -40,3 +40,15 @@ Handlebars.registerHelper('isAdmin', function(cargo, options) {
 });
 
 
+Handlebars.registerHelper('uniqueCategories', function (listaNoticias) {
+  const categories = new Set();
+  listaNoticias.forEach(noticia => categories.add(noticia.categoria));
+  return Array.from(categories);
+});
+
+Handlebars.registerHelper('uniqueEmploymentTypes', function (listaEmpregos) {
+  const types = new Set();
+  listaEmpregos.forEach(emprego => types.add(emprego.tipoEmprego));
+  return Array.from(types);
+});
+
