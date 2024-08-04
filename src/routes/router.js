@@ -669,12 +669,14 @@ router.get('/usuarios', async (req, res) => {
   await getUsuarioLogado(req);
 
   let listaUsuarios = await UsuarioDAO.getAll()
-  console.log(listaUsuarios)
   if (usuarioLogado.role == 'admin') {
     res.render('usuarios', {
       listaUsuarios: listaUsuarios,
-      currentPage: 'usuarios'
+      currentPage: 'usuarios',
+      usuarioLogado: usuarioLogado.get()
     })
+  } else{
+    res.redirect('/')
   }
 })
 
