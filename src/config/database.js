@@ -1,13 +1,16 @@
-// config/database.js
-const Sequelize = require('sequelize');
+const mysql = require('mysql2');
 
-const sequelize = new Sequelize('forum', 'root', '', {
-  host: 'localhost',
-  port: '3334',
-  dialect: 'mysql',
+const connection = mysql.createConnection({
+
 });
 
-module.exports = {
-  Sequelize: Sequelize,
-  sequelize: sequelize,
-};
+// Conectar ao banco de dados
+connection.connect((err) => {
+  if (err) {
+    console.error('Erro ao conectar ao banco de dados:', err);
+    return;
+  }
+  console.log('Conectado ao banco de dados!');
+});
+
+module.exports = connection;

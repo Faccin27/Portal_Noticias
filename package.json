@@ -19,6 +19,7 @@
     "ckeditor5": "^42.0.2",
     "cookie-parser": "^1.4.6",
     "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-handlebars": "^7.1.2",
     "handlebars": "^4.7.8",

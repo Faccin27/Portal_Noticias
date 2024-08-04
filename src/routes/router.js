@@ -673,7 +673,8 @@ router.get('/usuarios', async (req, res) => {
   if (usuarioLogado.role == 'admin') {
     res.render('usuarios', {
       listaUsuarios: listaUsuarios,
-      currentPage: 'usuarios'
+      currentPage: 'usuarios',
+      usuarioLogado: usuarioLogado.get()
     })
   }
 })
