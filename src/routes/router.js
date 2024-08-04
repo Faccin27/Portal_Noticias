@@ -110,7 +110,6 @@ router.get('/eventos', async (req, res) => {
       cargo: cargo
     };
   });
-  console.log(listaEventos)
 
   res.status(200).render("all-events", {
     usuarioLogado: usuarioLogado.get(),
@@ -323,9 +322,6 @@ router.get('/noticias', async (req, res) => {
   let listaNoticias = await NoticiaDAO.getAll();
   const isAdmin = usuarioLogado.role;
 
-
-  // Log para verificar a estrutura dos dados
-  console.log(listaNoticias);
 
   const { curtidas, curtido } = await processCurtidas('noticia', usuarioLogado);
 
@@ -673,7 +669,7 @@ router.get('/usuarios', async (req, res) => {
     res.render('usuarios', {
       listaUsuarios: listaUsuarios,
       currentPage: 'usuarios',
-      usuarioLogado: usuarioLogado.get()
+      usuarioLogado: usuarioLogado
     })
   } else{
     res.redirect('/')
