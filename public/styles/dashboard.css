@@ -937,3 +937,48 @@ margin: 0;
 padding: 10px 15px;
 }
 
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  margin-left: 59%;
+}
+
+.card-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.cleberson {
+  color: #e74c3c;
+}
+
+.cleberson:hover {
+  color: #c0392b;
+}
+
+.edit {
+  color: #3498db;
+}
+
+.edit:hover {
+  color: #2980b9;
+}
+
+.delete {
+  color: #e74c3c;
+}
+
+.delete:hover {
+  color: #c0392b;
+}
+
+.like-count {
+  font-size: 0.8rem;
+  color: #555;
+  margin-right: 0.5rem;
+}

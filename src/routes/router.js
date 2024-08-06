@@ -95,8 +95,8 @@ router.get('/eventos', async (req, res) => {
   await getUsuarioLogado(req);
   let listaEventos = await EventoDAO.getAll();
   const { curtidas, curtido } = await processCurtidas('evento', usuarioLogado);
-  const cargo = usuarioLogado.role;
-  const isAdmin = usuarioLogado.role;
+  const isAdmin = usuarioLogado ? usuarioLogado.role : false;
+
 
   listaEventos = listaEventos.map(evento => {
     const dataValues = evento.dataValues || evento;
@@ -107,12 +107,11 @@ router.get('/eventos', async (req, res) => {
       dataCriacao: formatDate(dataValues.dataCriacao || dataValues.createdAt),
       total_curtidas: curtidas[dataValues.id] || 0,
       curtido: curtido.has(dataValues.id),
-      cargo: cargo
     };
   });
 
   res.status(200).render("all-events", {
-    usuarioLogado: usuarioLogado.get(),
+    usuarioLogado: usuarioLogado,
     listaEventos: listaEventos,
     isAdmin: isAdmin
   });
@@ -184,7 +183,8 @@ router.get('/evento/:id', async (req, res) => {
 router.get('/empregos', async (req, res) => {
   await getUsuarioLogado(req);
   let listaEmpregos = await EmpregoDAO.getAll();
-  const isAdmin = usuarioLogado.role;
+    const isAdmin = usuarioLogado ? usuarioLogado.role : false;
+
 
   const { curtidas, curtido } = await processCurtidas('emprego', usuarioLogado);
 
@@ -264,7 +264,8 @@ router.get('/emprego/:id', async (req, res) => {
 router.get('/parceiros', async (req, res) => {
   await getUsuarioLogado(req);
   let listaParceiros = await ParceiroDAO.getAll();
-  const isAdmin = usuarioLogado.role;
+    const isAdmin = usuarioLogado ? usuarioLogado.role : false;
+
 
 
   const { curtidas, curtido } = await processCurtidas('parceiro', usuarioLogado);
@@ -320,7 +321,8 @@ router.post('/parceiros/curtida/:id', async (req, res) => {
 router.get('/noticias', async (req, res) => {
   await getUsuarioLogado(req);
   let listaNoticias = await NoticiaDAO.getAll();
-  const isAdmin = usuarioLogado.role;
+
+  const isAdmin = usuarioLogado ? usuarioLogado.role : false;
 
 
   const { curtidas, curtido } = await processCurtidas('noticia', usuarioLogado);
@@ -671,7 +673,7 @@ router.get('/usuarios', async (req, res) => {
       currentPage: 'usuarios',
       usuarioLogado: usuarioLogado
     })
-  } else{
+  } else {
     res.redirect('/')
   }
 })

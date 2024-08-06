@@ -25,6 +25,22 @@ class CurtidaDAO {
     }
   }
 
+  async countLikesByItem(tipo_item, item_id) {
+    let count = 0;
+    try {
+      count = await Curtida.count({
+        where: {
+          tipo_item,
+          item_id
+        }
+      });
+    } catch (error) {
+      console.error('Erro ao contar curtidas:', error);
+    } finally {
+      return count;
+    }
+  }
+
   // Busca uma curtida no banco de dados pela sua ID
   async getById(curtidaId) {
     let curtida;

@@ -25,6 +25,7 @@
             <p class="news-description">{{this.descricao}}</p>
             <a href="/noticia/{{this.id}}" class="read-more">Leia mais</a>
           </div>
+
         </div>
       </div>
       {{/each}}
@@ -86,6 +87,16 @@
                     <path d="M5 12h14"></path>
                     <path d="m12 5 7 7-7 7"></path>
                   </svg>
+                  <div class="card-actions">
+                    <form action="/parceiros/curtida/{{this.id}}" method="POST">
+                      {{#if this.curtido}}
+                      <button class="cleberson" type="submit"><i class="favorite fa-solid fa-heart"></i></button>
+                      {{else}}
+                      <button class="cleberson" type="submit"><i class="favorite fa-regular fa-heart"></i></button>
+                      {{/if}}
+                    </form>
+                    <span class="like-count">{{total_curtidas}}</span>
+                  </div>
                 </a>
               </div>
             </div>
