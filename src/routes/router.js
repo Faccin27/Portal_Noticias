@@ -88,7 +88,6 @@ router.get('/', async (req, res) => {
     total_curtidas: curtidasParceiros[parceiro.dataValues.id] || 0,
     curtido: curtidoParceiros.has(parceiro.dataValues.id)
   }));
-console.log(listaParceiros)
   if (usuarioLogado) {
     res.status(200).render("dashboard", {
       usuarioLogado: usuarioLogado.get(),
