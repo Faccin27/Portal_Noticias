@@ -7,100 +7,67 @@
     <title>Profile Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/styles/profile.css">
-    <style>
-        .save-button-container {
-            display: flex;
-            justify-content: flex-end;
-            padding: 20px 20px 20px 0;
-        }
-        .save-button {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-    </style>
+    <script src="/scripts/profile.js" defer></script>
 </head>
 
 <body>
     <header>
         {{> navbar}}
     </header>
-    <div class="card">
-        <div class="card-content">
-            <div class="main-content">
-                <div class="profile-section">
-                    <div class="profile-image">
-                        <img src="/images/users.jpg">
-                    </div>
-                    <div class="profile-info">
-                        <div class="profile-name">{{usuarioLogado.nome}}</div>
-                        <div class="profile-email">{{usuarioLogado.email}}</div>
-                    </div>
-                    <div class="image-upload">
-                        <img src="/images/profile.jpg" alt="User Image">
-                        <button class="upload-button">Upload New Image</button>
-                    </div>
-                </div>
-                <div class="form-section">
-                    <div class="form-group">
-                        <label for="name">Nome</label>
-                        <div class="input-wrapper">
-                            <input id="name" value="{{usuarioLogado.nome}}">
-                            <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
-                                <path d="m15 5 4 4"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <div class="input-wrapper">
-                            <input id="email" type="email" value="{{usuarioLogado.email}}">
-                            <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
-                                <path d="m15 5 4 4"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Senha</label>
-                        <div class="input-wrapper">
-                            <input id="password" type="password" value="********">
-                            <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
-                                <path d="m15 5 4 4"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="date">Registro</label>
-                        <div class="input-wrapper">
-                            <input id="dates" type="text" value="{{usuarioLogado.createdAt}}">
-                            <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
-                                <path d="m15 5 4 4"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+       <div class="container2">
+        <div class="header">
+            <h1>Meu Perfil</h1>
+        </div>
+        <div class="profile-info">
+            <img src="/images/profile.jpg" class="profile-pic" id="currentProfilePic">
+            <h2>{{usuarioLogado.nome}}</h2>
+        </div>
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('profile')">Perfil</div>
+            <div class="tab" onclick="showTab('edit')">Editar Perfil</div>
+        </div>
+        <div id="profile" class="content active">
+            <div class="field">
+                <label>Nome</label>
+                <p>{{usuarioLogado.nome}}</p>
             </div>
-            <div class="save-button-container">
-                <button class="save-button">Salvar</button>
+            <div class="field">
+                <label>E-mail</label>
+                <p>{{usuarioLogado.email}}</p>
+            </div>
+            <div class="field">
+                <label>Data de Registro</label>
+                <p>{{usuarioLogado.createdAt}}</p>
+            </div>
+            <div class="field">
+                <label>Cargo</label>
+                <p>{{usuarioLogado.role}}</p>
             </div>
         </div>
+        <div id="edit" class="content">
+            <div class="field">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" value="{{usuarioLogado.email}}">
+            </div>
+            <div class="field image-upload">
+                <img src="/images/profile.jpg" alt="Pré-visualização da Imagem" class="image-preview" id="imagePreview">
+                <input type="file" id="imageUpload" class="file-input" accept="image/*">
+                <label for="imageUpload" class="file-label">Escolher Nova Imagem</label>
+            </div>
+            <div class="field">
+                <label for="password">Nova Senha</label>
+                <input type="password" id="password">
+            </div>
+            <div class="field">
+                <label for="confirm-password">Confirmar Nova Senha</label>
+                <input type="password" id="confirm-password">
+            </div>
+            <button class="edit-button">Salvar Alterações</button>
+        </div>
     </div>
+    <footer>
+        {{> footer}}
+    </footer>
 </body>
 
 </html>

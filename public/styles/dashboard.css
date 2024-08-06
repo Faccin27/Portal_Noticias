@@ -790,7 +790,6 @@ transition: color 0.3s ease;
 color: #333;
 }
 
-/* Estilos do formulário */
 .job-modal .form-group {
 margin-bottom: 20px;
 width: calc(33.333% - 20px);
@@ -834,7 +833,6 @@ height: 120px;
 resize: vertical;
 }
 
-/* Campos de largura total */
 .job-modal .form-group:nth-child(4),
 .job-modal .form-group:nth-child(7),
 .job-modal .form-group:nth-child(8),
@@ -843,7 +841,6 @@ width: 100%;
 margin-right: 0;
 }
 
-/* Botão de envio */
 .job-submit-btn {
 background-color: #e24a4a;
 color: white;
@@ -892,10 +889,10 @@ flex-direction: column;
 align-items: stretch;
 gap: 10px;
 margin-top: 20px;
-width: 100%; /* Garante que o container ocupe toda a largura disponível */
+width: 100%; 
 }
 
-/* Estilo comum para os botões */
+
 .dashboard-button {
 width: 100%;
 padding: 10px 15px;
@@ -907,7 +904,7 @@ cursor: pointer;
 font-size: 16px;
 transition: background-color 0.3s;
 text-align: center;
-align-self: center; /* Centraliza todos os botões */
+align-self: center; 
 }
 
 .dashboard-button:hover {
@@ -918,20 +915,19 @@ background-color: #c53030;
 .event-modal-content{
  
     background-color: #fefefe;
-    margin: 10dvh auto; /* Centraliza o modal verticalmente */
+    margin: 10dvh auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Ajuste a largura do modal */
-    max-width: 900px; /* Defina um máximo para a largura */
+    width: 80%;
+    max-width: 900px; 
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    border-radius: 5px; /* Cantos arredondados */
-    height: auto; /* Ajusta a altura automaticamente */
-    max-height: 80vh; /* Define uma altura máxima, útil para rolar se necessário */
-    overflow-y: auto; /* Permite rolar verticalmente se o conteúdo for maior que a altura máxima */
+    border-radius: 5px; 
+    height: auto;
+    max-height: 80vh; 
+    overflow-y: auto; 
   
 }
 
-/* Removendo quaisquer margens ou paddings que possam afetar o alinhamento */
 #openModal, #openPartnerModal, #openJobModal {
 margin: 0;
 padding: 10px 15px;
@@ -941,7 +937,7 @@ padding: 10px 15px;
 .card-actions {
   display: flex;
   align-items: center;
-  margin-left: 59%;
+  margin-left: 50%;
 }
 
 .card-actions button {
@@ -980,5 +976,5 @@ padding: 10px 15px;
 .like-count {
   font-size: 0.8rem;
   color: #555;
-  margin-right: 0.5rem;
+  padding-left: 1dvh;
 }

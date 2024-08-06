@@ -40,8 +40,8 @@
       <section class="latest-news">
         <div class="section-content">
           <div class="latest-news-header">
-            <h2>Latest News</h2>
-            <a href="/noticias" class="viewall">View All</a>
+            <h2>Ultimas Notícias</h2>
+            <a href="/noticias" class="viewall">Ver todos</a>
           </div>
           <div class="news-grid">
             {{#each (limit listaNoticias 3)}}
@@ -58,6 +58,16 @@
                     <path d="M5 12h14"></path>
                     <path d="m12 5 7 7-7 7"></path>
                   </svg>
+                  <div class="card-actions">
+                    <form action="/noticias/curtida/{{this.id}}" method="POST">
+                      {{#if this.curtido}}
+                      <button class="cleberson" type="submit"><i class="favorite fa-solid fa-heart"></i></button>
+                      {{else}}
+                      <button class="cleberson" type="submit"><i class="favorite fa-regular fa-heart"></i></button>
+                      {{/if}}
+                    </form>
+                    <span class="like-count">{{total_curtidas}}</span>
+                  </div>
                 </a>
               </div>
             </div>
@@ -69,8 +79,8 @@
       <section class="partners">
         <div class="section-content">
           <div class="partners-header">
-            <h2>Our Partners</h2>
-            <a href="/parceiros" class="viewall">View All</a>
+            <h2>Nossos parceiros</h2>
+            <a href="/parceiros" class="viewall">Ver todos</a>
           </div>
           <div class="partners-grid">
             {{#each (limit listaParceiros 3)}}
@@ -107,8 +117,8 @@
       <section class="jobs">
         <div class="section-content">
           <div class="jobs-header">
-            <h2>Job Opportunities</h2>
-            <a href="/empregos" class="viewall">View All</a>
+            <h2>Oportunidades de emprego</h2>
+            <a href="/empregos" class="viewall">Ver todos</a>
           </div>
           <div class="jobs-grid">
             {{#each (limit listaEmpregos 3)}}
@@ -126,6 +136,16 @@
                     <path d="M5 12h14"></path>
                     <path d="m12 5 7 7-7 7"></path>
                   </svg>
+                  <div class="card-actions">
+                    <form action="/empregos/curtida/{{this.id}}" method="POST">
+                      {{#if this.curtido}}
+                      <button class="cleberson" type="submit"><i class="favorite fa-solid fa-heart"></i></button>
+                      {{else}}
+                      <button class="cleberson" type="submit"><i class="favorite fa-regular fa-heart"></i></button>
+                      {{/if}}
+                    </form>
+                    <span class="like-count">{{total_curtidas}}</span>
+                  </div>
                 </a>
               </div>
             </div>
@@ -154,6 +174,16 @@
                     <path d="M5 12h14"></path>
                     <path d="m12 5 7 7-7 7"></path>
                   </svg>
+                  <div class="card-actions">
+                    <form action="/eventos/curtida/{{this.id}}" method="POST">
+                      {{#if this.curtido}}
+                      <button class="cleberson" type="submit"><i class="favorite fa-solid fa-heart"></i></button>
+                      {{else}}
+                      <button class="cleberson" type="submit"><i class="favorite fa-regular fa-heart"></i></button>
+                      {{/if}}
+                    </form>
+                    <span class="like-count">{{total_curtidas}}</span>
+                  </div>
                 </a>
               </div>
             </div>

@@ -44,26 +44,51 @@ const processCurtidas = async (tipo_item, usuarioLogado) => {
 
 
 router.get('/', async (req, res) => {
-  await getUsuarioLogado(req)
+  await getUsuarioLogado(req);
 
+  // Obter as listas de eventos, empregos, notícias e parceiros
   let listaEventos = await EventoDAO.getLatest(3);
   let listaEmpregos = await EmpregoDAO.getLatest(3);
   let listaNoticias = await NoticiaDAO.getLatest(6);
   let listaParceiros = await ParceiroDAO.getLatest(3);
 
+  // Obter curtidas para cada tipo de item
+  const { curtidas: curtidasEventos, curtido: curtidoEventos } = await processCurtidas('evento', usuarioLogado);
+  const { curtidas: curtidasEmpregos, curtido: curtidoEmpregos } = await processCurtidas('emprego', usuarioLogado);
+  const { curtidas: curtidasNoticias, curtido: curtidoNoticias } = await processCurtidas('noticia', usuarioLogado);
+  const { curtidas: curtidasParceiros, curtido: curtidoParceiros } = await processCurtidas('parceiro', usuarioLogado);
 
+  // Mapear e formatar os dados
   listaEventos = listaEventos.map(evento => ({
     ...evento.dataValues,
     dataInicio: formatDate(evento.dataValues.dataInicio),
     dataFim: formatDate(evento.dataValues.dataFim),
-    dataCriacao: formatDate(evento.dataValues.dataCriacao)
+    dataCriacao: formatDate(evento.dataValues.dataCriacao),
+    total_curtidas: curtidasEventos[evento.dataValues.id] || 0,
+    curtido: curtidoEventos.has(evento.dataValues.id)
+  }));
+
+  listaEmpregos = listaEmpregos.map(emprego => ({
+    ...emprego.dataValues,
+    dataCriacao: formatDate(emprego.dataValues.dataCriacao),
+    total_curtidas: curtidasEmpregos[emprego.dataValues.id] || 0,
+    curtido: curtidoEmpregos.has(emprego.dataValues.id)
+  }));
+
+  listaNoticias = listaNoticias.map(noticia => ({
+    ...noticia.dataValues,
+    dataCriacao: formatDate(noticia.dataValues.dataCriacao),
+    total_curtidas: curtidasNoticias[noticia.dataValues.id] || 0,
+    curtido: curtidoNoticias.has(noticia.dataValues.id)
   }));
 
   listaParceiros = listaParceiros.map(parceiro => ({
     ...parceiro.dataValues,
-    data_criacao: formatDateWithoutTime(parceiro.dataValues.data_criacao)
+    data_criacao: formatDateWithoutTime(parceiro.dataValues.data_criacao),
+    total_curtidas: curtidasParceiros[parceiro.dataValues.id] || 0,
+    curtido: curtidoParceiros.has(parceiro.dataValues.id)
   }));
-
+console.log(listaParceiros)
   if (usuarioLogado) {
     res.status(200).render("dashboard", {
       usuarioLogado: usuarioLogado.get(),
