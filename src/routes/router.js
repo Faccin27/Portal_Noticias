@@ -661,10 +661,16 @@ router.post('/eventos/create', upload.single('image'), async (req, res) => {
 
 router.get('/profile', async (req, res) => {
   await getUsuarioLogado(req);
+  
   if (usuarioLogado) {
-    res.render('profile', { usuarioLogado: usuarioLogado.get() });
+    const formattedUser = {
+      ...usuarioLogado.get(),
+      createdAt: formatDate(usuarioLogado.get().createdAt) 
+    };
+    
+    res.render('profile', { usuarioLogado: formattedUser });
   } else {
-    res.status(403).send("Acesso negado!")
+    res.status(403).send("Acesso negado!");
   }
 });
 

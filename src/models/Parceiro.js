@@ -32,9 +32,9 @@ Parceiro.init({
     defaultValue: DataTypes.NOW
   },
 }, {
-  sequelize: db.sequelize, // Conexão com o banco de dados
-  modelName: 'Parceiro', // Nome do modelo
-  tableName: 'Parceiros', // Nome da tabela no banco de dados, geralmente no plural
+  sequelize: db.sequelize, 
+  modelName: 'Parceiro', 
+  tableName: 'parceiros', 
 });
 
 // Exportando a classe Parceiro
