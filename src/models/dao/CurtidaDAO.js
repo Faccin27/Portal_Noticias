@@ -20,10 +20,11 @@ class CurtidaDAO {
       curtidas = await Curtida.findAll();
     } catch (error) {
       console.error('Erro ao buscar curtidas:', error);
-    } finally {
-      return curtidas;
+      throw error; // Lança o erro novamente
     }
+    return curtidas;
   }
+  
 
   async countLikesByItem(tipo_item, item_id) {
     let count = 0;

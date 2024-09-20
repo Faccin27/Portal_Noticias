@@ -23,6 +23,7 @@ async function getUsuarioLogado(req) {
 
 const processCurtidas = async (tipo_item, usuarioLogado) => {
   const todasCurtidas = await CurtidaDAO.getAll();
+  console.log("CURTIDAS:", todasCurtidas)
   const curtidas = {};
   const curtido = new Set();
   const usuarioId = usuarioLogado ? usuarioLogado.id : null;

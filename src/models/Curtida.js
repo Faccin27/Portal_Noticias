@@ -18,7 +18,7 @@ Curtida.init({
     allowNull: false,
     references: {
       model: 'usuarios', 
-      key: 'id'          // Chave primária na tabela de usuários
+      key: 'id' // Chave primária na tabela de usuários
     }
   },
   tipo_item: {
@@ -33,6 +33,7 @@ Curtida.init({
   sequelize: db.sequelize, 
   modelName: 'Curtida', 
   tableName: 'curtidas', 
+  timestamps: false, // Desativa os timestamps
 });
 
 module.exports = Curtida;
